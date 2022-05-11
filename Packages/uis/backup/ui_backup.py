@@ -43,7 +43,7 @@ QComboBox QAbstractItemView {
 """
 
 
-class Ui_Dialog(object):
+class Ui_Backup(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
