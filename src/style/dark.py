@@ -862,6 +862,8 @@ FRAME_MAIN_CONTENT_FOR_PRIMARY = """
     }
 """
 
+LABEL_COLOR = "color: white; background: none;"
+
 LABEL_ICON_PRIMARY = """
     QLabel{
         border: 8px solid rgb(37, 38, 48);
@@ -888,12 +890,12 @@ DATE_EDIT = """
         border-radius: 10px;
     }
     QDateEdit::down-button{
-          image: url(./src/icon/main-icons/chevron-down.svg);
-          margin-right: 6px;
+        image: url(./src/icon/main-icons/chevron-down.svg);
+        margin-right: 6px;
     }
-     QDateEdit::up-button{
-           image: url(./src/icon/main-icons/chevron-up.svg);
-           margin-right: 6px;
+    QDateEdit::up-button{
+        image: url(./src/icon/main-icons/chevron-up.svg);
+        margin-right: 6px;
     }
     QDateEdit::up-button:pressed{
         background-color: rgb(26, 114, 255);
@@ -904,6 +906,7 @@ DATE_EDIT = """
         border-radius: 5px;
     }
 """
+
 LINE_EDIT = """
     QLineEdit{
         border: 0px solid;
@@ -1460,7 +1463,7 @@ LABEL_ICON_LOWER = """
     QLabel{
         border: 8px solid rgb(37, 38, 48);
         background-color: rgb(50, 52, 65);
-        border-radius: 105px;
+        border-radius: 100px;
     }
 """
 LABEL_SHOW_ROLL_LOWER = """
@@ -1551,6 +1554,33 @@ LABEL_MORE_ABOUT = """
     padding-left: 20px;
 """
 
+TEXT_EDIT = """
+    QTextEdit{
+        border: 0px solid;
+        color: rgb(240, 240, 240);
+        border-radius: 10px;
+        background-color: #1D222E;
+        padding-left: 10px;
+        padding-right: 10px;
+        selection-background-color: #30313F;
+        selection-color: #5F6063;
+    }
+    QTextEdit:hover{
+        border: 2px solid rgb(49, 50, 63);
+    }
+        
+    QTextEdit:focus{
+        border: 2px solid rgb(61, 152, 212);
+    }
+"""
+
+GROUP = """
+    QGroupBox {
+        background: none;
+        border: 1px solid rgb(61, 152, 212);
+        border-radius: 10px;
+    }
+"""
 
 # HTML CONTENTS
 LABEL_ICON_INTER_TEXT = """

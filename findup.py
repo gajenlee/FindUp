@@ -1,4 +1,3 @@
-from operator import setitem
 import cv2 as cv
 import sys
 import pandas as pd
@@ -17,7 +16,7 @@ from Packages.uis.main.ui_main import *
 from Packages.connecter.cryptography.crypto import *
 from Packages.connecter.progressBar.circular_progress import *
 from Packages.connecter.store.store import *
-from src.style.style import *
+from style.dark import *
 
 
 from PyQt5.QtWidgets import *
@@ -65,7 +64,7 @@ class Main_Window(QMainWindow):
         self.ui = Ui_Main()
         self.ui.setupUi(self)
         self.setIcon_for_window()
-        self.setTheme_for_window()
+        # self.setTheme_for_window()
         self.connect_functiom()
 
     def connect_functiom(self):
@@ -136,12 +135,12 @@ class Main_Window(QMainWindow):
         self.ui.scrollArea_3.setStyleSheet(SCROLLAREA)
         self.ui.scrollArea_content.setStyleSheet(SCROLLAREA)
         self.ui.scrollArea_4.setStyleSheet(SCROLLAREA)
+        self.ui.scrollArea_add_info.setStyleSheet(SCROLLAREA)
 
         self.ui.comboBox_stream.setStyleSheet(COMBO_BOX)
         self.ui.comboBox_stream_primary.setStyleSheet(COMBO_BOX)
         self.ui.lineEdit_level_ad.setStyleSheet(COMBO_BOX)
         self.ui.lineEdit_level_lower.setStyleSheet(COMBO_BOX)
-        self.ui.lineEdit_level.setStyleSheet(COMBO_BOX)
 
         self.setStyleSheet(MAIN_WINDOW_BACKGROUND)
         self.ui.btn_Toggle.setStyleSheet(TOGGLE_BTN)
@@ -174,22 +173,54 @@ class Main_Window(QMainWindow):
         self.ui.dateEdit_date_of_birth_ad.setStyleSheet(DATE_EDIT)
         self.ui.dateEdit_data_of_birth.setStyleSheet(DATE_EDIT)
 
+        self.ui.dateEdit_DOB.setStyleSheet(DATE_EDIT)
+        self.ui.dateEdit_first_appointment_date.setStyleSheet(DATE_EDIT)
+        self.ui.dateEdit_appointment_date.setStyleSheet(DATE_EDIT)
+
+        self.ui.lineEdit_full_name.setStyleSheet(LINE_EDIT)
+        self.ui.lineEdit__name_initial.setStyleSheet(LINE_EDIT)
+        self.ui.lineEdit_inc_no.setStyleSheet(LINE_EDIT)
+        self.ui.lineEdit_office_no.setStyleSheet(LINE_EDIT)
+        self.ui.lineEdit_personal_contact.setStyleSheet(LINE_EDIT)
+        self.ui.lineEdit_WOP_no.setStyleSheet(LINE_EDIT)
+        self.ui.lineEdit_agrakara_no.setStyleSheet(LINE_EDIT)
+        self.ui.lineEdit_spouse_name.setStyleSheet(LINE_EDIT)
+        self.ui.lineEdit_contact_no_offiec_home.setStyleSheet(LINE_EDIT)
+        self.ui.lineEdit_no_of_children.setStyleSheet(LINE_EDIT)
+
+        self.ui.textEdit_permanent_address.setStyleSheet(TEXT_EDIT)
+        self.ui.textEdit_working_address.setStyleSheet(TEXT_EDIT)
+        self.ui.textEdit_other.setStyleSheet(TEXT_EDIT)
+        self.ui.textEdit_nature_appointment.setStyleSheet(TEXT_EDIT)
+        self.ui.textEdit_appointmen_school.setStyleSheet(TEXT_EDIT)
+
+        self.ui.radioButton_married.setStyleSheet(RASIO_BUTTON)
+        self.ui.radioButton_unmarried.setStyleSheet(RASIO_BUTTON)
+        self.ui.radioButton_male.setStyleSheet(RASIO_BUTTON)
+        self.ui.radioButton_female.setStyleSheet(RASIO_BUTTON)
+        self.ui.radioButton_other.setStyleSheet(RASIO_BUTTON)
+
         self.ui.lineEdit_contect_primary.setStyleSheet(LINE_EDIT)
         self.ui.lineEdit_contect_ad.setStyleSheet(LINE_EDIT)
         self.ui.lineEdit_contect_lower.setStyleSheet(LINE_EDIT)
-        self.ui.lineEdit_contect.setStyleSheet(LINE_EDIT)
 
-        self.ui.lineEdit_address.setStyleSheet(LINE_EDIT)
+        self.ui.label_civil_text.setStyleSheet(LABEL_COLOR)
+        self.ui.label_gender_text.setStyleSheet(LABEL_COLOR)
+        self.ui.label_date_app_to_school_text.setStyleSheet(LABEL_COLOR)
+        self.ui.label_appointment_data_text.setStyleSheet(LABEL_COLOR)
+        self.ui.label_DOB_text.setStyleSheet(LABEL_COLOR)
+
+        self.ui.groupBox_civil.setStyleSheet(GROUP)
+        self.ui.groupBox_gender.setStyleSheet(GROUP)
+
         self.ui.lineEdit_address_ad.setStyleSheet(LINE_EDIT)
         self.ui.lineEdit_address_primary.setStyleSheet(LINE_EDIT)
         self.ui.lineEdit_address_lower.setStyleSheet(LINE_EDIT)
 
-        self.ui.lineEdit_name.setStyleSheet(LINE_EDIT)
         self.ui.lineEdit_name_ad.setStyleSheet(LINE_EDIT)
         self.ui.lineEdit_name_lower.setStyleSheet(LINE_EDIT)
         self.ui.lineEdit_name_primary.setStyleSheet(LINE_EDIT)
 
-        self.ui.lineEdit_email.setStyleSheet(LINE_EDIT)
         self.ui.lineEdit_email_ad.setStyleSheet(LINE_EDIT)
         self.ui.lineEdit_email_lower.setStyleSheet(LINE_EDIT)
         self.ui.lineEdit_email_primary.setStyleSheet(LINE_EDIT)
@@ -210,8 +241,6 @@ class Main_Window(QMainWindow):
         self.ui.lineEdit_registration_ad.setStyleSheet(LINE_EDIT)
         self.ui.lineEdit_ragis_number.setStyleSheet(LINE_EDIT)
 
-        self.ui.lineEdit_subject.setStyleSheet(LINE_EDIT)
-
         self.ui.lineEdit_username_change_input.setStyleSheet(LINE_EDIT)
         self.ui.lineEdit_change_email_input.setStyleSheet(LINE_EDIT)
         self.ui.lineEdit_contact_number_input.setStyleSheet(LINE_EDIT)
@@ -226,10 +255,6 @@ class Main_Window(QMainWindow):
         self.ui.radioButton_male_primary.setStyleSheet(RASIO_BUTTON)
         self.ui.radioButton_female_primary.setStyleSheet(RASIO_BUTTON)
         self.ui.radioButton_other_primary.setStyleSheet(RASIO_BUTTON)
-
-        self.ui.radioButton_male.setStyleSheet(RASIO_BUTTON)
-        self.ui.radioButton_female.setStyleSheet(RASIO_BUTTON)
-        self.ui.radioButton_other.setStyleSheet(RASIO_BUTTON)
 
         self.ui.radioButton_male_ad.setStyleSheet(RASIO_BUTTON)
         self.ui.radioButton_female_ad.setStyleSheet(RASIO_BUTTON)
@@ -377,6 +402,9 @@ class Main_Window(QMainWindow):
         self.ui.label_show_roll_number.setStyleSheet(LABEL_SHOW_ROLL_INTER)
         self.ui.btn_addInter.setStyleSheet(ADDINTER_BTN)
         self.ui.btn_go_home.setStyleSheet(GOHOME_INTER_BTN)
+        self.ui.btn_upload_image_lower.setStyleSheet(UPLOAD_IMAGE_BTN)
+        self.ui.btn_upload_image_primary.setStyleSheet(UPLOAD_IMAGE_BTN)
+        self.ui.btn_upload_image_advanced.setStyleSheet(UPLOAD_IMAGE_BTN)
 
         self.ui.frame_content.setStyleSheet(ANALYTICS_FRAME_CONTENT)
         self.ui.label_inter_head.setStyleSheet(ANALYTICS_LABEL_INTER_HEAD)
@@ -465,11 +493,6 @@ class Main_Window(QMainWindow):
         setIcon(self.ui.btn_rollSearch, ICON_SEARCH)
 
         # ADD INTER USER PAGE ICONS
-        setIcon_line(self.ui.lineEdit_name, ICON_USER)
-        setIcon_line(self.ui.lineEdit_address, ICON_LOCATION)
-        setIcon_line(self.ui.lineEdit_subject, ICON_SUBJECT)
-        setIcon_line(self.ui.lineEdit_email, ICON_AT)
-        setIcon_line(self.ui.lineEdit_contect, ICON_PHONE)
 
         # ADD LOWER USER PAGE ICONS
         setIcon_line(self.ui.lineEdit_name_lower, ICON_USER)
