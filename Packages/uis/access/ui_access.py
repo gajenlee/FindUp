@@ -18,10 +18,6 @@ class Ui_Access(object):
         self.frame_main.setObjectName(u"frame_main")
         self.frame_main.setMinimumSize(QSize(368, 183))
         self.frame_main.setMaximumSize(QSize(368, 183))
-        self.frame_main.setStyleSheet(u"QFrame{\n"
-                                      "	background-color: #1A1E28;\n"
-                                      "	border-radius: 10px;\n"
-                                      "}")
         self.frame_main.setFrameShape(QFrame.StyledPanel)
         self.frame_main.setFrameShadow(QFrame.Raised)
         self.verticalLayout_2 = QVBoxLayout(self.frame_main)
@@ -32,11 +28,6 @@ class Ui_Access(object):
         self.frame_title_bar.setObjectName(u"frame_title_bar")
         self.frame_title_bar.setMinimumSize(QSize(0, 35))
         self.frame_title_bar.setMaximumSize(QSize(16777215, 35))
-        self.frame_title_bar.setStyleSheet("QFrame {\n"
-                                           "   Background-color: rgb(52, 59, 71);\n"
-                                           "   border: 0px solid;\n"
-                                           "   border-radius: 10px;\n"
-                                           "}\n")
         self.frame_title_bar.setFrameShape(QFrame.StyledPanel)
         self.frame_title_bar.setFrameShadow(QFrame.Raised)
         self.horizontalLayout = QHBoxLayout(self.frame_title_bar)
@@ -60,9 +51,6 @@ class Ui_Access(object):
         font.setFamily(u"MesloLGL Nerd Font")
         font.setPointSize(10)
         self.label_title.setFont(font)
-        self.label_title.setStyleSheet(u"color: white;\n"
-                                       "padding-left: 10px;\n"
-                                       "background-color: none;")
 
         self.horizontalLayout_3.addWidget(self.label_title)
 
@@ -83,23 +71,6 @@ class Ui_Access(object):
         self.btn_close.setObjectName(u"btn_close")
         self.btn_close.setMinimumSize(QSize(20, 20))
         self.btn_close.setMaximumSize(QSize(20, 20))
-        self.btn_close.setStyleSheet(u"QPushButton{\n"
-                                     "	color: rgb(255, 255, 255);\n"
-                                     "	background-color: none;\n"
-                                     "	border: 0px solid;\n"
-                                     "	border-radius: 5px;\n"
-                                     "}\n"
-                                     "QPushButton:hover{\n"
-                                     "	background-color: rgb(255, 0, 0);\n"
-                                     "}\n"
-                                     "QPushButton:pressed{\n"
-                                     "	background-color: rgba(255, 0, 0, 100);\n"
-                                     "}")
-        icon = QIcon()
-        icon.addFile("packges/app/items/icons/24x24/cil-x.png",
-                     QSize(), QIcon.Normal, QIcon.Off)
-        self.btn_close.setIcon(icon)
-        self.btn_close.setIconSize(QSize(24, 24))
 
         self.horizontalLayout_2.addWidget(self.btn_close)
 
@@ -118,9 +89,6 @@ class Ui_Access(object):
         self.label_user_info = QLabel(self.frame_work_follw)
         self.label_user_info.setObjectName(u"label_user_info")
         self.label_user_info.setFont(font)
-        self.label_user_info.setStyleSheet(u"color: white;\n"
-                                           "padding-left: 10px;")
-
         self.verticalLayout_3.addWidget(self.label_user_info)
 
         self.lineEdit_current_password = QLineEdit(self.frame_work_follw)
@@ -131,24 +99,6 @@ class Ui_Access(object):
         font1 = QFont()
         font1.setPointSize(10)
         self.lineEdit_current_password.setFont(font1)
-        self.lineEdit_current_password.setStyleSheet(u"QLineEdit{\n"
-                                                     "	border: 0px solid;\n"
-                                                     "	color: rgb(240, 240, 240);\n"
-                                                     "	border-radius: 10px;\n"
-                                                     "	background-color: #1D222E;\n"
-                                                     "	padding-left: 10px;\n"
-                                                     "	padding-right: 10px;\n"
-                                                     "   selection-background-color: #30313F;\n"
-                                                     "   selection-color: #5F6063;\n"
-                                                     "}\n"
-                                                     "\n"
-                                                     "QLineEdit:hover{\n"
-                                                     "	border: 2px solid rgb(49, 50, 63);\n"
-                                                     "}\n"
-                                                     "\n"
-                                                     "QLineEdit:focus{\n"
-                                                     "	border: 2px solid rgb(61, 152, 212);\n"
-                                                     "}")
         self.lineEdit_current_password.setEchoMode(QLineEdit.Password)
 
         self.verticalLayout_3.addWidget(self.lineEdit_current_password)
@@ -158,19 +108,6 @@ class Ui_Access(object):
         self.btn_verify.setMinimumSize(QSize(0, 25))
         self.btn_verify.setMaximumSize(QSize(16777215, 25))
         self.btn_verify.setFont(font1)
-        self.btn_verify.setStyleSheet(u"QPushButton{\n"
-                                      "	color: rgb(255, 255, 255);\n"
-                                      "	background-color:  rgb(21, 121, 188);\n"
-                                      "	border: 0px solid;\n"
-                                      "	border-radius: 5px;\n"
-                                      "	margin-left: 250px;\n"
-                                      "}\n"
-                                      "QPushButton:hover{\n"
-                                      "	background-color: rgb(23, 133, 207);\n"
-                                      "}\n"
-                                      "QPushButton:pressed{\n"
-                                      "	background-color: rgb(18, 104, 162);\n"
-                                      "}")
 
         self.verticalLayout_3.addWidget(self.btn_verify)
 

@@ -4,6 +4,18 @@ from PyQt5.QtWidgets import *
 
 
 class Ui_Main(object):
+
+    def setShadowEffect(self, widget):
+
+        # Set Shadow Effect
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(30)
+        shadow.setXOffset(0)
+        shadow.setYOffset(0)
+        shadow.setColor(QColor(0, 0, 0, 80))
+
+        widget.setGraphicsEffect(shadow)
+
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
@@ -244,6 +256,7 @@ class Ui_Main(object):
         self.verticalLayout_43 = QVBoxLayout(self.page_add_students)
         self.verticalLayout_43.setObjectName("verticalLayout_43")
         self.frame_2 = QFrame(self.page_add_students)
+        self.setShadowEffect(self.frame_2)
         self.frame_2.setFrameShape(QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
@@ -288,6 +301,7 @@ class Ui_Main(object):
         self.verticalLayout_48 = QVBoxLayout(self.page)
         self.verticalLayout_48.setObjectName("verticalLayout_48")
         self.frame_main_content_for_primary = QFrame(self.page)
+        self.setShadowEffect(self.frame_main_content_for_primary)
         self.frame_main_content_for_primary.setFrameShape(QFrame.StyledPanel)
         self.frame_main_content_for_primary.setFrameShadow(QFrame.Raised)
         self.frame_main_content_for_primary.setObjectName(
@@ -309,6 +323,7 @@ class Ui_Main(object):
         self.label_icon_primary.setMinimumSize(QSize(200, 200))
         self.label_icon_primary.setMaximumSize(QSize(200, 200))
         self.label_icon_primary.setObjectName("label_icon_primary")
+        self.setShadowEffect(self.label_icon_primary)
         self.gridLayout_primary.addWidget(self.label_icon_primary, 0, 0, 1, 1)
         self.btn_upload_image_primary = QPushButton(
             self.frame_user_image_upload_primary)
@@ -563,6 +578,7 @@ class Ui_Main(object):
         self.verticalLayout_45.setSpacing(0)
         self.verticalLayout_45.setObjectName("verticalLayout_45")
         self.frame_main_content_for_advance = QFrame(self.page_add_advan)
+        self.setShadowEffect(self.frame_main_content_for_advance)
         self.frame_main_content_for_advance.setFrameShape(QFrame.StyledPanel)
         self.frame_main_content_for_advance.setFrameShadow(QFrame.Raised)
         self.frame_main_content_for_advance.setObjectName(
@@ -584,6 +600,7 @@ class Ui_Main(object):
         self.label_icon_.setMinimumSize(QSize(200, 200))
         self.label_icon_.setMaximumSize(QSize(200, 200))
         self.label_icon_.setObjectName("label_icon_")
+        self.setShadowEffect(self.label_icon_)
         self.gridLayout_advanced.addWidget(self.label_icon_, 0, 0, 1, 1)
         self.btn_upload_image_advanced = QPushButton(
             self.frame_user_image_upload_advanced)
@@ -880,9 +897,11 @@ class Ui_Main(object):
         self.page_content_Input.setGeometry(QRect(0, 0, 753, 1636))
         self.verticalLayout_13 = QVBoxLayout(self.page_content_Input)
         self.verticalLayout_13.setObjectName(u"verticalLayout_13")
-        self.widget_inter_1 = QWidget(self.page_content_Input)
+
+        self.widget_inter_1 = QFrame(self.page_content_Input)
         self.widget_inter_1.setObjectName(u"widget_inter_1")
         self.widget_inter_1.setMinimumSize(QSize(0, 500))
+        self.setShadowEffect(self.widget_inter_1)
         self.verticalLayout_19 = QVBoxLayout(self.widget_inter_1)
         self.verticalLayout_19.setObjectName(u"verticalLayout_19")
 
@@ -891,9 +910,13 @@ class Ui_Main(object):
         font2 = QFont()
         font2.setFamily(u"./src/font/segoeui.ttf")
         font2.setPointSize(10)
+        self.label_info_Inter_face.setMinimumSize(150, 150)
+        self.label_info_Inter_face.setMaximumSize(150, 150)
         self.label_info_Inter_face.setFont(font2)
+        self.setShadowEffect(self.label_info_Inter_face)
 
-        self.verticalLayout_19.addWidget(self.label_info_Inter_face)
+        self.verticalLayout_19.addWidget(
+            self.label_info_Inter_face, 0, Qt.AlignCenter)
 
         self.label_info_Inter_1 = QLabel(self.widget_inter_1)
         self.label_info_Inter_1.setObjectName(u"label_info_Inter_1")
@@ -906,6 +929,7 @@ class Ui_Main(object):
         self.frame_inter_delet_bar_1 = QFrame(self.widget_inter_1)
         self.frame_inter_delet_bar_1.setObjectName(u"frame_inter_delet_bar_1")
         self.frame_inter_delet_bar_1.setMaximumSize(QSize(16777215, 40))
+        self.setShadowEffect(self.frame_inter_delet_bar_1)
         self.frame_inter_delet_bar_1.setFrameShape(QFrame.StyledPanel)
         self.frame_inter_delet_bar_1.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_12 = QHBoxLayout(self.frame_inter_delet_bar_1)
@@ -942,8 +966,23 @@ class Ui_Main(object):
         self.widget_lower_1 = QWidget(self.page_content_Input)
         self.widget_lower_1.setObjectName(u"widget_lower_1")
         self.widget_lower_1.setMinimumSize(QSize(0, 500))
+        self.setShadowEffect(self.widget_lower_1)
         self.verticalLayout_21 = QVBoxLayout(self.widget_lower_1)
         self.verticalLayout_21.setObjectName(u"verticalLayout_21")
+
+        self.label_info_lower_face = QLabel(self.widget_lower_1)
+        self.label_info_lower_face.setObjectName(u"label_info_lower_face")
+        font2 = QFont()
+        font2.setFamily(u"./src/font/segoeui.ttf")
+        font2.setPointSize(10)
+        self.label_info_lower_face.setMinimumSize(150, 150)
+        self.label_info_lower_face.setMaximumSize(150, 150)
+        self.label_info_lower_face.setFont(font2)
+        self.setShadowEffect(self.label_info_lower_face)
+
+        self.verticalLayout_21.addWidget(
+            self.label_info_lower_face, 0, Qt.AlignCenter)
+
         self.label_info_lower_1 = QLabel(self.widget_lower_1)
         self.label_info_lower_1.setObjectName(u"label_info_lower_1")
         self.label_info_lower_1.setFont(font2)
@@ -953,6 +992,7 @@ class Ui_Main(object):
         self.frame_inter_delet_bar_3 = QFrame(self.widget_lower_1)
         self.frame_inter_delet_bar_3.setObjectName(u"frame_inter_delet_bar_3")
         self.frame_inter_delet_bar_3.setMaximumSize(QSize(16777215, 40))
+        self.setShadowEffect(self.frame_inter_delet_bar_3)
         self.frame_inter_delet_bar_3.setFrameShape(QFrame.StyledPanel)
         self.frame_inter_delet_bar_3.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_14 = QHBoxLayout(self.frame_inter_delet_bar_3)
@@ -979,8 +1019,23 @@ class Ui_Main(object):
         self.widget_lower_pri = QWidget(self.page_content_Input)
         self.widget_lower_pri.setObjectName(u"widget_lower_pri")
         self.widget_lower_pri.setMinimumSize(QSize(0, 500))
+        self.setShadowEffect(self.widget_lower_pri)
         self.verticalLayout_pri = QVBoxLayout(self.widget_lower_pri)
         self.verticalLayout_pri.setObjectName(u"verticalLayout_pri")
+
+        self.label_info_pri_face = QLabel(self.widget_lower_1)
+        self.label_info_pri_face.setObjectName(u"label_info_pri_face")
+        font2 = QFont()
+        font2.setFamily(u"./src/font/segoeui.ttf")
+        font2.setPointSize(10)
+        self.label_info_pri_face.setMinimumSize(150, 150)
+        self.label_info_pri_face.setMaximumSize(150, 150)
+        self.label_info_pri_face.setFont(font2)
+        self.setShadowEffect(self.label_info_pri_face)
+
+        self.verticalLayout_pri.addWidget(
+            self.label_info_pri_face, 0, Qt.AlignCenter)
+
         self.label_info_lower_pri = QLabel(self.widget_lower_pri)
         self.label_info_lower_pri.setObjectName(u"label_info_lower_pri")
         self.label_info_lower_pri.setFont(font2)
@@ -991,6 +1046,7 @@ class Ui_Main(object):
         self.frame_inter_delet_bar_pri.setObjectName(
             u"frame_inter_delet_bar_pri")
         self.frame_inter_delet_bar_pri.setMaximumSize(QSize(16777215, 40))
+        self.setShadowEffect(self.frame_inter_delet_bar_pri)
         self.frame_inter_delet_bar_pri.setFrameShape(QFrame.StyledPanel)
         self.frame_inter_delet_bar_pri.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_pri = QHBoxLayout(self.frame_inter_delet_bar_pri)
@@ -1018,8 +1074,23 @@ class Ui_Main(object):
         self.widget_lower_advan = QWidget(self.page_content_Input)
         self.widget_lower_advan.setObjectName(u"widget_lower_advan")
         self.widget_lower_advan.setMinimumSize(QSize(0, 500))
+        self.setShadowEffect(self.widget_lower_advan)
         self.verticalLayout_advan = QVBoxLayout(self.widget_lower_advan)
         self.verticalLayout_advan.setObjectName(u"verticalLayout_advan")
+
+        self.label_info_advan_face = QLabel(self.widget_lower_1)
+        self.label_info_advan_face.setObjectName(u"label_info_advan_face")
+        font2 = QFont()
+        font2.setFamily(u"./src/font/segoeui.ttf")
+        font2.setPointSize(10)
+        self.label_info_advan_face.setMinimumSize(150, 150)
+        self.label_info_advan_face.setMaximumSize(150, 150)
+        self.label_info_advan_face.setFont(font2)
+        self.setShadowEffect(self.label_info_advan_face)
+
+        self.verticalLayout_advan.addWidget(
+            self.label_info_advan_face, 0, Qt.AlignCenter)
+
         self.label_info_lower_advan = QLabel(self.widget_lower_advan)
         self.label_info_lower_advan.setObjectName(u"label_info_lower_advan")
         self.label_info_lower_advan.setFont(font2)
@@ -1030,6 +1101,7 @@ class Ui_Main(object):
         self.frame_inter_delet_bar_advan.setObjectName(
             u"frame_inter_delet_bar_advan")
         self.frame_inter_delet_bar_advan.setMaximumSize(QSize(16777215, 40))
+        self.setShadowEffect(self.frame_inter_delet_bar_advan)
         self.frame_inter_delet_bar_advan.setFrameShape(QFrame.StyledPanel)
         self.frame_inter_delet_bar_advan.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_advan = QHBoxLayout(
@@ -1089,8 +1161,24 @@ class Ui_Main(object):
         self.widget_inter_left_1 = QWidget(self.scrollAreaWidgetContents)
         self.widget_inter_left_1.setObjectName(u"widget_inter_left_1")
         self.widget_inter_left_1.setMinimumSize(QSize(0, 500))
+        self.setShadowEffect(self.widget_inter_left_1)
         self.verticalLayout_15 = QVBoxLayout(self.widget_inter_left_1)
         self.verticalLayout_15.setObjectName(u"verticalLayout_15")
+
+        self.label_info_inter_left_face = QLabel(self.widget_inter_left_1)
+        self.label_info_inter_left_face.setObjectName(
+            u"label_info_inter_left_face")
+        font2 = QFont()
+        font2.setFamily(u"./src/font/segoeui.ttf")
+        font2.setPointSize(10)
+        self.label_info_inter_left_face.setMinimumSize(150, 150)
+        self.label_info_inter_left_face.setMaximumSize(150, 150)
+        self.label_info_inter_left_face.setFont(font2)
+        self.setShadowEffect(self.label_info_inter_left_face)
+
+        self.verticalLayout_15.addWidget(
+            self.label_info_inter_left_face, 0, Qt.AlignCenter)
+
         self.info_inter_left_1 = QLabel(self.widget_inter_left_1)
         self.info_inter_left_1.setObjectName(u"info_inter_left_1")
         self.info_inter_left_1.setFont(font2)
@@ -1104,6 +1192,7 @@ class Ui_Main(object):
             u"frame_inter_left_btns_bar_1")
         self.frame_inter_left_btns_bar_1.setMinimumSize(QSize(0, 0))
         self.frame_inter_left_btns_bar_1.setMaximumSize(QSize(16777215, 40))
+        self.setShadowEffect(self.frame_inter_left_btns_bar_1)
         self.frame_inter_left_btns_bar_1.setFrameShape(QFrame.StyledPanel)
         self.frame_inter_left_btns_bar_1.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_8 = QHBoxLayout(self.frame_inter_left_btns_bar_1)
@@ -1138,8 +1227,24 @@ class Ui_Main(object):
         self.widget_lower_left_1 = QWidget(self.scrollAreaWidgetContents)
         self.widget_lower_left_1.setObjectName(u"widget_lower_left_1")
         self.widget_lower_left_1.setMinimumSize(QSize(0, 500))
+        self.setShadowEffect(self.widget_lower_left_1)
         self.verticalLayout_18 = QVBoxLayout(self.widget_lower_left_1)
         self.verticalLayout_18.setObjectName(u"verticalLayout_18")
+
+        self.label_info_lower_left_face = QLabel(self.widget_lower_left_1)
+        self.label_info_lower_left_face.setObjectName(
+            u"label_info_lower_left_face")
+        font2 = QFont()
+        font2.setFamily(u"./src/font/segoeui.ttf")
+        font2.setPointSize(10)
+        self.label_info_lower_left_face.setMinimumSize(150, 150)
+        self.label_info_lower_left_face.setMaximumSize(150, 150)
+        self.label_info_lower_left_face.setFont(font2)
+        self.setShadowEffect(self.label_info_lower_left_face)
+
+        self.verticalLayout_18.addWidget(
+            self.label_info_lower_left_face, 0, Qt.AlignCenter)
+
         self.info_lower_1 = QLabel(self.widget_lower_left_1)
         self.info_lower_1.setObjectName(u"info_lower_1")
         self.info_lower_1.setFont(font2)
@@ -1152,6 +1257,7 @@ class Ui_Main(object):
         self.frame_lower_left_btns_bar_1.setObjectName(
             u"frame_lower_left_btns_bar_1")
         self.frame_lower_left_btns_bar_1.setMaximumSize(QSize(16777215, 40))
+        self.setShadowEffect(self.frame_lower_left_btns_bar_1)
         self.frame_lower_left_btns_bar_1.setFrameShape(QFrame.StyledPanel)
         self.frame_lower_left_btns_bar_1.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_10 = QHBoxLayout(
@@ -1182,8 +1288,24 @@ class Ui_Main(object):
         self.widget_lower_left_pri = QWidget(self.scrollAreaWidgetContents)
         self.widget_lower_left_pri.setObjectName(u"widget_lower_left_pri")
         self.widget_lower_left_pri.setMinimumSize(QSize(0, 500))
+        self.setShadowEffect(self.widget_lower_left_pri)
         self.verticalLayout_pri = QVBoxLayout(self.widget_lower_left_pri)
         self.verticalLayout_pri.setObjectName(u"verticalLayout_pri")
+
+        self.label_info_pri_left_face = QLabel(self.widget_lower_left_pri)
+        self.label_info_pri_left_face.setObjectName(
+            u"label_info_pri_left_face")
+        font2 = QFont()
+        font2.setFamily(u"./src/font/segoeui.ttf")
+        font2.setPointSize(10)
+        self.label_info_pri_left_face.setMinimumSize(150, 150)
+        self.label_info_pri_left_face.setMaximumSize(150, 150)
+        self.label_info_pri_left_face.setFont(font2)
+        self.setShadowEffect(self.label_info_pri_left_face)
+
+        self.verticalLayout_pri.addWidget(
+            self.label_info_pri_left_face, 0, Qt.AlignCenter)
+
         self.info_lower_left_pri = QLabel(self.widget_lower_left_pri)
         self.info_lower_left_pri.setObjectName(u"info_lower_pri")
         self.info_lower_left_pri.setFont(font2)
@@ -1197,7 +1319,7 @@ class Ui_Main(object):
         self.frame_lower_btns_bar_pri.setObjectName(
             u"frame_lower_btns_bar_pri")
         self.frame_lower_btns_bar_pri.setMaximumSize(QSize(16777215, 40))
-
+        self.setShadowEffect(self.frame_lower_btns_bar_pri)
         self.frame_lower_btns_bar_pri.setFrameShape(QFrame.StyledPanel)
         self.frame_lower_btns_bar_pri.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_pri = QHBoxLayout(self.frame_lower_btns_bar_pri)
@@ -1230,8 +1352,24 @@ class Ui_Main(object):
         self.widget_lower_left_advan = QWidget(self.scrollAreaWidgetContents)
         self.widget_lower_left_advan.setObjectName(u"widget_lower_left_advan")
         self.widget_lower_left_advan.setMinimumSize(QSize(0, 500))
+        self.setShadowEffect(self.widget_lower_left_advan)
         self.verticalLayout_advan = QVBoxLayout(self.widget_lower_left_advan)
         self.verticalLayout_advan.setObjectName(u"verticalLayout_advan")
+
+        self.label_info_advan_left_face = QLabel(self.widget_lower_left_advan)
+        self.label_info_advan_left_face.setObjectName(
+            u"label_info_advan_left_face")
+        font2 = QFont()
+        font2.setFamily(u"./src/font/segoeui.ttf")
+        font2.setPointSize(10)
+        self.label_info_advan_left_face.setMinimumSize(150, 150)
+        self.label_info_advan_left_face.setMaximumSize(150, 150)
+        self.label_info_advan_left_face.setFont(font2)
+        self.setShadowEffect(self.label_info_advan_left_face)
+
+        self.verticalLayout_advan.addWidget(
+            self.label_info_advan_left_face, 0, Qt.AlignCenter)
+
         self.info_lower_left_advan = QLabel(self.widget_lower_left_advan)
         self.info_lower_left_advan.setObjectName(u"info_lower_advan")
         self.info_lower_left_advan.setFont(font2)
@@ -1244,6 +1382,7 @@ class Ui_Main(object):
         self.frame_lower_btns_bar_advan.setObjectName(
             u"frame_lower_btns_bar_advan")
         self.frame_lower_btns_bar_advan.setMaximumSize(QSize(16777215, 40))
+        self.setShadowEffect(self.frame_lower_btns_bar_advan)
         self.frame_lower_btns_bar_advan.setFrameShape(QFrame.StyledPanel)
         self.frame_lower_btns_bar_advan.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_advan = QHBoxLayout(
@@ -1297,6 +1436,7 @@ class Ui_Main(object):
         self.frame_searching_main.setObjectName(u"frame_searching_main")
         self.frame_searching_main.setMinimumSize(QSize(0, 0))
         self.frame_searching_main.setMaximumSize(QSize(16777215, 200))
+        self.setShadowEffect(self.frame_searching_main)
         self.frame_searching_main.setFrameShape(QFrame.StyledPanel)
         self.frame_searching_main.setFrameShadow(QFrame.Raised)
         self.verticalLayout_23 = QVBoxLayout(self.frame_searching_main)
@@ -1405,6 +1545,7 @@ class Ui_Main(object):
         self.label = QLabel(self.frame)
         self.label.setMinimumSize(QSize(200, 200))
         self.label.setMaximumSize(QSize(200, 200))
+        self.setShadowEffect(self.label)
         self.label.setObjectName("label")
         self.verticalLayout_28.addWidget(self.label, 0, Qt.AlignHCenter)
         self.frame_3 = QFrame(self.frame)
@@ -1425,6 +1566,7 @@ class Ui_Main(object):
         self.frame_user_name_changer = QFrame(self.scrollAreaWidgetContents_3)
         self.frame_user_name_changer.setMinimumSize(QSize(0, 200))
         self.frame_user_name_changer.setMaximumSize(QSize(16777215, 200))
+        self.setShadowEffect(self.frame_user_name_changer)
         self.frame_user_name_changer.setFrameShape(QFrame.StyledPanel)
         self.frame_user_name_changer.setFrameShadow(QFrame.Raised)
         self.frame_user_name_changer.setObjectName("frame_user_name_changer")
@@ -1500,6 +1642,7 @@ class Ui_Main(object):
 
         self.frame_more_options = QFrame(self.scrollAreaWidgetContents_3)
         self.frame_more_options.setMinimumSize(QSize(0, 50))
+        self.setShadowEffect(self.frame_more_options)
         self.frame_more_options.setFrameShape(QFrame.StyledPanel)
         self.frame_more_options.setFrameShadow(QFrame.Raised)
         self.frame_more_options.setObjectName("frame_more_options")
@@ -1626,6 +1769,7 @@ class Ui_Main(object):
         self.frame_email_changer = QFrame(self.scrollAreaWidgetContents_3)
         self.frame_email_changer.setMinimumSize(QSize(0, 45))
         self.frame_email_changer.setMaximumSize(QSize(16777215, 45))
+        self.setShadowEffect(self.frame_email_changer)
         self.frame_email_changer.setFrameShape(QFrame.StyledPanel)
         self.frame_email_changer.setFrameShadow(QFrame.Raised)
         self.frame_email_changer.setObjectName("frame_email_changer")
@@ -1702,6 +1846,7 @@ class Ui_Main(object):
             self.scrollAreaWidgetContents_3)
         self.frame_contect_number_changer.setMinimumSize(QSize(0, 45))
         self.frame_contect_number_changer.setMaximumSize(QSize(16777215, 45))
+        self.setShadowEffect(self.frame_contect_number_changer)
         self.frame_contect_number_changer.setFrameShape(QFrame.StyledPanel)
         self.frame_contect_number_changer.setFrameShadow(QFrame.Raised)
         self.frame_contect_number_changer.setObjectName(
@@ -1797,6 +1942,7 @@ class Ui_Main(object):
         self.frame_password_changer = QFrame(self.scrollAreaWidgetContents_3)
         self.frame_password_changer.setMinimumSize(QSize(0, 45))
         self.frame_password_changer.setMaximumSize(QSize(16777215, 45))
+        self.setShadowEffect(self.frame_password_changer)
         self.frame_password_changer.setFrameShape(QFrame.StyledPanel)
         self.frame_password_changer.setFrameShadow(QFrame.Raised)
         self.frame_password_changer.setObjectName("frame_password_changer")
@@ -1901,6 +2047,7 @@ class Ui_Main(object):
         self.frame_main_inter_info.setObjectName(u"frame_main_inter_info")
         self.frame_main_inter_info.setMinimumSize(QSize(0, 600))
         self.frame_main_inter_info.setMaximumSize(QSize(16777215, 16777215))
+        self.setShadowEffect(self.frame_main_inter_info)
         self.frame_main_inter_info.setFrameShape(QFrame.StyledPanel)
         self.frame_main_inter_info.setFrameShadow(QFrame.Raised)
         self.verticalLayout_44 = QVBoxLayout(self.frame_main_inter_info)
@@ -1957,6 +2104,7 @@ class Ui_Main(object):
         self.label_icon_inter.setMinimumSize(QSize(200, 200))
         self.label_icon_inter.setMaximumSize(QSize(200, 200))
         self.label_icon_inter.setObjectName("label_icon_")
+        self.setShadowEffect(self.label_icon_inter)
         self.gridLayout_4.addWidget(self.label_icon_inter, 0, 0, 1, 1)
         self.btn_upload_image = QPushButton(self.frame_user_image_upload)
         self.btn_upload_image.setMinimumSize(QSize(0, 25))
@@ -2334,6 +2482,7 @@ class Ui_Main(object):
         self.frame_inter.setObjectName(u"frame_inter")
         self.frame_inter.setMinimumSize(QSize(0, 450))
         self.frame_inter.setMaximumSize(QSize(16777215, 450))
+        self.setShadowEffect(self.frame_inter)
         self.frame_inter.setFrameShape(QFrame.StyledPanel)
         self.frame_inter.setFrameShadow(QFrame.Raised)
 
@@ -2353,6 +2502,7 @@ class Ui_Main(object):
         self.frame_lower.setObjectName(u"frame_lower")
         self.frame_lower.setMinimumSize(QSize(0, 500))
         self.frame_lower.setMaximumSize(QSize(16777215, 500))
+        self.setShadowEffect(self.frame_lower)
         self.frame_lower.setFrameShape(QFrame.StyledPanel)
         self.frame_lower.setFrameShadow(QFrame.Raised)
 
@@ -2367,6 +2517,7 @@ class Ui_Main(object):
         self.frame_lower_prim.setObjectName("frame_lower_prim")
         self.frame_lower_prim.setMinimumSize(QSize(0, 500))
         self.frame_lower_prim.setMaximumSize(QSize(16777215, 500))
+        self.setShadowEffect(self.frame_lower_prim)
         self.frame_lower_prim.setFrameShape(QFrame.StyledPanel)
         self.frame_lower_prim.setFrameShadow(QFrame.Raised)
 
@@ -2380,6 +2531,7 @@ class Ui_Main(object):
         self.frame_lower_advan.setObjectName("frame_lower_advan")
         self.frame_lower_advan.setMinimumSize(QSize(0, 500))
         self.frame_lower_advan.setMaximumSize(QSize(16777215, 500))
+        self.setShadowEffect(self.frame_lower_advan)
         self.frame_lower_advan.setFrameShape(QFrame.StyledPanel)
         self.frame_lower_advan.setFrameShadow(QFrame.Raised)
 
@@ -2403,6 +2555,7 @@ class Ui_Main(object):
         self.frame_main_lower_info = QFrame(self.page_add_lower)
         self.frame_main_lower_info.setObjectName(u"frame_main_lower_info")
         self.frame_main_lower_info.setMaximumSize(QSize(16777215, 650))
+        self.setShadowEffect(self.frame_main_lower_info)
         self.frame_main_lower_info.setFrameShape(QFrame.StyledPanel)
         self.frame_main_lower_info.setFrameShadow(QFrame.Raised)
         self.verticalLayout_46 = QVBoxLayout(self.frame_main_lower_info)
@@ -2424,6 +2577,7 @@ class Ui_Main(object):
         self.label_icon_lower.setObjectName(u"label_icon_lower")
         self.label_icon_lower.setMinimumSize(QSize(200, 200))
         self.label_icon_lower.setMaximumSize(QSize(200, 200))
+        self.setShadowEffect(self.label_icon_lower)
         self.gridLayout_lower.addWidget(self.label_icon_lower, 0, 0, 1, 1)
         self.btn_upload_image_lower = QPushButton(
             self.frame_user_image_upload_lower)
@@ -2725,6 +2879,7 @@ class Ui_Main(object):
         self.frame_advanced_level_12 = QFrame(self.scrollAreaWidgetContents_4)
         self.frame_advanced_level_12.setMinimumSize(QSize(0, 500))
         self.frame_advanced_level_12.setMaximumSize(QSize(16777215, 500))
+        self.setShadowEffect(self.frame_advanced_level_12)
         self.frame_advanced_level_12.setFrameShape(QFrame.StyledPanel)
         self.frame_advanced_level_12.setFrameShadow(QFrame.Raised)
         self.frame_advanced_level_12.setObjectName("frame_advanced_level_12")
@@ -2741,6 +2896,7 @@ class Ui_Main(object):
         self.frame_advanced_level_13 = QFrame(self.scrollAreaWidgetContents_4)
         self.frame_advanced_level_13.setMinimumSize(QSize(0, 500))
         self.frame_advanced_level_13.setMaximumSize(QSize(16777215, 500))
+        self.setShadowEffect(self.frame_advanced_level_13)
         self.frame_advanced_level_13.setFrameShape(QFrame.StyledPanel)
         self.frame_advanced_level_13.setFrameShadow(QFrame.Raised)
         self.frame_advanced_level_13.setObjectName("frame_advanced_level_13")
@@ -2772,6 +2928,7 @@ class Ui_Main(object):
             u"frame_user_icon_for_super")
         self.frame_user_icon_for_super.setMinimumSize(QSize(210, 210))
         self.frame_user_icon_for_super.setMaximumSize(QSize(210, 210))
+        self.setShadowEffect(self.frame_user_icon_for_super)
         self.frame_user_icon_for_super.setFrameShape(QFrame.StyledPanel)
         self.frame_user_icon_for_super.setFrameShadow(QFrame.Raised)
         self.verticalLayout_41 = QVBoxLayout(self.frame_user_icon_for_super)

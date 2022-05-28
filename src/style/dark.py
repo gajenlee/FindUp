@@ -888,6 +888,14 @@ LABEL_ICON_PRIMARY = """
         color: white;
     }
 """
+LABEL_ACTIVE_LEFT = """
+    QLabel{
+        border: 8px solid rgb(37, 38, 48);
+        background-color: rgb(50, 52, 65);
+        border-radius: 75px;
+        color: white;
+    }
+"""
 
 LABEL_SHOW_ROLL_PRIMARY = """
     color: white;
@@ -1743,3 +1751,103 @@ LAFT_LABEL_INFO_TEXT = """
         </body>
     </html>
 """
+
+###############################################################################################
+# Logging Window Theme
+###############################################################################################
+BACKGROUND_WIDGET = """
+    #background {
+        background-color: rgb(26, 27, 34);
+        color:rgb(255, 255, 255);
+        border-radius: 10px;
+    }
+"""
+LOGO_OF_WINDOW = "<img align=\'center\' src=\"./src/img/findupnew.png\">"
+
+LOGIN_LINE_EDIT = """
+    QLineEdit {
+        border: 0px solid;
+        background-color: rgb(37, 38, 48);
+        border-radius: 10px;
+        padding-left: 10px;
+        color: white;
+    }
+    QLineEdit:hover {border: 3px solid rgb(59, 61, 77);}
+    QLineEdit:focus {border: 3px solid rgb(39, 53, 84);}
+"""
+
+###############################################################################################
+# Access Window
+###############################################################################################
+BACKGROUND_FRAME_MAIN = """
+    QFrame{
+        background-color: #1A1E28;
+        border-radius: 10px;
+    }
+"""
+TITTE_BAR_BACKGROUND = """
+    QFrame {
+        Background-color: rgb(52, 59, 71);
+        border: 0px solid;
+        border-radius: 10px;
+    }
+"""
+LABEL_TITLE = """
+    color: white;
+    padding-left: 10px;
+    background-color: none;
+"""
+BTN_CLOSE = """
+    QPushButton{
+        color: rgb(255, 255, 255);
+        background-color: none;
+        border: 0px solid;
+        border-radius: 5px;
+    }
+    QPushButton:hover{
+        background-color: rgb(255, 0, 0);
+    }
+    QPushButton:pressed{
+        background-color: rgba(255, 0, 0, 100);
+    }
+"""
+LABEL_USER_INFO = """
+    color: white;
+    padding-left: 10px;
+"""
+LINE_EDIT_ACCESS = """
+    QLineEdit{
+        border: 0px solid;
+        color: rgb(240, 240, 240);
+        border-radius: 10px;
+        background-color: #1D222E;
+        padding-left: 10px;
+        padding-right: 10px;
+        selection-background-color: #30313F;
+        selection-color: #5F6063;
+    }
+    
+    QLineEdit:hover{
+        border: 2px solid rgb(49, 50, 63);
+    }
+    
+    QLineEdit:focus{
+        border: 2px solid rgb(61, 152, 212);
+    }
+"""
+BTN_VARIFY = """
+    QPushButton{
+        color: rgb(255, 255, 255);
+        background-color:  rgb(21, 121, 188);
+        border: 0px solid;
+        border-radius: 5px;
+        margin-left: 250px;
+    }
+    QPushButton:hover{
+        background-color: rgb(23, 133, 207);
+    }
+    QPushButton:pressed{
+        background-color: rgb(18, 104, 162);
+    }
+"""
+ICON_CLOSE = "./src/icon/light-icon/x.svg"

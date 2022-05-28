@@ -11,11 +11,6 @@ class Ui_Login(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.background = QtWidgets.QFrame(self.centralwidget)
         self.background.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        self.background.setStyleSheet("#background {\n"
-                                      "    background-color: rgb(26, 27, 34);\n"
-                                      "    color:rgb(255, 255, 255);\n"
-                                      "    border-radius: 10px;\n"
-                                      "}")
         self.background.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.background.setFrameShadow(QtWidgets.QFrame.Raised)
         self.background.setObjectName("background")
@@ -32,7 +27,6 @@ class Ui_Login(object):
         self.logo = QtWidgets.QFrame(self.frame_widgets)
         self.logo.setMinimumSize(QtCore.QSize(0, 200))
         self.logo.setMaximumSize(QtCore.QSize(16777215, 200))
-        self.logo.setStyleSheet("image: url(:/icon/findup.png);")
         self.logo.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.logo.setFrameShadow(QtWidgets.QFrame.Raised)
         self.logo.setObjectName("logo")
@@ -41,7 +35,6 @@ class Ui_Login(object):
         self.label_logo = QtWidgets.QLabel(self.logo)
         self.label_logo.setMinimumSize(QtCore.QSize(200, 200))
         self.label_logo.setMaximumSize(QtCore.QSize(160, 160))
-        self.label_logo.setStyleSheet("")
         self.label_logo.setObjectName("label_logo")
         self.verticalLayout_3.addWidget(
             self.label_logo, 0, QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
@@ -52,17 +45,6 @@ class Ui_Login(object):
         font = QtGui.QFont()
         font.setPointSize(12)
         self.lineEdit_name.setFont(font)
-        self.lineEdit_name.setStyleSheet("#lineEdit_name {\n"
-                                         "    border: 0px solid;\n"
-                                         "    background-color: rgb(37, 38, 48);\n"
-                                         "    border-radius: 10px;\n"
-                                         "    padding-left: 10px;\n"
-                                         "    color: white;\n"
-                                         "}\n"
-                                         "#lineEdit_name:hover {border: 3px solid rgb(59, 61, 77);}\n"
-                                         "#lineEdit_name:focus {border: 3px solid rgb(39, 53, 84);}\n"
-                                         "\n"
-                                         "")
         self.lineEdit_name.setObjectName("lineEdit_name")
         self.verticalLayout_2.addWidget(self.lineEdit_name)
         self.lineEdit_pass = QtWidgets.QLineEdit(self.frame_widgets)
@@ -72,15 +54,6 @@ class Ui_Login(object):
         font = QtGui.QFont()
         font.setPointSize(12)
         self.lineEdit_pass.setFont(font)
-        self.lineEdit_pass.setStyleSheet("#lineEdit_pass {\n"
-                                         "    border: 0px solid;\n"
-                                         "    background-color: rgb(37, 38, 48);\n"
-                                         "    border-radius: 10px;\n"
-                                         "    padding-left: 10px;\n"
-                                         "    color: white;\n"
-                                         "}\n"
-                                         "#lineEdit_pass:hover {border: 3px solid rgb(59, 61, 77);}\n"
-                                         "#lineEdit_pass:focus {border: 3px solid rgb(39, 53, 84);}")
         self.lineEdit_pass.setEchoMode(QtWidgets.QLineEdit.Password)
         self.lineEdit_pass.setObjectName("lineEdit_pass")
         self.verticalLayout_2.addWidget(self.lineEdit_pass)

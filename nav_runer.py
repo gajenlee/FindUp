@@ -4,6 +4,64 @@ from findup import *
 # MAIN WINDOW WORKER
 class UIFunctions(Main_Window):
 
+    def thread_connecter_light(self, maxWidth, enable):
+
+        thread_toggle = Thread_Toggle()
+        thread_toggle.button_function.connect(
+            lambda: UIFunctions.toggleMenu_light(self, maxWidth, enable))
+        thread_toggle.start()
+        thread_toggle.exec()
+
+    def thread_connecter_dark(self, maxWidth, enable):
+
+        thread_toggle = Thread_Toggle()
+        thread_toggle.button_function.connect(
+            lambda: UIFunctions.toggleMenu_dark(self, maxWidth, enable))
+        thread_toggle.start()
+        thread_toggle.exec()
+
+    def userSide_toggle_light_connecter(self, maxWidth, enable):
+        thread_toggle = Thread_Toggle()
+        thread_toggle.button_function.connect(
+            lambda: UIFunctions.userSideBar_toggle_light(self, maxWidth, enable))
+        thread_toggle.start()
+        thread_toggle.exec()
+
+    def userSide_toggle_dark_connecter(self, maxWidth, enable):
+        thread_toggle = Thread_Toggle()
+        thread_toggle.button_function.connect(
+            lambda: UIFunctions.userSideBar_toggle_dark(self, maxWidth, enable))
+        thread_toggle.start()
+        thread_toggle.exec()
+
+    def settingHiddenBar_light_connecter(self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active):
+        thread_toggle = Thread_Toggle()
+        thread_toggle.button_function.connect(lambda: UIFunctions.settingHiddenBar_light(
+            self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active))
+        thread_toggle.start()
+        thread_toggle.exec()
+
+    def settingHiddenBar_dark_connecter(self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active):
+        thread_toggle = Thread_Toggle()
+        thread_toggle.button_function.connect(lambda: UIFunctions.settingHiddenBar_dark(
+            self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active))
+        thread_toggle.start()
+        thread_toggle.exec()
+
+    def settingHiddenBar_two_light_connecter(self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active):
+        thread_toggle = Thread_Toggle()
+        thread_toggle.button_function.connect(lambda: UIFunctions.settingHiddenBar_light(
+            self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active))
+        thread_toggle.start()
+        thread_toggle.exec()
+
+    def settingHiddenBar_two_dark_connecter(self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active):
+        thread_toggle = Thread_Toggle()
+        thread_toggle.button_function.connect(lambda: UIFunctions.settingHiddenBar_dark(
+            self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active))
+        thread_toggle.start()
+        thread_toggle.exec()
+
     # Toggle Menu Button
     def toggleMenu_light(self, maxWidth, enable):
         if enable:

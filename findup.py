@@ -27,14 +27,164 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
 from nav_runer import *
+from logging_findup import *
 
 
 class Access_Window(QDialog):
+
+    isIconPlace = False
+
     def __init__(self, parent=None, *args, **kw):
         super().__init__(parent=parent, *args, **kw)
         self.ui = Ui_Access()
         self.ui.setupUi(self)
+
+        logger.debug("The Access Window Is Runing... [ Access_Window ]")
+
+        # remove the frame of window
+        self.setWindowFlag(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setWindowModality(QtCore.Qt.ApplicationModal)
+
+        # SET TITLE BAR
+        self.ui.frame_title_bar.mouseMoveEvent = self.moveWindow
+
+        # set Enter button event
+        self.keyPressEvent = self.keyClickedEvent
+
+        # Button connecter
+        self.btn_connecter()
+
+        # Defualt theme
+        self.defualt_theme()
+
         self.show()
+
+    # Light Theme
+    def setLightTheme(self):
+        self.ui.frame_main.setStyleSheet(light.BACKGROUND_FRAME_MAIN)
+        self.ui.frame_title_bar.setStyleSheet(light.TITTE_BAR_BACKGROUND)
+        self.ui.label_title.setStyleSheet(light.LABEL_TITLE)
+        self.ui.label_user_info.setStyleSheet(light.LABEL_USER_INFO)
+
+        self.ui.btn_close.setStyleSheet(light.BTN_CLOSE)
+        self.ui.lineEdit_current_password.setStyleSheet(light.LINE_EDIT_ACCESS)
+        self.ui.btn_verify.setStyleSheet(light.BTN_VARIFY)
+
+    def setIconLightTheme(self):
+        def setIcon_line(widget, path,):
+            icon = QIcon()
+            icon.addFile(path, QSize(), QIcon.Normal, QIcon.Off)
+            widget.addAction(icon, QLineEdit.LeadingPosition)
+
+        def setIcon_line_(widget, path):
+            icon = QIcon()
+            icon.addFile(path, QSize(), QIcon.Normal, QIcon.Off)
+            widget.findChild(QAction).setIcon(icon)
+
+        if not self.isIconPlace:
+            setIcon_line(self.ui.lineEdit_current_password, light.ICON_LOCK)
+        else:
+            setIcon_line_(self.ui.lineEdit_current_password, light.ICON_LOCK)
+
+        icon = QIcon()
+        icon.addFile(light.ICON_CLOSE)
+        self.ui.btn_close.setIcon(icon)
+
+    # Dark Theme
+    def setDarkTheme(self):
+        self.ui.frame_main.setStyleSheet(dark.BACKGROUND_FRAME_MAIN)
+        self.ui.frame_title_bar.setStyleSheet(dark.TITTE_BAR_BACKGROUND)
+        self.ui.label_title.setStyleSheet(dark.LABEL_TITLE)
+        self.ui.label_user_info.setStyleSheet(dark.LABEL_USER_INFO)
+
+        self.ui.btn_close.setStyleSheet(dark.BTN_CLOSE)
+        self.ui.lineEdit_current_password.setStyleSheet(dark.LINE_EDIT_ACCESS)
+        self.ui.btn_verify.setStyleSheet(dark.BTN_VARIFY)
+
+    def setIconDarkTheme(self):
+
+        def setIcon_line(widget, path,):
+            icon = QIcon()
+            icon.addFile(path, QSize(), QIcon.Normal, QIcon.Off)
+            widget.addAction(icon, QLineEdit.LeadingPosition)
+
+        def setIcon_line_(widget, path):
+            icon = QIcon()
+            icon.addFile(path, QSize(), QIcon.Normal, QIcon.Off)
+            widget.findChild(QAction).setIcon(icon)
+
+        if not self.isIconPlace:
+            setIcon_line(self.ui.lineEdit_current_password, dark.ICON_LOCK)
+        else:
+            setIcon_line_(self.ui.lineEdit_current_password, dark.ICON_LOCK)
+
+        icon = QIcon()
+        icon.addFile(dark.ICON_CLOSE)
+        self.ui.btn_close.setIcon(icon)
+
+    def defualt_theme(self):
+        self.setLightTheme()
+        self.setIconLightTheme()
+
+    def setShadow(self):
+        # Set Shadow Effect
+        self.shadow = QGraphicsDropShadowEffect(self)
+        self.shadow.setBlurRadius(15)
+        self.shadow.setXOffset(0)
+        self.shadow.setYOffset(0)
+        self.shadow.setColor(QColor(0, 0, 0, 80))
+        self.ui.frame_main.setGraphicsEffect(self.shadow)
+
+    def btn_connecter(self):
+
+        # Close Button
+        self.ui.btn_close.clicked.connect(lambda: self.close())
+
+    def shacke_window(self):
+
+        logger.debug("The shacke function Actived... [ shacke_window ]")
+
+        # SHACKE WINDOW
+        actual_pos = self.pos()
+        QTimer.singleShot(0, lambda: self.move(
+            actual_pos.x() + 1, actual_pos.y()))
+        QTimer.singleShot(50, lambda: self.move(
+            actual_pos.x() + -2, actual_pos.y()))
+        QTimer.singleShot(100, lambda: self.move(
+            actual_pos.x() + 4, actual_pos.y()))
+        QTimer.singleShot(150, lambda: self.move(
+            actual_pos.x() + -5, actual_pos.y()))
+        QTimer.singleShot(200, lambda: self.move(
+            actual_pos.x() + 4, actual_pos.y()))
+        QTimer.singleShot(250, lambda: self.move(
+            actual_pos.x() + -2, actual_pos.y()))
+        QTimer.singleShot(300, lambda: self.move(
+            actual_pos.x(), actual_pos.y()))
+
+    # key Event
+    def moveWindow(self, event):
+
+        # IF LEFT CLICK MOVE WINDOW
+        if event.buttons() == Qt.LeftButton:
+            self.move(self.pos() + event.globalPos() - self.dragPos)
+            self.dragPos = event.globalPos()
+            event.accept()
+
+    def mousePressEvent(self, event):
+        # Mouse Press Event
+        self.dragPos = event.globalPos()
+
+    def keyClickedEvent(self, event):
+        if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
+
+            logger.info("The Enter Button Clicked... [ keyClickedEvent ]")
+
+            print("The Enter Button Is Clicked ...")
+            self.shacke_window()
+
+        elif event.key() == Qt.Key_Escape or event.key == Qt.Key_Enter:
+            self.close()
 
 
 class Backup_Window(QDialog):
@@ -46,19 +196,476 @@ class Backup_Window(QDialog):
 
 
 class Create_Window(QMainWindow):
+    iconReplace = False
+    progress_conter = 0
+
     def __init__(self, parent=None, *args, **kw):
         super().__init__(parent=parent, *args, **kw)
         self.ui = Ui_Create()
         self.ui.setupUi(self)
+
+        # remove the frame of window
+        self.setWindowFlag(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+
+        logger.debug("Createing Inti function is runing... [ Create_Window ]")
+
+        # Set Theme
+        self.default_theme()
+
+        # Set shadow
+        self.setShadowWindow()
+
+        # KEY EVENT FOR LOGIN WINDOW
+        self.keyPressEvent = self.clickEvent
+
         self.show()
+
+    # Dark Theme
+    def setThemeDark(self):
+
+        logger.debug("Theme is setting... [ setThemeDark ]")
+
+        # Theme Contents
+        self.ui.background.setStyleSheet(dark.BACKGROUND_WIDGET)
+        self.ui.lineEdit_name.setStyleSheet(dark.LOGIN_LINE_EDIT)
+        self.ui.lineEdit_pass.setStyleSheet(dark.LOGIN_LINE_EDIT)
+        self.ui.lineEdit_con_pass.setStyleSheet(dark.LOGIN_LINE_EDIT)
+        self.ui.lineEdit_email.setStyleSheet(dark.LOGIN_LINE_EDIT)
+        self.ui.lineEdit_contact.setStyleSheet(dark.LOGIN_LINE_EDIT)
+
+        # TEXT CONTENTS
+        self.ui.label_logo.setText(dark.LOGO_OF_WINDOW)
+
+    def setIconDark(self):
+
+        logger.debug("Icon is setting... [ setIconDark ]")
+
+        def setIcon_line(widget, path,):
+            icon = QIcon()
+            icon.addFile(path, QSize(), QIcon.Normal, QIcon.Off)
+            widget.addAction(icon, QLineEdit.LeadingPosition)
+
+        def setIcon_line_(widget, path):
+            icon = QIcon()
+            icon.addFile(path, QSize(), QIcon.Normal, QIcon.Off)
+            widget.findChild(QAction).setIcon(icon)
+
+        if not self.iconReplace:
+            logger.debug("Icon is palce setting... [ setIconDark ]")
+
+            setIcon_line(self.ui.lineEdit_name, dark.ICON_USER)
+            setIcon_line(self.ui.lineEdit_pass, dark.ICON_LOCK)
+            setIcon_line(self.ui.lineEdit_con_pass, dark.ICON_LOCK)
+            setIcon_line(self.ui.lineEdit_contact, dark.ICON_PHONE)
+            setIcon_line(self.ui.lineEdit_email, dark.ICON_AT)
+        else:
+            logger.debug("Icon is repalce setting... [ setIconDark ]")
+
+            setIcon_line_(self.ui.lineEdit_name, dark.ICON_USER)
+            setIcon_line_(self.ui.lineEdit_pass, dark.ICON_LOCK)
+            setIcon_line_(self.ui.lineEdit_con_pass, dark.ICON_LOCK)
+            setIcon_line_(self.ui.lineEdit_contact, dark.ICON_PHONE)
+            setIcon_line_(self.ui.lineEdit_email, dark.ICON_AT)
+
+    def prograssBarDark(self):
+
+        logger.debug("The Prograss Bar is starting... [prograssBarDark]")
+
+        # Set Progress Bar
+        self.progress = CircularProgress()
+        self.progress.width = 258
+        self.progress.height = 258
+
+        self.progress.value = 0
+        self.progress.setFixedSize(self.progress.width, self.progress.height)
+        self.progress.font_size = 25
+        self.progress.add_shadow(True)
+        self.progress.progress_width = 5
+        self.progress.progress_color = QColor("#316B4F")
+        self.progress.text_color = QColor("#E6E6E6")
+        self.progress.bg_color = QColor("#222222")
+        self.progress.setParent(self.ui.preloader)
+        self.progress.show()
+
+    # Light Theme
+
+    def setThemeLight(self):
+
+        logger.debug("Theme is setting... [ setThemeLight ]")
+
+        # Theme Contents
+        self.ui.background.setStyleSheet(light.BACKGROUND_WIDGET)
+        self.ui.lineEdit_name.setStyleSheet(light.LOGIN_LINE_EDIT)
+        self.ui.lineEdit_pass.setStyleSheet(light.LOGIN_LINE_EDIT)
+        self.ui.lineEdit_con_pass.setStyleSheet(light.LOGIN_LINE_EDIT)
+        self.ui.lineEdit_email.setStyleSheet(light.LOGIN_LINE_EDIT)
+        self.ui.lineEdit_contact.setStyleSheet(light.LOGIN_LINE_EDIT)
+
+        # TEXT CONTENTS
+        self.ui.label_logo.setText(light.LOGO_OF_WINDOW)
+
+    def setIconLight(self):
+
+        logger.debug("Icon is setting... [ setIconLight ]")
+
+        def setIcon_line(widget, path,):
+            icon = QIcon()
+            icon.addFile(path, QSize(), QIcon.Normal, QIcon.Off)
+            widget.addAction(icon, QLineEdit.LeadingPosition)
+
+        def setIcon_line_(widget, path):
+            icon = QIcon()
+            icon.addFile(path, QSize(), QIcon.Normal, QIcon.Off)
+            widget.findChild(QAction).setIcon(icon)
+
+        if not self.iconReplace:
+            logger.debug("Icon is palce setting... [ setIconDark ]")
+
+            setIcon_line(self.ui.lineEdit_name, light.ICON_USER)
+            setIcon_line(self.ui.lineEdit_pass, light.ICON_LOCK)
+            setIcon_line(self.ui.lineEdit_con_pass, light.ICON_LOCK)
+            setIcon_line(self.ui.lineEdit_contact, light.ICON_PHONE)
+            setIcon_line(self.ui.lineEdit_email, light.ICON_AT)
+        else:
+            logger.debug("Icon is repalce setting... [ setIconDark ]")
+
+            setIcon_line_(self.ui.lineEdit_name, light.ICON_USER)
+            setIcon_line_(self.ui.lineEdit_pass, light.ICON_LOCK)
+            setIcon_line_(self.ui.lineEdit_con_pass, light.ICON_LOCK)
+            setIcon_line_(self.ui.lineEdit_contact, light.ICON_PHONE)
+            setIcon_line_(self.ui.lineEdit_email, light.ICON_AT)
+
+    def prograssBarLight(self):
+
+        logger.debug("The Prograss Bar is starting... [prograssBarLight]")
+
+        # Set Progress Bar
+        self.progress = CircularProgress()
+        self.progress.width = 258
+        self.progress.height = 258
+
+        self.progress.value = 0
+        self.progress.setFixedSize(self.progress.width, self.progress.height)
+        self.progress.font_size = 25
+        self.progress.add_shadow(True)
+        self.progress.progress_width = 5
+        self.progress.progress_color = QColor("#316B4F")
+        self.progress.text_color = QColor("#262525")
+        self.progress.bg_color = QColor("#999797")
+        self.progress.setParent(self.ui.preloader)
+        self.progress.show()
+
+    # set Shadow Window
+    def setShadowWindow(self):
+        # Set Shadow Effect
+        self.shadow = QGraphicsDropShadowEffect(self)
+        self.shadow.setBlurRadius(15)
+        self.shadow.setXOffset(0)
+        self.shadow.setYOffset(0)
+        self.shadow.setColor(QColor(0, 0, 0, 80))
+        self.ui.background.setGraphicsEffect(self.shadow)
+
+    # defalt theme setter
+    def default_theme(self):
+
+        logger.debug("The Default Theme Is Runing... [default_theme]")
+        self.setThemeLight()
+        self.setThemeLight()
+        self.prograssBarLight()
+
+    # Update The Prograss Bar
+    def update(self):
+        if self.progress_conter >= 100:
+            self.timer.stop()
+            self.shacke_window()
+
+        self.progress.set_value(self.progress_conter)
+        self.progress_conter += 1
+
+    def animation_create(self):
+
+        logger.debug("Animation of login is working... [ animation_login ]")
+        # ANIMATION
+        self.animation = QPropertyAnimation(self.ui.frame_widgets, b"geometry")
+        self.animation.setDuration(1500)
+        self.animation.setStartValue(
+            QRect(0, 30, self.ui.frame_widgets.width(), self.ui.frame_widgets.height()))
+        self.animation.setEndValue(
+            QRect(0, -410, self.ui.frame_widgets.width(), self.ui.frame_widgets.height()))
+        self.animation.setEasingCurve(QEasingCurve.InOutQuart)
+        self.animation.start()
+
+    def shacke_window(self):
+
+        logger.debug("The shacke function Actived... [ shacke_window ]")
+
+        # SHACKE WINDOW
+        actual_pos = self.pos()
+        QTimer.singleShot(0, lambda: self.move(
+            actual_pos.x() + 1, actual_pos.y()))
+        QTimer.singleShot(50, lambda: self.move(
+            actual_pos.x() + -2, actual_pos.y()))
+        QTimer.singleShot(100, lambda: self.move(
+            actual_pos.x() + 4, actual_pos.y()))
+        QTimer.singleShot(150, lambda: self.move(
+            actual_pos.x() + -5, actual_pos.y()))
+        QTimer.singleShot(200, lambda: self.move(
+            actual_pos.x() + 4, actual_pos.y()))
+        QTimer.singleShot(250, lambda: self.move(
+            actual_pos.x() + -2, actual_pos.y()))
+        QTimer.singleShot(300, lambda: self.move(
+            actual_pos.x(), actual_pos.y()))
+
+    # Click Event
+    def clickEvent(self, event):
+
+        if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
+
+            logger.info("The Enter Button Clicked... [ clicEvent ]")
+
+            def prosses():
+                self.animation_create()
+                self.timer = QTimer()
+                self.timer.timeout.connect(self.update)
+                self.timer.start(35)
+
+            thread_loading = Thread_Loading()
+            thread_loading.prograss_function.connect(
+                lambda: QTimer.singleShot(1200, lambda: prosses()))
+            thread_loading.start()
+            thread_loading.exec()
+
+        elif event.key() == Qt.Key_Escape or event.key == Qt.Key_Enter:
+            self.close()
 
 
 class Login_Window(QMainWindow):
-    def __init__(self, parent=None, *args, **kw):
-        super().__init__(parent=parent, *args, **kw)
+
+    iconReplace = False
+    progress_conter = 0
+
+    def __init__(self):
+        QDialog.__init__(self)
         self.ui = Ui_Login()
         self.ui.setupUi(self)
+
+        # remove the frame of window
+        self.setWindowFlag(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+
+        logger.debug("Logging Inti function is runing... [ Login_Window ]")
+
+        # Set Theme
+        self.default_theme()
+
+        # Set shadow
+        self.setShadowWindow()
+
+        # KEY EVENT FOR LOGIN WINDOW
+        self.keyPressEvent = self.clickEvent
+
         self.show()
+
+    # Dark Theme
+    def setThemeDark(self):
+
+        logger.debug("Theme is setting... [ setThemeDark ]")
+
+        # Theme Contents
+        self.ui.background.setStyleSheet(dark.BACKGROUND_WIDGET)
+        self.ui.lineEdit_name.setStyleSheet(dark.LOGIN_LINE_EDIT)
+        self.ui.lineEdit_pass.setStyleSheet(dark.LOGIN_LINE_EDIT)
+
+        # TEXT CONTENTS
+        self.ui.label_logo.setText(dark.LOGO_OF_WINDOW)
+
+    def setIconDark(self):
+
+        logger.debug("Icon is setting... [ setIconDark ]")
+
+        def setIcon_line(widget, path,):
+            icon = QIcon()
+            icon.addFile(path, QSize(), QIcon.Normal, QIcon.Off)
+            widget.addAction(icon, QLineEdit.LeadingPosition)
+
+        def setIcon_line_(widget, path):
+            icon = QIcon()
+            icon.addFile(path, QSize(), QIcon.Normal, QIcon.Off)
+            widget.findChild(QAction).setIcon(icon)
+
+        if not self.iconReplace:
+            logger.debug("Icon is palce setting... [ setIconDark ]")
+
+            setIcon_line(self.ui.lineEdit_name, dark.ICON_USER)
+            setIcon_line(self.ui.lineEdit_pass, dark.ICON_LOCK)
+        else:
+            logger.debug("Icon is repalce setting... [ setIconDark ]")
+
+            setIcon_line_(self.ui.lineEdit_name, dark.ICON_USER)
+            setIcon_line_(self.ui.lineEdit_pass, dark.ICON_LOCK)
+
+    def prograssBarDark(self):
+
+        logger.debug("The Prograss Bar is starting... [prograssBarDark]")
+
+        # Set Progress Bar
+        self.progress = CircularProgress()
+        self.progress.width = 258
+        self.progress.height = 258
+
+        self.progress.value = 0
+        self.progress.setFixedSize(self.progress.width, self.progress.height)
+        self.progress.font_size = 25
+        self.progress.add_shadow(True)
+        self.progress.progress_width = 5
+        self.progress.progress_color = QColor("#316B4F")
+        self.progress.text_color = QColor("#E6E6E6")
+        self.progress.bg_color = QColor("#222222")
+        self.progress.setParent(self.ui.preloader)
+        self.progress.show()
+
+    # Light Theme
+
+    def setThemeLight(self):
+
+        logger.debug("Theme is setting... [ setThemeLight ]")
+
+        # Theme Contents
+        self.ui.background.setStyleSheet(light.BACKGROUND_WIDGET)
+        self.ui.lineEdit_name.setStyleSheet(light.LOGIN_LINE_EDIT)
+        self.ui.lineEdit_pass.setStyleSheet(light.LOGIN_LINE_EDIT)
+
+        # TEXT CONTENTS
+        self.ui.label_logo.setText(light.LOGO_OF_WINDOW)
+
+    def setIconLight(self):
+
+        logger.debug("Icon is setting... [ setIconLight ]")
+
+        def setIcon_line(widget, path,):
+            icon = QIcon()
+            icon.addFile(path, QSize(), QIcon.Normal, QIcon.Off)
+            widget.addAction(icon, QLineEdit.LeadingPosition)
+
+        def setIcon_line_(widget, path):
+            icon = QIcon()
+            icon.addFile(path, QSize(), QIcon.Normal, QIcon.Off)
+            widget.findChild(QAction).setIcon(icon)
+
+        if not self.iconReplace:
+            logger.debug("Icon is palce setting... [ setIconLight ]")
+
+            setIcon_line(self.ui.lineEdit_name, light.ICON_USER)
+            setIcon_line(self.ui.lineEdit_pass, light.ICON_LOCK)
+        else:
+            logger.debug("Icon is repalce setting... [ setIconLight ]")
+
+            setIcon_line_(self.ui.lineEdit_name, light.ICON_USER)
+            setIcon_line_(self.ui.lineEdit_pass, light.ICON_LOCK)
+
+    def prograssBarLight(self):
+
+        logger.debug("The Prograss Bar is starting... [prograssBarLight]")
+
+        # Set Progress Bar
+        self.progress = CircularProgress()
+        self.progress.width = 258
+        self.progress.height = 258
+
+        self.progress.value = 0
+        self.progress.setFixedSize(self.progress.width, self.progress.height)
+        self.progress.font_size = 25
+        self.progress.add_shadow(True)
+        self.progress.progress_width = 5
+        self.progress.progress_color = QColor("#316B4F")
+        self.progress.text_color = QColor("#262525")
+        self.progress.bg_color = QColor("#999797")
+        self.progress.setParent(self.ui.preloader)
+        self.progress.show()
+
+    # set Shadow Window
+    def setShadowWindow(self):
+        # Set Shadow Effect
+        self.shadow = QGraphicsDropShadowEffect(self)
+        self.shadow.setBlurRadius(15)
+        self.shadow.setXOffset(0)
+        self.shadow.setYOffset(0)
+        self.shadow.setColor(QColor(0, 0, 0, 80))
+        self.ui.background.setGraphicsEffect(self.shadow)
+
+    # defalt theme setter
+    def default_theme(self):
+
+        logger.debug("The Default Theme Is Runing... [default_theme]")
+        self.setThemeLight()
+        self.setIconLight()
+        self.prograssBarLight()
+
+    # Update The Prograss Bar
+    def update(self):
+        if self.progress_conter >= 100:
+            self.timer.stop()
+            self.shacke_window()
+
+        self.progress.set_value(self.progress_conter)
+        self.progress_conter += 1
+
+    def animation_login(self):
+
+        logger.debug("Animation of login is working... [ animation_login ]")
+        # ANIMATION
+        self.animation = QPropertyAnimation(self.ui.frame_widgets, b"geometry")
+        self.animation.setDuration(1500)
+        self.animation.setStartValue(
+            QRect(0, 70, self.ui.frame_widgets.width(), self.ui.frame_widgets.height()))
+        self.animation.setEndValue(
+            QRect(0, -325, self.ui.frame_widgets.width(), self.ui.frame_widgets.height()))
+        self.animation.setEasingCurve(QEasingCurve.InOutQuart)
+        self.animation.start()
+
+    def shacke_window(self):
+
+        logger.debug("The shacke function Actived... [ shacke_window ]")
+
+        # SHACKE WINDOW
+        actual_pos = self.pos()
+        QTimer.singleShot(0, lambda: self.move(
+            actual_pos.x() + 1, actual_pos.y()))
+        QTimer.singleShot(50, lambda: self.move(
+            actual_pos.x() + -2, actual_pos.y()))
+        QTimer.singleShot(100, lambda: self.move(
+            actual_pos.x() + 4, actual_pos.y()))
+        QTimer.singleShot(150, lambda: self.move(
+            actual_pos.x() + -5, actual_pos.y()))
+        QTimer.singleShot(200, lambda: self.move(
+            actual_pos.x() + 4, actual_pos.y()))
+        QTimer.singleShot(250, lambda: self.move(
+            actual_pos.x() + -2, actual_pos.y()))
+        QTimer.singleShot(300, lambda: self.move(
+            actual_pos.x(), actual_pos.y()))
+
+    # Click Event
+    def clickEvent(self, event):
+
+        if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
+
+            logger.info("The Enter Button Clicked... [ clicEvent ]")
+
+            def prosses():
+                self.animation_login()
+                self.timer = QTimer()
+                self.timer.timeout.connect(self.update)
+                self.timer.start(35)
+
+            thread_loading = Thread_Loading()
+            thread_loading.prograss_function.connect(
+                lambda: QTimer.singleShot(1200, lambda: prosses()))
+            thread_loading.start()
+            thread_loading.exec()
+
+        elif event.key() == Qt.Key_Escape or event.key == Qt.Key_Enter:
+            self.close()
 
 
 class Main_Window(QMainWindow):
@@ -70,14 +677,18 @@ class Main_Window(QMainWindow):
         super().__init__(parent=parent, *args, **kw)
         self.ui = Ui_Main()
         self.ui.setupUi(self)
+        logger.debug("init function is runing ... [connect ui of main]")
 
         # Run Default Theme runer
         self.default_theme()
 
         # Button activity connecter
         self.btnToFunctionConnecter()
+        self.show()
 
     def btnToFunctionConnecter(self):
+        logger.debug(
+            "Button function connecter Actived... [ btnToFunctionConnecter ]")
 
         # THEME BUTTON FOE CHAMGE THEME
         self.ui.btn_setTheme.clicked.connect(self.setTheme)
@@ -85,18 +696,20 @@ class Main_Window(QMainWindow):
     # light theme of window
     def connect_functiom_light(self):
 
+        logger.debug("Connect function Actived... [ connect_functiom_light ]")
+
         # Toggle Burguer Menu
         self.ui.btn_Toggle.clicked.connect(
-            lambda: UIFunctions.toggleMenu_light(self, 200, True))
+            lambda: UIFunctions.thread_connecter_light(self, 200, True))
 
         # Setting Bar Animation
-        self.ui.btn_hidden_username_bar.clicked.connect(lambda: UIFunctions.settingHiddenBar_light(self,  self.ui.frame_user_name_changer.height(
+        self.ui.btn_hidden_username_bar.clicked.connect(lambda: UIFunctions.settingHiddenBar_light_connecter(self,  self.ui.frame_user_name_changer.height(
         ), self.ui.frame_user_name_changer, self.ui.frame_name_changer_content_page, True, self.ui.btn_hidden_username_bar, light.BTN_HIDDEN_ICON, light.BTN_OPENED_ICON))
-        self.ui.btn_hidden_email_bar.clicked.connect(lambda: UIFunctions.settingHiddenBar_light(self,  self.ui.frame_email_changer.height(
+        self.ui.btn_hidden_email_bar.clicked.connect(lambda: UIFunctions.settingHiddenBar_light_connecter(self,  self.ui.frame_email_changer.height(
         ), self.ui.frame_email_changer, self.ui.frame_email_changer_content_bar, True, self.ui.btn_hidden_email_bar, light.BTN_HIDDEN_ICON, light.BTN_OPENED_ICON))
-        self.ui.btn_hidden_contact_number_bar.clicked.connect(lambda: UIFunctions.settingHiddenBar_light(self,  self.ui.frame_contect_number_changer.height(
+        self.ui.btn_hidden_contact_number_bar.clicked.connect(lambda: UIFunctions.settingHiddenBar_light_connecter(self,  self.ui.frame_contect_number_changer.height(
         ), self.ui.frame_contect_number_changer, self.ui.frame_contect_number_changer_content_bar, True, self.ui.btn_hidden_contact_number_bar, light.BTN_HIDDEN_ICON, light.BTN_OPENED_ICON))
-        self.ui.btn_hidden_passowd_changer_bar.clicked.connect(lambda: UIFunctions.settingHiddenBar_light(self,  self.ui.frame_password_changer.height(
+        self.ui.btn_hidden_passowd_changer_bar.clicked.connect(lambda: UIFunctions.settingHiddenBar_light_connecter(self,  self.ui.frame_password_changer.height(
         ), self.ui.frame_password_changer, self.ui.frame_password_changer_content_bar, True, self.ui.btn_hidden_passowd_changer_bar, light.BTN_HIDDEN_ICON, light.BTN_OPENED_ICON))
 
         self.ui.btn_hidden_options.clicked.connect(lambda: UIFunctions.settingHiddenBar_two_light(self,  self.ui.frame_more_options.height(
@@ -106,7 +719,7 @@ class Main_Window(QMainWindow):
 
         # SUPER USER BTN
         self.ui.btn_superuser.clicked.connect(
-            lambda: UIFunctions.userSideBar_toggle_light(self, 300, True))
+            lambda: UIFunctions.userSide_toggle_light_connecter(self, 300, True))
 
         # BUTTONE CONNECTER
         UIFunctions.current_page_light(self)
@@ -159,6 +772,8 @@ class Main_Window(QMainWindow):
             lambda: UIFunctions.home_light(self))
 
     def setTheme_for_window_light(self):
+
+        logger.debug("Light Theme Actived... [ setTheme_for_window_light ]")
 
         self.ui.scrollArea_2.setStyleSheet(light.SCROLLAREA)
         self.ui.scrollArea.setStyleSheet(light.SCROLLAREA)
@@ -248,6 +863,10 @@ class Main_Window(QMainWindow):
         self.ui.widget_inter_1.setStyleSheet(light.WIDGET_INTER_1)
         self.ui.widget_inter_left_1.setStyleSheet(light.WIDGET_INTER_1)
 
+        self.ui.label_info_Inter_face.setStyleSheet(light.LABEL_ACTIVE_LEFT)
+        self.ui.label_info_inter_left_face.setStyleSheet(
+            light.LABEL_ACTIVE_LEFT)
+
         self.ui.frame_inter_delet_bar_1.setStyleSheet(
             light.FRAME_INTER_DELETE_BAR_1)
         self.ui.frame_inter_left_btns_bar_1.setStyleSheet(
@@ -318,6 +937,9 @@ class Main_Window(QMainWindow):
         self.ui.widget_lower_pri.setStyleSheet(light.WIDGET_PRIMARY_1)
         self.ui.widget_lower_left_pri.setStyleSheet(light.WIDGET_PRIMARY_1)
 
+        self.ui.label_info_pri_face.setStyleSheet(light.LABEL_ACTIVE_LEFT)
+        self.ui.label_info_pri_left_face.setStyleSheet(light.LABEL_ACTIVE_LEFT)
+
         self.ui.btn_delete_lower_left_pri.setStyleSheet(
             light.DELETE_PRIMARY_BTN_1)
         self.ui.btn_upload_image_primary.setStyleSheet(light.UPLOAD_IMAGE_BTN)
@@ -369,6 +991,10 @@ class Main_Window(QMainWindow):
 
         self.ui.widget_lower_1.setStyleSheet(light.WIDGET_LOWER_1)
         self.ui.widget_lower_left_1.setStyleSheet(light.WIDGET_LOWER_1)
+
+        self.ui.label_info_lower_face.setStyleSheet(light.LABEL_ACTIVE_LEFT)
+        self.ui.label_info_lower_left_face.setStyleSheet(
+            light.LABEL_ACTIVE_LEFT)
 
         self.ui.btn_delete_lower_1.setStyleSheet(light.DELETE_LOWER_BTN_1)
         self.ui.btn_delete_lower_left_1.setStyleSheet(light.DELETE_LOWER_BTN_1)
@@ -447,6 +1073,10 @@ class Main_Window(QMainWindow):
 
         self.ui.widget_lower_advan.setStyleSheet(light.WIDGET_ADVANCED_1)
         self.ui.widget_lower_left_advan.setStyleSheet(light.WIDGET_ADVANCED_1)
+
+        self.ui.label_info_advan_face.setStyleSheet(light.LABEL_ACTIVE_LEFT)
+        self.ui.label_info_advan_left_face.setStyleSheet(
+            light.LABEL_ACTIVE_LEFT)
 
         # SUPER USER COMPENTS
         self.ui.lineEdit_username_change_input.setStyleSheet(light.LINE_EDIT)
@@ -549,6 +1179,9 @@ class Main_Window(QMainWindow):
 
     def setIcon_for_window_light(self):
 
+        logger.debug(
+            "Set Icon Function Actived... [ setIcon_for_window_light ]")
+
         # SET ICON FUNCTION
         def setIcon(widget, path,):
             icon = QIcon()
@@ -613,6 +1246,9 @@ class Main_Window(QMainWindow):
 
         if not self.theme_button_pressed:
 
+            logger.debug(
+                "Light icon placer Actived... [ setIcon_for_window_light ]")
+
             # ADD INTER USER PAGE ICONS
             setIcon_line(self.ui.lineEdit_full_name, light.ICON_USER)
             setIcon_line(self.ui.lineEdit__name_initial, light.ICON_USER)
@@ -672,6 +1308,8 @@ class Main_Window(QMainWindow):
 
         else:
 
+            logger.debug(
+                "Light icon replacer Actived... [ setIcon_for_window_light ]")
             # ADD INTER USER PAGE ICONS
             setIcon_line_(self.ui.lineEdit_full_name, light.ICON_USER)
             setIcon_line_(self.ui.lineEdit__name_initial, light.ICON_USER)
@@ -771,18 +1409,20 @@ class Main_Window(QMainWindow):
 
     # this dark theme of window
     def connect_functiom_dark(self):
+        logger.debug("Connect Function Actived... [ connect_functiom_dark ]")
+
         # Toggle Burguer Menu
         self.ui.btn_Toggle.clicked.connect(
-            lambda: UIFunctions.toggleMenu_light(self, 200, True))
+            lambda: UIFunctions.thread_connecter_dark(self, 200, True))
 
         # Setting Bar Animation
-        self.ui.btn_hidden_username_bar.clicked.connect(lambda: UIFunctions.settingHiddenBar_dark(self,  self.ui.frame_user_name_changer.height(
+        self.ui.btn_hidden_username_bar.clicked.connect(lambda: UIFunctions.settingHiddenBar_dark_connecter(self,  self.ui.frame_user_name_changer.height(
         ), self.ui.frame_user_name_changer, self.ui.frame_name_changer_content_page, True, self.ui.btn_hidden_username_bar, dark.BTN_HIDDEN_ICON, dark.BTN_OPENED_ICON))
-        self.ui.btn_hidden_email_bar.clicked.connect(lambda: UIFunctions.settingHiddenBar_dark(self,  self.ui.frame_email_changer.height(
+        self.ui.btn_hidden_email_bar.clicked.connect(lambda: UIFunctions.settingHiddenBar_dark_connecter(self,  self.ui.frame_email_changer.height(
         ), self.ui.frame_email_changer, self.ui.frame_email_changer_content_bar, True, self.ui.btn_hidden_email_bar, dark.BTN_HIDDEN_ICON, dark.BTN_OPENED_ICON))
-        self.ui.btn_hidden_contact_number_bar.clicked.connect(lambda: UIFunctions.settingHiddenBar_dark(self,  self.ui.frame_contect_number_changer.height(
+        self.ui.btn_hidden_contact_number_bar.clicked.connect(lambda: UIFunctions.settingHiddenBar_dark_connecter(self,  self.ui.frame_contect_number_changer.height(
         ), self.ui.frame_contect_number_changer, self.ui.frame_contect_number_changer_content_bar, True, self.ui.btn_hidden_contact_number_bar, dark.BTN_HIDDEN_ICON, dark.BTN_OPENED_ICON))
-        self.ui.btn_hidden_passowd_changer_bar.clicked.connect(lambda: UIFunctions.settingHiddenBar_dark(self,  self.ui.frame_password_changer.height(
+        self.ui.btn_hidden_passowd_changer_bar.clicked.connect(lambda: UIFunctions.settingHiddenBar_dark_connecter(self,  self.ui.frame_password_changer.height(
         ), self.ui.frame_password_changer, self.ui.frame_password_changer_content_bar, True, self.ui.btn_hidden_passowd_changer_bar, dark.BTN_HIDDEN_ICON, dark.BTN_OPENED_ICON))
 
         self.ui.btn_hidden_options.clicked.connect(lambda: UIFunctions.settingHiddenBar_two_dark(self,  self.ui.frame_more_options.height(
@@ -792,7 +1432,7 @@ class Main_Window(QMainWindow):
 
         # SUPER USER BTN
         self.ui.btn_superuser.clicked.connect(
-            lambda: UIFunctions.userSideBar_toggle_dark(self, 300, True))
+            lambda: UIFunctions.userSide_toggle_dark_connecter(self, 300, True))
 
         # BUTTONE CONNECTER
         UIFunctions.current_page_light(self)
@@ -845,6 +1485,9 @@ class Main_Window(QMainWindow):
             lambda: UIFunctions.home_dark(self))
 
     def setTheme_for_window_dark(self):
+        logger.debug(
+            "setTheme Function Actived... [ setTheme_for_window_dark ]")
+
         self.ui.scrollArea_2.setStyleSheet(dark.SCROLLAREA)
         self.ui.scrollArea.setStyleSheet(dark.SCROLLAREA)
         self.ui.scrollArea_resalt.setStyleSheet(dark.SCROLLAREA)
@@ -933,6 +1576,10 @@ class Main_Window(QMainWindow):
         self.ui.widget_inter_1.setStyleSheet(dark.WIDGET_INTER_1)
         self.ui.widget_inter_left_1.setStyleSheet(dark.WIDGET_INTER_1)
 
+        self.ui.label_info_Inter_face.setStyleSheet(dark.LABEL_ACTIVE_LEFT)
+        self.ui.label_info_inter_left_face.setStyleSheet(
+            dark.LABEL_ACTIVE_LEFT)
+
         self.ui.frame_inter_delet_bar_1.setStyleSheet(
             dark.FRAME_INTER_DELETE_BAR_1)
         self.ui.frame_inter_left_btns_bar_1.setStyleSheet(
@@ -1003,6 +1650,9 @@ class Main_Window(QMainWindow):
         self.ui.widget_lower_pri.setStyleSheet(dark.WIDGET_PRIMARY_1)
         self.ui.widget_lower_left_pri.setStyleSheet(dark.WIDGET_PRIMARY_1)
 
+        self.ui.label_info_pri_face.setStyleSheet(dark.LABEL_ACTIVE_LEFT)
+        self.ui.label_info_pri_left_face.setStyleSheet(dark.LABEL_ACTIVE_LEFT)
+
         self.ui.btn_delete_lower_left_pri.setStyleSheet(
             dark.DELETE_PRIMARY_BTN_1)
         self.ui.btn_upload_image_primary.setStyleSheet(dark.UPLOAD_IMAGE_BTN)
@@ -1054,6 +1704,10 @@ class Main_Window(QMainWindow):
 
         self.ui.widget_lower_1.setStyleSheet(dark.WIDGET_LOWER_1)
         self.ui.widget_lower_left_1.setStyleSheet(dark.WIDGET_LOWER_1)
+
+        self.ui.label_info_lower_face.setStyleSheet(dark.LABEL_ACTIVE_LEFT)
+        self.ui.label_info_lower_left_face.setStyleSheet(
+            dark.LABEL_ACTIVE_LEFT)
 
         self.ui.btn_delete_lower_1.setStyleSheet(dark.DELETE_LOWER_BTN_1)
         self.ui.btn_delete_lower_left_1.setStyleSheet(dark.DELETE_LOWER_BTN_1)
@@ -1132,6 +1786,10 @@ class Main_Window(QMainWindow):
 
         self.ui.widget_lower_advan.setStyleSheet(dark.WIDGET_ADVANCED_1)
         self.ui.widget_lower_left_advan.setStyleSheet(dark.WIDGET_ADVANCED_1)
+
+        self.ui.label_info_advan_face.setStyleSheet(dark.LABEL_ACTIVE_LEFT)
+        self.ui.label_info_advan_left_face.setStyleSheet(
+            dark.LABEL_ACTIVE_LEFT)
 
         # SUPER USER COMPENTS
         self.ui.lineEdit_username_change_input.setStyleSheet(dark.LINE_EDIT)
@@ -1234,6 +1892,8 @@ class Main_Window(QMainWindow):
 
     def setIcon_for_window_dark(self):
 
+        logger.debug("setIcon Function Actived... [ setIcon_for_window_dark ]")
+
         # SET ICON FUNCTION
         def setIcon(widget, path,):
             icon = QIcon()
@@ -1300,6 +1960,8 @@ class Main_Window(QMainWindow):
             icon
         )
         if not self.theme_button_pressed:
+            logger.debug(
+                "Dark icon placer Actived... [ setIcon_for_window_dark ]")
             setIcon_line(self.ui.lineEdit_full_name, dark.ICON_USER)
             setIcon_line(self.ui.lineEdit__name_initial, dark.ICON_USER)
             setIcon_line(self.ui.lineEdit_office_no, dark.ICON_PHONE)
@@ -1356,8 +2018,9 @@ class Main_Window(QMainWindow):
             setIcon_line(self.ui.lineEdit_name_initial_ad, dark.ICON_USER)
 
         else:
+            logger.debug(
+                "Dark icon Replacer Actived... [ setIcon_for_window_dark ]")
             # ADD LOWER PRIMARY USER PAGE ICONS
-            print("LOWRE PRIMARY USER ICON ADDPAGE COMPLETE ....")
             setIcon_line_(self.ui.lineEdit_name_full_primary, dark.ICON_USER)
             setIcon_line_(self.ui.lineEdit_name_initial_primary,
                           dark.ICON_USER)
@@ -1376,7 +2039,6 @@ class Main_Window(QMainWindow):
             setIcon_line_(self.ui.lineEdit_father_job_primary, dark.ICON_JOB)
 
             # ADD INTER USER PAGE ICON
-            print("INTER USER ICON ADDPAGE COMPLETE ....")
             setIcon_line_(self.ui.lineEdit_full_name, dark.ICON_USER)
             setIcon_line_(self.ui.lineEdit__name_initial, dark.ICON_USER)
             setIcon_line_(self.ui.lineEdit_office_no, dark.ICON_PHONE)
@@ -1451,7 +2113,7 @@ class Main_Window(QMainWindow):
     # this allows to change the theme of window
     def setTheme(self):
         if self.ui.comboBox_theme_items.currentIndex() == 0:
-
+            logger.debug("Light theme Thread Actived... [ setTheme ]")
             # Light theme thread
             thread_theme = Thread_Theme()
             thread_theme.connect_function.connect(self.connect_functiom_light)
@@ -1462,10 +2124,9 @@ class Main_Window(QMainWindow):
             thread_theme.start()
             thread_theme.finished.connect(lambda: self.iconButtonPressed(True))
             thread_theme.exec()
-            print("True")
 
         else:
-
+            logger.debug("Dark theme Thread Actived... [ setTheme ]")
             # Dark theme Thread
             thread_theme = Thread_Theme()
             thread_theme.connect_function.connect(self.connect_functiom_dark)
@@ -1475,11 +2136,11 @@ class Main_Window(QMainWindow):
             thread_theme.start()
             thread_theme.finished.connect(lambda: self.iconButtonPressed(True))
             thread_theme.exec()
-            print("False")
 
     # default theme for window startup
 
     def default_theme(self):
+        logger.debug("set the default theme of findup... [ default_theme ]")
         self.setIcon_for_window_light()
         self.setTheme_for_window_light()
         self.connect_functiom_light()
@@ -1487,11 +2148,11 @@ class Main_Window(QMainWindow):
 
     # Icon Button pressed Evenet Getter
     def iconButtonPressed(self, prim):
+        logger.debug("Theme Icon Replacer Actived... [ iconButtonPressed ]")
         self.theme_button_pressed = prim
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     main = Main_Window()
-    main.show()
     app.exec_()

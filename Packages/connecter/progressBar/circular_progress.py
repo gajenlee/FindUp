@@ -18,7 +18,7 @@ class CircularProgress(QWidget):
         self.progress_color = 0xff79c6
         # Text
         self.enable_text = True
-        self.font_family = "Segoe UI"
+        self.font_family = "../../../src/font/segoeui.ttf"
         self.font_size = 12
         self.suffix = "%"
         self.text_color = 0xff79c6
