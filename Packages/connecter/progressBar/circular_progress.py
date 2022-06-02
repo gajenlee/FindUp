@@ -1,4 +1,3 @@
-
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -18,10 +17,15 @@ class CircularProgress(QWidget):
         self.progress_color = 0xff79c6
         # Text
         self.enable_text = True
-        self.font_family = "../../../src/font/segoeui.ttf"
-        self.font_size = 12
+        self.font_family = "./src/font/segoeui.ttf"
+        self.font_size = 15
         self.suffix = "%"
         self.text_color = 0xff79c6
+
+        # Greeting Text
+        self.label_greeting = None
+        self.label_greeting_img = []
+
         # BG
         self.enable_bg = True
         self.bg_color = 0x44475a
@@ -57,7 +61,12 @@ class CircularProgress(QWidget):
         paint = QPainter()
         paint.begin(self)
         paint.setRenderHint(QPainter.Antialiasing)  # remove pixelated edges
-        paint.setFont(QFont(self.font_family, self.font_size))
+
+        font = QFont()
+        font.setFamily(self.font_family)
+        font.setPointSize(self.font_size)
+        font.setBold(True)
+        paint.setFont(font)
 
         # CREATE RECTANGLE
         rect = QRect(0, 0, self.width, self.height)
@@ -80,7 +89,8 @@ class CircularProgress(QWidget):
         # CREATE ARC / CIRCULAR PROGRESS
         pen.setColor(QColor(self.progress_color))
         paint.setPen(pen)
-        paint.drawArc(margin, margin, width, height, -90 * 16, -value * 16)
+        paint.drawArc(margin, margin, width,
+                      height, -90 * 16, -value * 16)
 
         # CREATE TEXT
         if self.enable_text:
@@ -89,8 +99,26 @@ class CircularProgress(QWidget):
             paint.drawText(rect, Qt.AlignCenter,
                            f"{self.value}{self.suffix}")
 
+            if self.label_greeting != None:
+                try:
+                    pix = QPixmap(self.label_greeting_img[round(self.value/30)])
+                    self.label_greeting.resize(pix.width(), pix.height())
+                    self.label_greeting.setPixmap(pix)
+                    self.label_greeting.setAlignment(Qt.AlignCenter)
+
+                except Exception as p:
+                    print(p)
+
         # END
         paint.end()
+
+    def animation(self):
+        self.ani = QPropertyAnimation(self.opac, b"opacity")
+        self.ani.setDuration(3000)
+        self.ani.setLoopCount(2)
+        self.ani.setStartValue(.9)
+        self.ani.setEndValue(.0)
+        self.ani.start()
 
 
 if __name__ == "__main__":

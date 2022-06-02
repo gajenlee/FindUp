@@ -10,7 +10,7 @@ class UIFunctions(Main_Window):
         thread_toggle.button_function.connect(
             lambda: UIFunctions.toggleMenu_light(self, maxWidth, enable))
         thread_toggle.start()
-        thread_toggle.exec()
+        thread_toggle.exec_()
 
     def thread_connecter_dark(self, maxWidth, enable):
 
@@ -18,49 +18,49 @@ class UIFunctions(Main_Window):
         thread_toggle.button_function.connect(
             lambda: UIFunctions.toggleMenu_dark(self, maxWidth, enable))
         thread_toggle.start()
-        thread_toggle.exec()
+        thread_toggle.exec_()
 
     def userSide_toggle_light_connecter(self, maxWidth, enable):
         thread_toggle = Thread_Toggle()
         thread_toggle.button_function.connect(
             lambda: UIFunctions.userSideBar_toggle_light(self, maxWidth, enable))
         thread_toggle.start()
-        thread_toggle.exec()
+        thread_toggle.exec_()
 
     def userSide_toggle_dark_connecter(self, maxWidth, enable):
         thread_toggle = Thread_Toggle()
         thread_toggle.button_function.connect(
             lambda: UIFunctions.userSideBar_toggle_dark(self, maxWidth, enable))
         thread_toggle.start()
-        thread_toggle.exec()
+        thread_toggle.exec_()
 
     def settingHiddenBar_light_connecter(self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active):
         thread_toggle = Thread_Toggle()
         thread_toggle.button_function.connect(lambda: UIFunctions.settingHiddenBar_light(
             self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active))
         thread_toggle.start()
-        thread_toggle.exec()
+        thread_toggle.exec_()
 
     def settingHiddenBar_dark_connecter(self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active):
         thread_toggle = Thread_Toggle()
         thread_toggle.button_function.connect(lambda: UIFunctions.settingHiddenBar_dark(
             self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active))
         thread_toggle.start()
-        thread_toggle.exec()
+        thread_toggle.exec_()
 
     def settingHiddenBar_two_light_connecter(self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active):
         thread_toggle = Thread_Toggle()
         thread_toggle.button_function.connect(lambda: UIFunctions.settingHiddenBar_light(
             self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active))
         thread_toggle.start()
-        thread_toggle.exec()
+        thread_toggle.exec_()
 
     def settingHiddenBar_two_dark_connecter(self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active):
         thread_toggle = Thread_Toggle()
         thread_toggle.button_function.connect(lambda: UIFunctions.settingHiddenBar_dark(
             self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active))
         thread_toggle.start()
-        thread_toggle.exec()
+        thread_toggle.exec_()
 
     # Toggle Menu Button
     def toggleMenu_light(self, maxWidth, enable):
@@ -86,7 +86,7 @@ class UIFunctions(Main_Window):
             self.animation.setDuration(500)
             self.animation.setStartValue(width)
             self.animation.setEndValue(widthExtended)
-            self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
+            self.animation.setEasingCurve(QEasingCurve.InOutQuart)
             self.animation.start()
 
             # ANIMATION 2
@@ -95,7 +95,7 @@ class UIFunctions(Main_Window):
             self.animationToggle.setDuration(500)
             self.animationToggle.setStartValue(twidth)
             self.animationToggle.setEndValue(widthExtended)
-            self.animationToggle.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
+            self.animationToggle.setEasingCurve(QEasingCurve.InOutQuart)
             self.animationToggle.start()
 
     def settingHiddenBar_light(self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active):
@@ -131,7 +131,7 @@ class UIFunctions(Main_Window):
             self.animation_hidden.setStartValue(current_height)
             self.animation_hidden.setEndValue(heightExtended)
             self.animation_hidden.setEasingCurve(
-                QtCore.QEasingCurve.InOutQuart)
+                QEasingCurve.InOutQuart)
             self.animation_hidden.start()
 
             #  Maximum Size Main Frame
@@ -141,7 +141,7 @@ class UIFunctions(Main_Window):
             self.animation_hidden_two.setStartValue(current_height)
             self.animation_hidden_two.setEndValue(heightExtended)
             self.animation_hidden_two.setEasingCurve(
-                QtCore.QEasingCurve.InOutQuart)
+                QEasingCurve.InOutQuart)
             self.animation_hidden_two.start()
 
             ##### Hidden Bar #####
@@ -152,7 +152,7 @@ class UIFunctions(Main_Window):
             self.animation_hidden_frame.setStartValue(current_hidden_height)
             self.animation_hidden_frame.setEndValue(heightExtended_hidden_bar)
             self.animation_hidden_frame.setEasingCurve(
-                QtCore.QEasingCurve.InOutQuart)
+                QEasingCurve.InOutQuart)
             self.animation_hidden_frame.start()
 
             # Maximum Size For Hidden Frame
@@ -164,7 +164,7 @@ class UIFunctions(Main_Window):
             self.animation_hidden_frame_two.setEndValue(
                 heightExtended_hidden_bar)
             self.animation_hidden_frame_two.setEasingCurve(
-                QtCore.QEasingCurve.InOutQuart)
+                QEasingCurve.InOutQuart)
             self.animation_hidden_frame_two.start()
 
     def settingHiddenBar_two_light(self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active):
@@ -200,7 +200,7 @@ class UIFunctions(Main_Window):
             self.animation_hidden.setStartValue(current_height)
             self.animation_hidden.setEndValue(heightExtended)
             self.animation_hidden.setEasingCurve(
-                QtCore.QEasingCurve.InOutQuart)
+                QEasingCurve.InOutQuart)
             self.animation_hidden.start()
 
             #  Maximum Size Main Frame
@@ -210,7 +210,7 @@ class UIFunctions(Main_Window):
             self.animation_hidden_two.setStartValue(current_height)
             self.animation_hidden_two.setEndValue(heightExtended)
             self.animation_hidden_two.setEasingCurve(
-                QtCore.QEasingCurve.InOutQuart)
+                QEasingCurve.InOutQuart)
             self.animation_hidden_two.start()
 
             ##### Hidden Bar #####
@@ -221,7 +221,7 @@ class UIFunctions(Main_Window):
             self.animation_hidden_frame.setStartValue(current_hidden_height)
             self.animation_hidden_frame.setEndValue(heightExtended_hidden_bar)
             self.animation_hidden_frame.setEasingCurve(
-                QtCore.QEasingCurve.InOutQuart)
+                QEasingCurve.InOutQuart)
             self.animation_hidden_frame.start()
 
             # Maximum Size For Hidden Frame
@@ -233,7 +233,7 @@ class UIFunctions(Main_Window):
             self.animation_hidden_frame_two.setEndValue(
                 heightExtended_hidden_bar)
             self.animation_hidden_frame_two.setEasingCurve(
-                QtCore.QEasingCurve.InOutQuart)
+                QEasingCurve.InOutQuart)
             self.animation_hidden_frame_two.start()
 
     def userSideBar_toggle_light(self, maxWidth, enable):
@@ -254,7 +254,7 @@ class UIFunctions(Main_Window):
             self.animation.setDuration(500)
             self.animation.setStartValue(width)
             self.animation.setEndValue(widthExtended)
-            self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
+            self.animation.setEasingCurve(QEasingCurve.InOutQuart)
             self.animation.start()
 
     # Get Courrent page set
@@ -310,14 +310,20 @@ class UIFunctions(Main_Window):
         self.ui.btn_setting.setStyleSheet(light.SETTING_PAGE_BTN)
 
     def current_page_light(self):
-        if self.ui.stackedWidget.currentIndex() == 3:
-            self.ui.btn_inter.setStyleSheet(light.INTER_BTN)
-            self.ui.btn_lower.setStyleSheet(light.LOWER_BTN)
-            self.ui.btn_page_home.setStyleSheet(light.HOME_PAGE_BTN_OPEN)
-            self.ui.btn_page_left.setStyleSheet(light.HOME_LEFT_PAGE_BTN)
-            self.ui.btn_page_search.setStyleSheet(light.SEARCH_PAGE_BRN)
-            self.ui.btn_setting.setStyleSheet(light.SETTING_PAGE_BTN)
-            self.ui.btn_page_analytics.setStyleSheet(light.ANALYTICS_PAGE_BTN)
+        if self.ui.stackedWidget.currentWidget() == self.ui.Home:
+            UIFunctions.home_light(self)
+
+        if self.ui.stackedWidget.currentWidget() == self.ui.page_left:
+            UIFunctions.left_light(self)
+
+        if self.ui.stackedWidget.currentWidget() == self.ui.page_search:
+            UIFunctions.search_light(self)
+
+        if self.ui.stackedWidget.currentWidget() == self.ui.page_setting:
+            UIFunctions.setting_light(self)
+
+        if self.ui.stackedWidget.currentWidget() == self.ui.analytics:
+            UIFunctions.analytics_light(self)
 
     def addInter_page_light(self):
         self.ui.btn_inter.setStyleSheet(light.INTER_BTN_OPEN)
@@ -373,7 +379,7 @@ class UIFunctions(Main_Window):
             self.animation.setDuration(500)
             self.animation.setStartValue(width)
             self.animation.setEndValue(widthExtended)
-            self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
+            self.animation.setEasingCurve(QEasingCurve.InOutQuart)
             self.animation.start()
 
             # ANIMATION 2
@@ -382,7 +388,7 @@ class UIFunctions(Main_Window):
             self.animationToggle.setDuration(500)
             self.animationToggle.setStartValue(twidth)
             self.animationToggle.setEndValue(widthExtended)
-            self.animationToggle.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
+            self.animationToggle.setEasingCurve(QEasingCurve.InOutQuart)
             self.animationToggle.start()
 
     def settingHiddenBar_dark(self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active):
@@ -418,7 +424,7 @@ class UIFunctions(Main_Window):
             self.animation_hidden.setStartValue(current_height)
             self.animation_hidden.setEndValue(heightExtended)
             self.animation_hidden.setEasingCurve(
-                QtCore.QEasingCurve.InOutQuart)
+                QEasingCurve.InOutQuart)
             self.animation_hidden.start()
 
             #  Maximum Size Main Frame
@@ -428,7 +434,7 @@ class UIFunctions(Main_Window):
             self.animation_hidden_two.setStartValue(current_height)
             self.animation_hidden_two.setEndValue(heightExtended)
             self.animation_hidden_two.setEasingCurve(
-                QtCore.QEasingCurve.InOutQuart)
+                QEasingCurve.InOutQuart)
             self.animation_hidden_two.start()
 
             ##### Hidden Bar #####
@@ -439,7 +445,7 @@ class UIFunctions(Main_Window):
             self.animation_hidden_frame.setStartValue(current_hidden_height)
             self.animation_hidden_frame.setEndValue(heightExtended_hidden_bar)
             self.animation_hidden_frame.setEasingCurve(
-                QtCore.QEasingCurve.InOutQuart)
+                QEasingCurve.InOutQuart)
             self.animation_hidden_frame.start()
 
             # Maximum Size For Hidden Frame
@@ -451,7 +457,7 @@ class UIFunctions(Main_Window):
             self.animation_hidden_frame_two.setEndValue(
                 heightExtended_hidden_bar)
             self.animation_hidden_frame_two.setEasingCurve(
-                QtCore.QEasingCurve.InOutQuart)
+                QEasingCurve.InOutQuart)
             self.animation_hidden_frame_two.start()
 
     def settingHiddenBar_two_dark(self,  current_height, frame_obj, hidden_frame,  enabel, btn_obj, path_icon_normal, path_icon_active):
@@ -487,7 +493,7 @@ class UIFunctions(Main_Window):
             self.animation_hidden.setStartValue(current_height)
             self.animation_hidden.setEndValue(heightExtended)
             self.animation_hidden.setEasingCurve(
-                QtCore.QEasingCurve.InOutQuart)
+                QEasingCurve.InOutQuart)
             self.animation_hidden.start()
 
             #  Maximum Size Main Frame
@@ -497,7 +503,7 @@ class UIFunctions(Main_Window):
             self.animation_hidden_two.setStartValue(current_height)
             self.animation_hidden_two.setEndValue(heightExtended)
             self.animation_hidden_two.setEasingCurve(
-                QtCore.QEasingCurve.InOutQuart)
+                QEasingCurve.InOutQuart)
             self.animation_hidden_two.start()
 
             ##### Hidden Bar #####
@@ -508,7 +514,7 @@ class UIFunctions(Main_Window):
             self.animation_hidden_frame.setStartValue(current_hidden_height)
             self.animation_hidden_frame.setEndValue(heightExtended_hidden_bar)
             self.animation_hidden_frame.setEasingCurve(
-                QtCore.QEasingCurve.InOutQuart)
+                QEasingCurve.InOutQuart)
             self.animation_hidden_frame.start()
 
             # Maximum Size For Hidden Frame
@@ -520,7 +526,7 @@ class UIFunctions(Main_Window):
             self.animation_hidden_frame_two.setEndValue(
                 heightExtended_hidden_bar)
             self.animation_hidden_frame_two.setEasingCurve(
-                QtCore.QEasingCurve.InOutQuart)
+                QEasingCurve.InOutQuart)
             self.animation_hidden_frame_two.start()
 
     def userSideBar_toggle_dark(self, maxWidth, enable):
@@ -541,7 +547,7 @@ class UIFunctions(Main_Window):
             self.animation.setDuration(500)
             self.animation.setStartValue(width)
             self.animation.setEndValue(widthExtended)
-            self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
+            self.animation.setEasingCurve(QEasingCurve.InOutQuart)
             self.animation.start()
 
     # Get Courrent page set
@@ -597,14 +603,20 @@ class UIFunctions(Main_Window):
         self.ui.btn_setting.setStyleSheet(dark.SETTING_PAGE_BTN)
 
     def current_page_dark(self):
-        if self.ui.stackedWidget.currentIndex() == 3:
-            self.ui.btn_inter.setStyleSheet(dark.INTER_BTN)
-            self.ui.btn_lower.setStyleSheet(dark.LOWER_BTN)
-            self.ui.btn_page_home.setStyleSheet(dark.HOME_PAGE_BTN_OPEN)
-            self.ui.btn_page_left.setStyleSheet(dark.HOME_LEFT_PAGE_BTN)
-            self.ui.btn_page_search.setStyleSheet(dark.SEARCH_PAGE_BRN)
-            self.ui.btn_setting.setStyleSheet(dark.SETTING_PAGE_BTN)
-            self.ui.btn_page_analytics.setStyleSheet(dark.ANALYTICS_PAGE_BTN)
+        if self.ui.stackedWidget.currentWidget() == self.ui.Home:
+            UIFunctions.home_dark(self)
+
+        if self.ui.stackedWidget.currentWidget() == self.ui.page_left:
+            UIFunctions.left_dark(self)
+
+        if self.ui.stackedWidget.currentWidget() == self.ui.page_search:
+            UIFunctions.search_dark(self)
+
+        if self.ui.stackedWidget.currentWidget() == self.ui.page_setting:
+            UIFunctions.setting_dark(self)
+
+        if self.ui.stackedWidget.currentWidget() == self.ui.analytics:
+            UIFunctions.analytics_dark(self)
 
     def addInter_page_dark(self):
         self.ui.btn_inter.setStyleSheet(dark.INTER_BTN_OPEN)

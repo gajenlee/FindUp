@@ -1,55 +1,123 @@
 import json
 import os
+from logging_findup import *
+
 
 # Paths For Saveing
-PATH_CONFIG_DIR = os.path.join(f"C:/Users/{os.getlogin()}/.findup/config/")
-PATH_STORE_DATA_DIR = os.path.join(f"C:/Users/{os.getlogin()}/.findup/store/")
+PATH_CONFIG_DIR = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/config/user/")
 
-PATH_CONFIG_FILE = os.path.join(
-    f"C:/Users/{os.getlogin()}/.findup/config/config.bin")
-PATH_STORE_DATA_FILE = os.path.join(
-    f"C:/Users/{os.getlogin()}/.findup/store/data.json")
-PATH_STORE_DATA_BIN_FILE = os.path.join(
-    f"C:/Users/{os.getlogin()}/.findup/store/recycleBin.json")
+
+# DATA LOCATION
+PATH_STORE_DATA_DIR_ACTIVE = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/active/")
+PATH_STORE_DATA_DIR_RECYCLE = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/recycle/")
+
+
+# Lower data Location
+PATH_STORE_DATA_FILE_INTER = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/active/Idata.json")
+PATH_STORE_DATA_FILE_PRIMARY = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/active/Pdata.json")
+PATH_STORE_DATA_FILE_ORDNARY = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/active/Odata.json")
+PATH_STORE_DATA_FILE_ADVNACED = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/active/Adata.json")
+
+# Lower data Location FOR RECYLE
+PATH_STORE_DATA_FILE_INTER_LIFT = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/recycle/LIdata.json")
+PATH_STORE_DATA_FILE_PRIMARY_LIFT = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/recycle/LPdata.json")
+PATH_STORE_DATA_FILE_ORDNARY_LIFT = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/recycle/LOdata.json")
+PATH_STORE_DATA_FILE_ADVNACED_LIFT = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/recycle/LAdata.json")
+
+# Super User Setting data loaction
 PATH_STORE_DATA_SETTING = os.path.join(
-    f"C:/Users/{os.getlogin()}/.findup/store/setting.json")
+    f"C:/Users/{os.getlogin()}/.findup/config/user/setting.json")
 
 
-class ReadBinary(object):
+# Names For Files
+SETTING_FILE = "setting.json"
 
-    __fileName = PATH_CONFIG_FILE
+INTER_FILE = 'Idata.json'
+PRIMARY_FILE = 'Pdata.json'
+ORDNARY_FILE = 'Odata.json'
+ADVANCED_FILE = 'Adata.json'
+
+INTER_FILE_LEFT = 'LIdata.json'
+PRIMARY_FILE_LEFT = 'LPdata.json'
+ORDNARY_FILE_LEFT = 'LOdata.json'
+ADVANCED_FILE_LEFT = 'LAdata.json'
+
+# User Key Word
+SETTING = 'Setting'
+INTERUSER = 'INTERUSER'
+PRIMARYLOWER = 'Lower-User-Primary'
+ORDNARYLOWER = 'Lower-User-Ordinary'
+ADVNACEDLOWER = 'Lower-User-Advanced'
+
+
+# SETTING CLASS
+class Setting:
 
     @staticmethod
-    def read_binary_file():
-        with open(ReadBinary.__fileName, 'r+b') as file:
-            data = file.read()
-        return data.decode('utf-8')
+    def init():
+        logger.debug(
+            "The Setting class json function is runing... [ init ]"
+        )
+        # Create Fplder For Setting
+        try:
+            os.makedirs(PATH_CONFIG_DIR)
+
+        except FileExistsError:
+            logger.exception("The Setting File Already Exists Error [ init ]")
+
+        except Exception as p:
+            print(p)
+            logger.exception("Something went wrong [ init ]")
 
     @staticmethod
-    def write_binary_file(text):
-        with open(ReadBinary.__fileName, 'w+b') as file:
-            file.write(text.encode('utf-8'))
+    def store_superuser(obj):
+        if SETTING_FILE not in os.listdir(PATH_CONFIG_DIR):
+            data = {"Setting": {}}
+            Store.write_json(data, PATH_STORE_DATA_SETTING)
+
+        data = Store.read_json(PATH_STORE_DATA_SETTING)
+        data[SETTING] = obj
+        Store.write_json(data, PATH_STORE_DATA_SETTING)
+
+    @staticmethod
+    def load_superuser():
+        return Store.read_json(PATH_STORE_DATA_SETTING)
 
 
+# STORE CLASS
 class Store(object):
 
-    __fileName = PATH_STORE_DATA_FILE
-    __fileNameForLeft = PATH_STORE_DATA_BIN_FILE
-    __fileSetting = PATH_STORE_DATA_SETTING
-
-    # MAKE JSON FILE AND INIT FUNCTION
     @staticmethod
     def init():
 
-        if "setting.json" not in os.listdir(PATH_STORE_DATA_DIR):
-            data = {
-                "Super-User": []
-            }
-            Store.write_super_user(data)
+        # Create Folder For Data
+        try:
+            os.makedirs(PATH_STORE_DATA_DIR_ACTIVE)
+            os.makedirs(PATH_STORE_DATA_DIR_RECYCLE)
 
-        if "data.json" not in os.listdir(PATH_STORE_DATA_DIR):
+        except FileExistsError:
+            logger.exception("The File Already Exists... [init]")
+
+        logger.debug("The store class is runing... [init]")
+
+        # Active user Data
+        if INTER_FILE not in os.listdir(PATH_STORE_DATA_DIR_ACTIVE):
+            data = {'INTERUSER': []}
+            Store.write_json(data, PATH_STORE_DATA_FILE_INTER)
+
+        if PRIMARY_FILE not in os.listdir(PATH_STORE_DATA_DIR_ACTIVE):
             data = {
-                "Inter-User": [],
                 "Lower-User-Primary":
                 {
                     "Level - 01": [],
@@ -57,8 +125,13 @@ class Store(object):
                     "Level - 03": [],
                     "Level - 04": [],
                     "Level - 05": [],
-                
-                },
+
+                }
+            }
+            Store.write_json(data, PATH_STORE_DATA_FILE_PRIMARY)
+
+        if ORDNARY_FILE not in os.listdir(PATH_STORE_DATA_DIR_ACTIVE):
+            data = {
                 "Lower-User-Ordinary":
                 {
                     "Level - 06": [],
@@ -67,115 +140,91 @@ class Store(object):
                     "Level - 09": [],
                     "Level - 10": [],
                     "Level - 11": []
-                },
-                "Lower-User-Advanced":{
+                }
+            }
+            Store.write_json(data, PATH_STORE_DATA_FILE_ORDNARY)
+
+        if ADVANCED_FILE not in os.listdir(PATH_STORE_DATA_DIR_ACTIVE):
+            data = {
+                "Lower-User-Advanced": {
                     "Level - 12": {
-                        "Mathematics":[],
-                        "Science":[],
-                        "Engineering-Technology":[],
-                        "Bio-Technology":[],
-                        "Commerce":[],
-                        "Art":[]
+                        "Mathematics": [],
+                        "Science": [],
+                        "Engineering-Technology": [],
+                        "Bio-Technology": [],
+                        "Commerce": [],
+                        "Art": []
                     },
                     "Level - 13": {
-                        "Mathematics":[],
-                        "Science":[],
-                        "Engineering-Technology":[],
-                        "Bio-Technology":[],
-                        "Commerce":[],
-                        "Art":[]
+                        "Mathematics": [],
+                        "Science": [],
+                        "Engineering-Technology": [],
+                        "Bio-Technology": [],
+                        "Commerce": [],
+                        "Art": []
                     }
                 }
-
             }
-            Store.write_json(data)
+            Store.write_json(data, PATH_STORE_DATA_FILE_ADVNACED)
 
-        if "recycleBin.json" not in os.listdir(PATH_STORE_DATA_DIR):
-            data = {
+        # Recycle user Data
+        if INTER_FILE_LEFT not in os.listdir(PATH_STORE_DATA_DIR_RECYCLE):
+            data = {'INTERUSER': []}
+            Store.write_json(
+                data, PATH_STORE_DATA_FILE_INTER_LIFT)
 
-                "Inter-User": [],
-                "Lower-User-Primary": [],
-                "Lower-User-Ordinary": [],
-                "Lower-User-Advanced":[]
+        if PRIMARY_FILE_LEFT not in os.listdir(PATH_STORE_DATA_DIR_RECYCLE):
+            data = {"Lower-User-Primary": []}
+            Store.write_json(
+                data, PATH_STORE_DATA_FILE_PRIMARY_LIFT)
 
-            }
-            Store.write_json_for_left(data)
+        if ORDNARY_FILE_LEFT not in os.listdir(PATH_STORE_DATA_DIR_RECYCLE):
+            data = {"Lower-User-Ordinary": []}
+            Store.write_json(
+                data, PATH_STORE_DATA_FILE_ORDNARY_LIFT)
+
+        if ADVANCED_FILE_LEFT not in os.listdir(PATH_STORE_DATA_DIR_RECYCLE):
+            data = {"Lower-User-Advanced": []}
+            Store.write_json(data, PATH_STORE_DATA_FILE_ADVNACED_LIFT)
+
+    @staticmethod
+    def write_json(data, filePath):
+        logger.debug(
+            "The store class write json function is runing... [write_json]")
+        with open(filePath, 'w') as json_file:
+            json.dump(data, json_file, indent=4)
+
+    @staticmethod
+    def read_json(filePath):
+        logger.debug(
+            "The store class read json function is runing... [read_json]")
+        with open(filePath, 'r') as json_file:
+            data = json.load(json_file)
+        return data
+
+    @staticmethod
+    def append_json(data, filePath, userType, levelKey=None, streemKey=None):
+
+        if levelKey != None and streemKey != None:
+
+            logger.debug(
+                "The store class append json level streem function is runing... [append_json]")
+            loaded_data = Store.read_json(filePath)
+            loaded_data[userType][levelKey][streemKey].append(data)
+            Store.write_json(loaded_data, filePath)
+
+        elif levelKey != None:
+
+            logger.debug(
+                "The store class append json level function is runing... [append_json]")
+            loaded_data = Store.read_json(filePath)
+            loaded_data[userType][levelKey].append(data)
+            Store.write_json(loaded_data, filePath)
+
         else:
-            print(" !! Ready for data set !! ")
 
-    # READ JSON DATA
-    @staticmethod
-    def read_json():
-        with open(Store.__fileName, 'r') as file:
-            data = json.load(file)
-        return data
-
-    # UPDATE INTER USER DATAS
-    @staticmethod
-    def update_json(dataValue, userType):
-        data = Store.read_json()
-        temp = data[userType]
-        temp.append(dataValue)
-        Store.write_json(data)
-
-    # WRITE JSON DATA
-    @staticmethod
-    def write_json(data):
-        with open(Store.__fileName, 'w') as file:
-            json.dump(data, file, indent=4)
-
-    # UPDATE LOWER CLASS DATA
-    @staticmethod
-    def update_json_for_lower(dataValue, userType, levelClass):
-        with open(Store.__fileName, 'r') as file:
-            data = json.load(file)
-            print(userType, levelClass)
-            temp = data[userType][levelClass]
-            temp.append(dataValue)
-        Store.write_json(data)
-
-    # Update Advance Lower Data
-    @staticmethod
-    def update_json_for_advance_lower(userType, data, level, stream):
-        data = Store.read_json()
-        data[userType][level][stream].append(data)
-        Store.write_json(data)
-
-    # LEFT STATUS USAGE
-    @staticmethod
-    def write_json_for_left(data):
-        with open(Store.__fileNameForLeft, 'w') as file:
-            json.dump(data, file, indent=4)
-
-    @staticmethod
-    def read_json_for_left():
-        with open(Store.__fileNameForLeft, 'r') as file:
-            data = json.load(file)
-        return data
-
-    @staticmethod
-    def update_json_for_left(dataValue, userType):
-        data = Store.read_json_for_left()
-        temp = data[userType]
-        temp.append(dataValue)
-        Store.write_json_for_left(data)
-
-    @staticmethod
-    def write_super_user(data):
-        with open(Store.__fileSetting, 'w') as file:
-            json.dump(data, file, indent=4)
-
-    @staticmethod
-    def read_super_user():
-        with open(Store.__fileSetting, 'r') as file:
-            data = json.load(file)
-        return data
-
-    @staticmethod
-    def update_super_user(dataValue):
-        data = Store.read_super_user()
-        temp = data["Super-User"]
-        temp.append(dataValue)
-        Store.write_super_user(data)
-
-
+            logger.debug(
+                "The store class append json function is runing.. [append_json]")
+            loaded_data = Store.read_json(filePath)
+            loaded_data[userType].append(data)
+            Store.write_json(loaded_data, filePath)

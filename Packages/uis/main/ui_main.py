@@ -2,7 +2,6 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-
 class Ui_Main(object):
 
     def setShadowEffect(self, widget):

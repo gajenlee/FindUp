@@ -94,7 +94,13 @@ class Ui_Create(object):
         self.preloader.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.preloader.setFrameShadow(QtWidgets.QFrame.Raised)
         self.preloader.setObjectName("preloader")
+        self.label_greeting = QtWidgets.QLabel(self.frame_widgets)
+        self.label_greeting.setObjectName("label_greeting")
+        self.label_greeting.setMinimumSize(QtCore.QSize(0, 35))
+        self.label_greeting.setMaximumSize(QtCore.QSize(16777215, 35))
         self.verticalLayout_2.addWidget(self.preloader)
+        self.verticalLayout_2.addWidget(
+            self.label_greeting, 0, QtCore.Qt.AlignCenter)
         self.verticalLayout.addWidget(self.background)
         MainWindow.setCentralWidget(self.centralwidget)
 

@@ -4,8 +4,10 @@ import pandas as pd
 import matplotlib as mtp
 import numpy as np
 import json
+import re
 
 from threading import Thread
+from Packages.connecter.compands.checkers import checkTheContactNum, checkTheEmail
 
 from Packages.uis.access.ui_access import *
 from Packages.uis.backup.ui_backup import *
@@ -17,6 +19,7 @@ from Packages.connecter.cryptography.crypto import *
 from Packages.connecter.progressBar.circular_progress import *
 from Packages.connecter.store.store import *
 from Packages.connecter.thread_findup.threadForFindup import *
+from Packages.connecter.compands.checkers import *
 
 from src.style import dark
 from src.style import light
@@ -216,6 +219,10 @@ class Create_Window(QMainWindow):
         # Set shadow
         self.setShadowWindow()
 
+        # Store User Data
+        Store.init()
+        Setting.init()
+
         # KEY EVENT FOR LOGIN WINDOW
         self.keyPressEvent = self.clickEvent
 
@@ -279,17 +286,19 @@ class Create_Window(QMainWindow):
 
         self.progress.value = 0
         self.progress.setFixedSize(self.progress.width, self.progress.height)
-        self.progress.font_size = 25
+        self.progress.font_size = 20
         self.progress.add_shadow(True)
-        self.progress.progress_width = 5
+        self.progress.progress_width = 30
         self.progress.progress_color = QColor("#316B4F")
-        self.progress.text_color = QColor("#E6E6E6")
+        self.progress.text_color = QColor("#b3b1b1")
         self.progress.bg_color = QColor("#222222")
         self.progress.setParent(self.ui.preloader)
+        self.progress.label_greeting = self.ui.label_greeting
+        self.progress.label_greeting_img = ["#", "./src/img/greeting/en-light.png",
+                                            "./src/img/greeting/ta-light.png", "./src/img/greeting/si-light.png"]
         self.progress.show()
 
     # Light Theme
-
     def setThemeLight(self):
 
         logger.debug("Theme is setting... [ setThemeLight ]")
@@ -347,13 +356,16 @@ class Create_Window(QMainWindow):
 
         self.progress.value = 0
         self.progress.setFixedSize(self.progress.width, self.progress.height)
-        self.progress.font_size = 25
+        self.progress.font_size = 20
         self.progress.add_shadow(True)
-        self.progress.progress_width = 5
+        self.progress.progress_width = 30
         self.progress.progress_color = QColor("#316B4F")
         self.progress.text_color = QColor("#262525")
         self.progress.bg_color = QColor("#999797")
         self.progress.setParent(self.ui.preloader)
+        self.progress.label_greeting = self.ui.label_greeting
+        self.progress.label_greeting_img = ["#", "./src/img/greeting/en-dark.png",
+                                            "./src/img/greeting/ta-dark.png", "./src/img/greeting/si-dark.png"]
         self.progress.show()
 
     # set Shadow Window
@@ -368,20 +380,41 @@ class Create_Window(QMainWindow):
 
     # defalt theme setter
     def default_theme(self):
-
         logger.debug("The Default Theme Is Runing... [default_theme]")
-        self.setThemeLight()
-        self.setThemeLight()
-        self.prograssBarLight()
+
+        if SETTING_FILE in os.listdir(PATH_CONFIG_DIR):
+
+            setting = Setting.load_superuser()
+            if setting["Setting"]["Default-theme"] == "light":
+                self.setThemeLight()
+                self.setIconLight()
+                self.prograssBarLight()
+            else:
+                self.setThemeDark()
+                self.setIconDark()
+                self.prograssBarDark()
+        else:
+            self.setThemeLight()
+            self.setIconLight()
+            self.prograssBarLight()
 
     # Update The Prograss Bar
     def update(self):
+
+        def mainwindow():
+            main = Main_Window()
+            self.close()
+
         if self.progress_conter >= 100:
             self.timer.stop()
-            self.shacke_window()
+            thread = Thread_Open()
+            thread.opening_window.connect(
+                lambda: QTimer.singleShot(1200, lambda: mainwindow()))
+            thread.start()
+            thread.exec_()
 
         self.progress.set_value(self.progress_conter)
-        self.progress_conter += 1
+        self.progress_conter += 2
 
     def animation_create(self):
 
@@ -422,7 +455,7 @@ class Create_Window(QMainWindow):
 
         if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
 
-            logger.info("The Enter Button Clicked... [ clicEvent ]")
+            logger.info("The Enter Button Clicked... [ clickEvent ]")
 
             def prosses():
                 self.animation_create()
@@ -430,14 +463,58 @@ class Create_Window(QMainWindow):
                 self.timer.timeout.connect(self.update)
                 self.timer.start(35)
 
-            thread_loading = Thread_Loading()
-            thread_loading.prograss_function.connect(
-                lambda: QTimer.singleShot(1200, lambda: prosses()))
-            thread_loading.start()
-            thread_loading.exec()
+            __getuserinput = self.getInputFromUser()
+            if __getuserinput != False:
+
+                if checkThePassword(__getuserinput[1]) and \
+                    (checkTheEmail(__getuserinput[2]) == True or checkTheEmail(__getuserinput[2]) == None) and \
+                        checkTheContactNum(__getuserinput[-1]) and \
+                        checkTheUserName(__getuserinput[0]):
+
+                    if checkTheEmail(__getuserinput[2]) == None:
+                        obj = Crypto.encrypt_superuser(
+                            __getuserinput[0],
+                            __getuserinput[1],
+                            __getuserinput[-1]
+                        )
+
+                    else:
+                        obj = Crypto.encrypt_superuser(
+                            __getuserinput[0],
+                            __getuserinput[1],
+                            __getuserinput[-1],
+                            __getuserinput[2]
+                        )
+
+                    Thread(target=Setting.store_superuser,
+                           args=(obj, )).start()
+                    logger.debug("The Data was saveing... [clickEvent]")
+
+                    thread_loading = Thread_Loading()
+                    thread_loading.prograss_function.connect(
+                        lambda: QTimer.singleShot(1400, lambda: prosses()))
+                    thread_loading.start()
+                    thread_loading.exec_()
+
+                else:
+                    self.shacke_window()
+            else:
+                self.shacke_window()
 
         elif event.key() == Qt.Key_Escape or event.key == Qt.Key_Enter:
             self.close()
+
+    # Get Input From User
+    def getInputFromUser(self):
+        __name = self.ui.lineEdit_name.text()
+        __pass = self.ui.lineEdit_pass.text()
+        __con_pass = self.ui.lineEdit_con_pass.text()
+        __email = self.ui.lineEdit_email.text()
+        __contact = self.ui.lineEdit_contact.text()
+
+        if __con_pass == __pass:
+            return [__name, __pass, __email, __contact]
+        return False
 
 
 class Login_Window(QMainWindow):
@@ -461,6 +538,9 @@ class Login_Window(QMainWindow):
 
         # Set shadow
         self.setShadowWindow()
+
+        # Store User Data
+        Store.init()
 
         # KEY EVENT FOR LOGIN WINDOW
         self.keyPressEvent = self.clickEvent
@@ -516,9 +596,9 @@ class Login_Window(QMainWindow):
 
         self.progress.value = 0
         self.progress.setFixedSize(self.progress.width, self.progress.height)
-        self.progress.font_size = 25
+        self.progress.font_size = 20
         self.progress.add_shadow(True)
-        self.progress.progress_width = 5
+        self.progress.progress_width = 30
         self.progress.progress_color = QColor("#316B4F")
         self.progress.text_color = QColor("#E6E6E6")
         self.progress.bg_color = QColor("#222222")
@@ -575,9 +655,9 @@ class Login_Window(QMainWindow):
 
         self.progress.value = 0
         self.progress.setFixedSize(self.progress.width, self.progress.height)
-        self.progress.font_size = 25
+        self.progress.font_size = 20
         self.progress.add_shadow(True)
-        self.progress.progress_width = 5
+        self.progress.progress_width = 30
         self.progress.progress_color = QColor("#316B4F")
         self.progress.text_color = QColor("#262525")
         self.progress.bg_color = QColor("#999797")
@@ -598,18 +678,33 @@ class Login_Window(QMainWindow):
     def default_theme(self):
 
         logger.debug("The Default Theme Is Runing... [default_theme]")
-        self.setThemeLight()
-        self.setIconLight()
-        self.prograssBarLight()
+        setting = Setting.load_superuser()
+        if setting["Setting"]["Default-theme"] == "light":
+            self.setThemeLight()
+            self.setIconLight()
+            self.prograssBarLight()
+        else:
+            self.setThemeDark()
+            self.setIconDark()
+            self.prograssBarDark()
 
     # Update The Prograss Bar
     def update(self):
+
+        def mainwindow():
+            main = Main_Window()
+            self.close()
+
         if self.progress_conter >= 100:
             self.timer.stop()
-            self.shacke_window()
+            thread = Thread_Open()
+            thread.opening_window.connect(
+                lambda: QTimer.singleShot(1200, lambda: mainwindow()))
+            thread.start()
+            thread.exec_()
 
         self.progress.set_value(self.progress_conter)
-        self.progress_conter += 1
+        self.progress_conter += 2
 
     def animation_login(self):
 
@@ -658,14 +753,41 @@ class Login_Window(QMainWindow):
                 self.timer.timeout.connect(self.update)
                 self.timer.start(35)
 
-            thread_loading = Thread_Loading()
-            thread_loading.prograss_function.connect(
-                lambda: QTimer.singleShot(1200, lambda: prosses()))
-            thread_loading.start()
-            thread_loading.exec()
+            user = self.getUserInput()
+            if user:
+
+                __data = Setting.load_superuser()
+                __user = Crypto.decrypt_superuser_user(
+                    [__data[SETTING]["Name"][0], __data[SETTING]["Name"][-1]],
+                    [__data[SETTING]["Password"][0],
+                        __data[SETTING]["Password"][-1]]
+                )
+
+                if __user[0] == user[0] and __user[-1] == user[-1]:
+
+                    thread_loading = Thread_Loading()
+                    thread_loading.prograss_function.connect(
+                        lambda: QTimer.singleShot(1200, lambda: prosses()))
+                    thread_loading.start()
+                    thread_loading.exec_()
+
+                else:
+                    self.shacke_window()
+
+            else:
+                self.shacke_window()
 
         elif event.key() == Qt.Key_Escape or event.key == Qt.Key_Enter:
             self.close()
+
+    def getUserInput(self):
+        __name = self.ui.lineEdit_name.text()
+        __pwd = self.ui.lineEdit_pass.text()
+
+        if __name != '' and __pwd != '':
+            return [__name, __pwd]
+
+        return False
 
 
 class Main_Window(QMainWindow):
@@ -684,6 +806,7 @@ class Main_Window(QMainWindow):
 
         # Button activity connecter
         self.btnToFunctionConnecter()
+
         self.show()
 
     def btnToFunctionConnecter(self):
@@ -1435,7 +1558,7 @@ class Main_Window(QMainWindow):
             lambda: UIFunctions.userSide_toggle_dark_connecter(self, 300, True))
 
         # BUTTONE CONNECTER
-        UIFunctions.current_page_light(self)
+        UIFunctions.current_page_dark(self)
 
         self.ui.btn_page_home.clicked.connect(
             lambda: UIFunctions.home_dark(self))
@@ -1525,6 +1648,7 @@ class Main_Window(QMainWindow):
         self.ui.btn_advanced.setStyleSheet(dark.ADVANCED_BTN)
 
         # INTER USER COMPENTS
+        self.ui.scrollArea_add_info.setStyleSheet(dark.ADD_INTER_PAGE_WIDGET)
         self.ui.lineEdit_full_name.setStyleSheet(dark.LINE_EDIT)
         self.ui.lineEdit__name_initial.setStyleSheet(dark.LINE_EDIT)
         self.ui.lineEdit_inc_no.setStyleSheet(dark.LINE_EDIT)
@@ -1954,11 +2078,6 @@ class Main_Window(QMainWindow):
         setIcon(self.ui.btn_rollSearch, dark.ICON_SEARCH)
 
         # ADD INTER USER PAGE ICONS
-        icon = QIcon()
-        icon.addFile(dark.ICON_USER)
-        self.ui.lineEdit_full_name.findChild(QAction).setIcon(
-            icon
-        )
         if not self.theme_button_pressed:
             logger.debug(
                 "Dark icon placer Actived... [ setIcon_for_window_dark ]")
@@ -2018,6 +2137,7 @@ class Main_Window(QMainWindow):
             setIcon_line(self.ui.lineEdit_name_initial_ad, dark.ICON_USER)
 
         else:
+            print(self.theme_button_pressed)
             logger.debug(
                 "Dark icon Replacer Actived... [ setIcon_for_window_dark ]")
             # ADD LOWER PRIMARY USER PAGE ICONS
@@ -2112,6 +2232,7 @@ class Main_Window(QMainWindow):
 
     # this allows to change the theme of window
     def setTheme(self):
+
         if self.ui.comboBox_theme_items.currentIndex() == 0:
             logger.debug("Light theme Thread Actived... [ setTheme ]")
             # Light theme thread
@@ -2122,8 +2243,11 @@ class Main_Window(QMainWindow):
             thread_theme.connect_setIcons.connect(
                 self.setIcon_for_window_light)
             thread_theme.start()
+            thread_theme.exec_()
+
             thread_theme.finished.connect(lambda: self.iconButtonPressed(True))
-            thread_theme.exec()
+            Thread(target=self.setTheThemeChangesJson,
+                   args=["light", ]).start()
 
         else:
             logger.debug("Dark theme Thread Actived... [ setTheme ]")
@@ -2134,16 +2258,24 @@ class Main_Window(QMainWindow):
                 self.setTheme_for_window_dark)
             thread_theme.connect_setIcons.connect(self.setIcon_for_window_dark)
             thread_theme.start()
+            thread_theme.exec_()
+
             thread_theme.finished.connect(lambda: self.iconButtonPressed(True))
-            thread_theme.exec()
+            Thread(target=self.setTheThemeChangesJson, args=["dark", ]).start()
 
     # default theme for window startup
 
     def default_theme(self):
         logger.debug("set the default theme of findup... [ default_theme ]")
-        self.setIcon_for_window_light()
-        self.setTheme_for_window_light()
-        self.connect_functiom_light()
+        setting = Setting.load_superuser()
+        if setting["Setting"]["Default-theme"] == "light":
+            self.setIcon_for_window_light()
+            self.setTheme_for_window_light()
+            self.connect_functiom_light()
+        else:
+            self.setIcon_for_window_dark()
+            self.setTheme_for_window_dark()
+            self.connect_functiom_dark()
         self.theme_button_pressed = True
 
     # Icon Button pressed Evenet Getter
@@ -2151,8 +2283,36 @@ class Main_Window(QMainWindow):
         logger.debug("Theme Icon Replacer Actived... [ iconButtonPressed ]")
         self.theme_button_pressed = prim
 
+    # Set The Theme Changes into Json File
+    def setTheThemeChangesJson(self, val):
+        logger.debug(
+            "The Theme Changes Setted into Json Setting File.... [ setTheThemeChangesJson ]")
+        __data = Setting.load_superuser()
+        __data[SETTING]["Default-theme"] = val
+        Setting.store_superuser(__data[SETTING])
+        print(val)
+
+
+class Verifier:
+    def __init__(self):
+        self.path = os.listdir(PATH_CONFIG_DIR)
+        self.verifier = False
+        if SETTING_FILE in self.path:
+            __data = Setting.load_superuser()
+            self.verifier = __data[SETTING]['Create']
+
+    def run(self):
+        if self.verifier:
+            app = QApplication(sys.argv)
+            login = Login_Window()
+            app.exec_()
+
+        else:
+            app = QApplication(sys.argv)
+            create = Create_Window()
+            app.exec()
+
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    main = Main_Window()
-    app.exec_()
+    verifier = Verifier()
+    verifier.run()

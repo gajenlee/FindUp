@@ -828,6 +828,7 @@ THEME_BTN = """
 MAIN_WINDOW_BACKGROUND = "background-color: none; border: 0px solid;"
 TOP_BAR_BACKGROUND = "background-color: rgb(20, 20, 20);"
 TOP_FRAME_BACKGROUND = "background-color: none;"
+ADD_INTER_PAGE_WIDGET = "background-color: rgb(26, 27, 34);"
 FRAME_RETURN_BAR = """
     background-color: rgb(40, 43, 53);
     border: none;
@@ -1333,6 +1334,7 @@ SETTING_LABEL = """
 SETTING_NAME_CHANGER = """
     QFrame {
         background-color: rgb(34, 35, 44);
+        border-radius: 10px;
     }
 """
 SETTING_USER_NAME_TITLE = """
@@ -1345,6 +1347,7 @@ SETTING_LABEL_SHOW_CURRENT_USERNAME = """
 SETTING_FRAME_MORE_OP = """
     QFrame {
         background-color: rgb(34, 35, 44);
+        border-radius: 10px;
     }
 """
 SETTING_LABEL_TITLE = """
@@ -1362,6 +1365,7 @@ SETTING_LABEL_INFO_RESET = """
 SETTING_FRAME_EMAIL_CHANGER = """
     QFrame {
         background-color: rgb(34, 35, 44);
+        border-radius: 10px;
     }
 """
 SETTING_LABEL_CHANGE_EMAIL_TITLE = """
@@ -1372,6 +1376,7 @@ SETTING_LABEL_CURRENT_EMAIL = "color: white;"
 SETTING_FRAME_CONTECT_NUM_CHANGER = """
     QFrame {
         background-color: rgb(34, 35, 44);
+        border-radius: 10px;
     }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 """
 SETTING_LABEL_CHANGE_CONTECT_NUM_TITLE = """
@@ -1382,6 +1387,7 @@ SETTING_SHOW_CURRENT_CONTECT_NUM = "color: white;"
 SETTING_FRAME_PASSWORD_CHANGER = """
     QFrame {
         background-color: rgb(34, 35, 44);
+        border-radius: 10px;
     }
 """
 SETTING_LABEL_CHANGE_PASSWORD_TITLE = """
