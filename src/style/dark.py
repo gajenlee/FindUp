@@ -279,9 +279,11 @@ INTER_BTN = """
         border-radius: 5px;
     }
     QPushButton:hover{
+        color: white;
         background-color: rgb(85, 170, 255);
     }
     QPushButton:pressed{
+        color: white;
         background-color: rgba(85, 170, 255, 100);
     }
 """
@@ -293,9 +295,11 @@ INTER_BTN_OPEN = """
         border-radius: 5px;
     }
     QPushButton:hover{
+        color: white;
         background-color: rgb(85, 170, 255);
     }
     QPushButton:pressed{
+        color: white;
         background-color: rgba(85, 170, 255, 100);
     }
 """
@@ -308,9 +312,11 @@ LOWER_BTN = """
      	border-radius: 5px;
     }
     QPushButton:hover{
+        color: white;
      	background-color: rgb(85, 170, 255);
     }
     QPushButton:pressed{
+        color: white;
      	background-color: rgba(85, 170, 255, 100);
     }
 """
@@ -322,9 +328,11 @@ LOWER_BTN_OPEN = """
         border-radius: 5px;
     }
     QPushButton:hover{
+        color: white;
         background-color: rgb(85, 170, 255);
     }
     QPushButton:pressed{
+        color: white;
         background-color: rgba(85, 170, 255, 100);
     }
 """
@@ -366,9 +374,11 @@ PRIMARY_BTN = """
         border-radius: 10px;
     }
     QPushButton:hover{
+        color: white;
         background-color: rgb(85, 170, 255);
     }
     QPushButton:pressed{
+        color: white;
         background-color: rgba(85, 170, 255, 100);
     }
 """
@@ -381,9 +391,11 @@ ORDNARY_BTN = """
         border-radius: 10px;
     }
     QPushButton:hover{
+        color: white;
         background-color: rgb(85, 170, 255);
     }
     QPushButton:pressed{
+        color: white;
         background-color: rgba(85, 170, 255, 100);
     }
 """
@@ -396,9 +408,11 @@ ADVANCED_BTN = """
         border-radius: 10px;
     }
     QPushButton:hover{
+        color: white;
         background-color: rgb(85, 170, 255);
     }
     QPushButton:pressed{
+        color: white;
         background-color: rgba(85, 170, 255, 100);
     }
 """
@@ -426,9 +440,11 @@ GOHOME_PRIMARY_BTN = """
         border-radius: 5px;
     }
     QPushButton:hover{
+        color: white;
         background-color: rgb(21, 134, 255);
     }
     QPushButton:pressed{
+        color: white;
         background-color: rgba(26, 114, 255, 100);
     }
 """
@@ -455,10 +471,12 @@ GOHOME_ADVANCED_BTN = """
         border: 0px solid;
         border-radius: 5px;
     }
-        QPushButton:hover{
+    QPushButton:hover{
+        color: white;
         background-color: rgb(21, 134, 255);
     }
     QPushButton:pressed{
+        color: white;
         background-color: rgba(26, 114, 255, 100);
     }
 """
@@ -535,7 +553,6 @@ SEARCH_BAR_BTN = """
         background-color: rgba(85, 170, 255, 100);
     }
 """
-
 SETTING_USERNAME_HIDDEN_BTN = """
     QPushButton {
         background-color: none;
@@ -837,6 +854,24 @@ FRAME_RETURN_BAR = """
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;
 """
+
+PROGRESS_BAR = """
+    QProgressBar {
+        border: 0px solid;
+        border-radius: 5px;
+        color: white;
+        font: 10pt \"./src/font/segoeui.ttf\";
+    }
+    QProgressBar::chunk {
+        background-color: rgb(0, 127, 226);
+        border-radius: 5px;
+    }
+    #status_prograss {
+        text-align: center;
+    }
+"""
+STATUS_BAR_LABEL = "color: white;"
+STATUS_BAR_BACKGROUND = "background-color: rgb(42, 45, 57);"
 
 FRAME_BACKUP = """
     QPushButton{
@@ -1585,7 +1620,8 @@ LABEL_INFO_SUPERUSER = """
     background-color: rgb(34, 35, 44);
     border: 6px solid rgb(30, 31, 39);
     border-radius: 15px;
-    margin-top: 10px;
+    margin: 10px;
+    padding: 10px;
 """
 
 FRAME_ABOUT = """
@@ -1628,8 +1664,13 @@ GROUP = """
         background: none;
         border: 1px solid rgb(61, 152, 212);
         border-radius: 10px;
+        color: white;
+        font-family: \'./src/font/segoeui.ttf\';
+        font-size: 15px;
+        font-weight: 600;
     }
 """
+INTER_ADD_TEACHER_BACKGROUND = "background-color: none;"
 
 SETTING_FRAME_SETTHEME = "background-color: none;"
 SETTING_LABEL_THEME = "color: white;"
@@ -1708,6 +1749,8 @@ ICON_GO = "./src/icon/light-icon/chevron-left.svg"
 ICON_DELETE = "./src/icon/light-icon/user-x.svg"
 ICON_JOB = "./src/icon/light-icon/briefcase.svg"
 ICON_RIL = ""
+ICON_QUALIF = "./src/icon/light-icon/badge-check.svg"
+ICON_SUBJECT = "./src/icon/light-icon/book.svg"
 
 ICON_THEME_BTN = "./src/icon/light-icon/brightness-2.svg"
 
@@ -1723,10 +1766,28 @@ def setSuperUserIconName(name, label_widget):
             <head/>
             <body>
                 <p align=\"center\"><img src=\"{ICON_USER_100}\"/></p>
-                <p align=\"center\" font>{name}</p>
+                <p style=\"padding-left: 10px;\" align=\"center\"><b>{name.title()}</b></p>
             </body>
         </html>
     """
+    )
+
+
+def setSuperUserFinform(obj, label_widget):
+    label_widget.setText(
+        f"""
+            <html>
+            <head/>
+            <body>
+                <h3><b>Name</b></h3>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{obj[0].title()}</b></p>
+                <h3><b>Email</b></h3>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{obj[1]}</b></p>
+                <h3><b>Contact</b></h3>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{obj[2]}</b></p>
+            </body>
+        </html>
+        """
     )
 
 

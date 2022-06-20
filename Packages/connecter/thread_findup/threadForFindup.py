@@ -38,3 +38,11 @@ class Thread_Open(QThread):
 
     def run(self):
         self.opening_window.emit()
+
+
+# The Access Window Opening Window Thread
+class Thread_Access(QThread):
+    opening_window = pyqtSignal()
+
+    def run(self):
+        self.opening_window.emit()

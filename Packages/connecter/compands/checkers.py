@@ -72,6 +72,11 @@ def superUserLayoutStore(name: list, password: list, contact: list, email=None):
     return obj
 
 
+# Inter User Object layout
+def interUserLayoutStore(data_obj, status, gender):
+    pass
+
+
 # Encrypt and Decrypt Data
 class Crypto:
 
@@ -123,3 +128,21 @@ class Crypto:
         __name = cal.__secure.decrypt(name[0], name[-1])
 
         return [__name, __pwd]
+
+    @classmethod
+    def decrypt_one(cal, any_obj: list):
+        __data = cal.__secure.decrypt(any_obj[0], any_obj[-1])
+        return __data
+
+    @classmethod
+    def encrypt_one(cal, any_obj: str):
+        __data = cal.__secure.encrypt(any_obj)
+        return __data
+
+    @classmethod
+    def encrypt_interuser(cal, data_obj: list):
+        pass
+
+    @classmethod
+    def decrypt_interuser(cal, data_obj: list):
+        pass

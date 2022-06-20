@@ -2,16 +2,17 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+
 class Ui_Main(object):
 
-    def setShadowEffect(self, widget):
+    def setShadowEffect(self, widget, blur=30, color=QColor(0, 0, 0, 80)):
 
         # Set Shadow Effect
         shadow = QGraphicsDropShadowEffect()
-        shadow.setBlurRadius(30)
+        shadow.setBlurRadius(blur)
         shadow.setXOffset(0)
         shadow.setYOffset(0)
-        shadow.setColor(QColor(0, 0, 0, 80))
+        shadow.setColor(color)
 
         widget.setGraphicsEffect(shadow)
 
@@ -294,6 +295,79 @@ class Ui_Main(object):
         self.horizontalLayout_26.addLayout(self.horizontalLayout_25)
         self.verticalLayout_43.addWidget(self.frame_2)
         self.stackedWidget.addWidget(self.page_add_students)
+
+        self.page_inter_add = QWidget()
+        self.page_inter_add.setObjectName("page_inter_add")
+        self.verticalLayout_43_inter = QVBoxLayout(self.page_inter_add)
+        self.verticalLayout_43_inter.setObjectName("verticalLayout_43_inter")
+        self.fakces_inter_3 = QFrame(self.page_inter_add)
+        self.fakces_inter_3.setMinimumSize(QSize(0, 100))
+        self.fakces_inter_3.setMaximumSize(QSize(16777215, 100))
+        self.fakces_inter_3.setFrameShape(QFrame.StyledPanel)
+        self.fakces_inter_3.setFrameShadow(QFrame.Raised)
+        self.fakces_inter_3.setObjectName("fakces_inter_3")
+        self.verticalLayout_43_inter.addWidget(self.fakces_inter_3)
+        self.frame_add_btns_inters = QFrame(self.page_inter_add)
+        self.frame_add_btns_inters.setFrameShape(QFrame.StyledPanel)
+        self.frame_add_btns_inters.setFrameShadow(QFrame.Raised)
+        self.frame_add_btns_inters.setObjectName("frame_add_btns_inters")
+        self.horizontalLayout_26_inter = QHBoxLayout(
+            self.frame_add_btns_inters)
+        self.horizontalLayout_26_inter.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_26_inter.setSpacing(0)
+        self.horizontalLayout_26_inter.setObjectName(
+            "horizontalLayout_26_inter")
+        self.fakces_inter = QFrame(self.frame_add_btns_inters)
+        self.fakces_inter.setMinimumSize(QSize(100, 0))
+        self.fakces_inter.setMaximumSize(QSize(20, 16777215))
+        self.fakces_inter.setFrameShape(QFrame.StyledPanel)
+        self.fakces_inter.setFrameShadow(QFrame.Raised)
+        self.fakces_inter.setObjectName("fakces_inter")
+        self.horizontalLayout_26_inter.addWidget(self.fakces_inter)
+        self.horizontalLayout_25_inter = QHBoxLayout()
+        self.horizontalLayout_25_inter.setSpacing(15)
+        self.horizontalLayout_25_inter.setObjectName(
+            "horizontalLayout_25_inter")
+        self.btn_teahers = QPushButton(self.frame_add_btns_inters)
+        self.btn_teahers.setMinimumSize(QSize(0, 45))
+        self.btn_teahers.setMaximumSize(QSize(16777215, 45))
+        font = QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_teahers.setFont(font)
+        self.btn_teahers.setObjectName("btn_teahers")
+        self.horizontalLayout_25_inter.addWidget(self.btn_teahers)
+        self.btn_none_teaher = QPushButton(self.frame_add_btns_inters)
+        self.btn_none_teaher.setMinimumSize(QSize(0, 45))
+        self.btn_none_teaher.setMaximumSize(QSize(16777215, 45))
+        font = QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_none_teaher.setFont(font)
+        self.btn_none_teaher.setObjectName("btn_none_teaher")
+        self.horizontalLayout_25_inter.addWidget(self.btn_none_teaher)
+        self.horizontalLayout_26_inter.addLayout(
+            self.horizontalLayout_25_inter)
+        self.fakces_inter_2 = QFrame(self.frame_add_btns_inters)
+        self.fakces_inter_2.setMinimumSize(QSize(20, 0))
+        self.fakces_inter_2.setMaximumSize(QSize(100, 16777215))
+        self.fakces_inter_2.setFrameShape(QFrame.StyledPanel)
+        self.fakces_inter_2.setFrameShadow(QFrame.Raised)
+        self.fakces_inter_2.setObjectName("fakces_inter_2")
+        self.horizontalLayout_26_inter.addWidget(self.fakces_inter_2)
+        self.verticalLayout_43_inter.addWidget(self.frame_add_btns_inters)
+        self.frame_informtion_inter = QFrame(self.page_inter_add)
+        self.frame_informtion_inter.setMinimumSize(QSize(0, 100))
+        self.frame_informtion_inter.setMaximumSize(QSize(16777215, 100))
+        self.frame_informtion_inter.setFrameShape(QFrame.StyledPanel)
+        self.frame_informtion_inter.setFrameShadow(QFrame.Raised)
+        self.frame_informtion_inter.setObjectName("frame_informtion_inter")
+        self.verticalLayout_44_inter = QVBoxLayout(self.frame_informtion_inter)
+        self.verticalLayout_44_inter.setObjectName("verticalLayout_44_inter")
+        self.verticalLayout_43_inter.addWidget(self.frame_informtion_inter)
+        self.stackedWidget.addWidget(self.page_inter_add)
 
         self.page = QWidget()
         self.page.setObjectName("page")
@@ -2038,27 +2112,6 @@ class Ui_Main(object):
 
         self.stackedWidget.addWidget(self.page_setting)
 
-        self.page_add_inter = QWidget()
-        self.page_add_inter.setObjectName(u"page_add_inter")
-        self.verticalLayout_43 = QVBoxLayout(self.page_add_inter)
-        self.verticalLayout_43.setObjectName(u"verticalLayout_43")
-        self.frame_main_inter_info = QFrame(self.page_add_inter)
-        self.frame_main_inter_info.setObjectName(u"frame_main_inter_info")
-        self.frame_main_inter_info.setMinimumSize(QSize(0, 600))
-        self.frame_main_inter_info.setMaximumSize(QSize(16777215, 16777215))
-        self.setShadowEffect(self.frame_main_inter_info)
-        self.frame_main_inter_info.setFrameShape(QFrame.StyledPanel)
-        self.frame_main_inter_info.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_44 = QVBoxLayout(self.frame_main_inter_info)
-        self.verticalLayout_44.setObjectName(u"verticalLayout_44")
-
-        self.frame_content = QFrame(self.frame_main_inter_info)
-        self.frame_content.setObjectName(u"frame_content")
-        self.frame_content.setFrameShape(QFrame.StyledPanel)
-        self.frame_content.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_45 = QVBoxLayout(self.frame_content)
-        self.verticalLayout_45.setObjectName(u"verticalLayout_45")
-
         font11 = QFont()
         font11.setFamily(u"./src/font/segoeui.ttf")
         font11.setPointSize(11)
@@ -2071,95 +2124,533 @@ class Ui_Main(object):
         font10.setBold(False)
         font10.setWeight(50)
 
-        self.scrollArea_add_info = QScrollArea(self.frame_content)
+        self.page_add_inter_none = QWidget()
+        self.page_add_inter_none.setObjectName("page_add_inter_none")
+        self.verticalLayout_54 = QVBoxLayout(self.page_add_inter_none)
+        self.verticalLayout_54.setObjectName("verticalLayout_54")
+        self.frame_main_inter_info_inter_teache_none = QFrame(
+            self.page_add_inter_none)
+        self.frame_main_inter_info_inter_teache_none.setMinimumSize(
+            QSize(0, 0))
+        self.frame_main_inter_info_inter_teache_none.setFrameShape(
+            QFrame.StyledPanel)
+        self.frame_main_inter_info_inter_teache_none.setFrameShadow(
+            QFrame.Raised)
+        self.frame_main_inter_info_inter_teache_none.setObjectName(
+            "frame_main_inter_info_inter_teache_none")
+        self.verticalLayout_53 = QVBoxLayout(
+            self.frame_main_inter_info_inter_teache_none)
+        self.verticalLayout_53.setContentsMargins(5, 5, 5, 5)
+        self.verticalLayout_53.setObjectName("verticalLayout_53")
+        self.frame_content_inter_teacher_none = QFrame(
+            self.frame_main_inter_info_inter_teache_none)
+        self.frame_content_inter_teacher_none.setMinimumSize(QSize(0, 0))
+        self.frame_content_inter_teacher_none.setFrameShape(QFrame.StyledPanel)
+        self.frame_content_inter_teacher_none.setFrameShadow(QFrame.Raised)
+        self.frame_content_inter_teacher_none.setObjectName(
+            "frame_content_inter_teacher_none")
+        self.gridLayout_10 = QGridLayout(self.frame_content_inter_teacher_none)
+        self.gridLayout_10.setContentsMargins(10, 10, 10, 10)
+        self.gridLayout_10.setObjectName("gridLayout_10")
+        self.label_show_roll_number_none = QLabel(
+            self.frame_content_inter_teacher_none)
+        self.label_show_roll_number_none.setMinimumSize(QSize(0, 30))
+        self.label_show_roll_number_none.setMaximumSize(QSize(16777215, 30))
+        self.label_show_roll_number_none.setObjectName(
+            "label_show_roll_number_none")
+        self.gridLayout_10.addWidget(
+            self.label_show_roll_number_none, 1, 0, 1, 2)
+        self.horizontalLayout_inter_none = QHBoxLayout()
+        self.horizontalLayout_inter_none.setObjectName(
+            "horizontalLayout_inter_none")
+        self.btn_addInter_teacher_none = QPushButton(
+            self.frame_content_inter_teacher_none)
+        self.btn_addInter_teacher_none.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_addInter_teacher_none.setFont(font)
+        self.btn_addInter_teacher_none.setObjectName(
+            "btn_addInter_teacher_none")
+        self.horizontalLayout_inter_none.addWidget(
+            self.btn_addInter_teacher_none)
+        self.btn_go_inter_teacher_none = QPushButton(
+            self.frame_content_inter_teacher_none)
+        self.btn_go_inter_teacher_none.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_go_inter_teacher_none.setFont(font)
+        self.btn_go_inter_teacher_none.setObjectName(
+            "btn_go_inter_teacher_none")
+        self.horizontalLayout_inter_none.addWidget(
+            self.btn_go_inter_teacher_none)
+        self.gridLayout_10.addLayout(
+            self.horizontalLayout_inter_none, 2, 0, 1, 2)
+        self.scrollArea_add_info_none = QScrollArea(
+            self.frame_content_inter_teacher_none)
+        self.scrollArea_add_info_none.setWidgetResizable(True)
+        self.scrollArea_add_info_none.setObjectName("scrollArea_add_info_none")
+        self.scrollAreaWidgetInfo_none = QWidget()
+        self.scrollAreaWidgetInfo_none.setGeometry(QRect(0, 0, 835, 1000))
+        self.scrollAreaWidgetInfo_none.setMinimumSize(QSize(0, 1000))
+        self.scrollAreaWidgetInfo_none.setObjectName(
+            "scrollAreaWidgetInfo_none")
+        self.verticalLayout_55 = QVBoxLayout(self.scrollAreaWidgetInfo_none)
+        self.verticalLayout_55.setObjectName("verticalLayout_55")
+        self.frame_user_image_upload_inter_teacher_none = QFrame(
+            self.scrollAreaWidgetInfo_none)
+        self.frame_user_image_upload_inter_teacher_none.setMaximumSize(
+            QSize(16777215, 300))
+        self.frame_user_image_upload_inter_teacher_none.setFrameShape(
+            QFrame.StyledPanel)
+        self.frame_user_image_upload_inter_teacher_none.setFrameShadow(
+            QFrame.Raised)
+        self.frame_user_image_upload_inter_teacher_none.setObjectName(
+            "frame_user_image_upload_inter_teacher_none")
+        self.gridLayout_9 = QGridLayout(
+            self.frame_user_image_upload_inter_teacher_none)
+        self.gridLayout_9.setContentsMargins(10, 10, 10, 10)
+        self.gridLayout_9.setSpacing(10)
+        self.gridLayout_9.setObjectName("gridLayout_9")
+        self.label_icon_none = QLabel(
+            self.frame_user_image_upload_inter_teacher_none)
+        self.label_icon_none.setMinimumSize(QSize(200, 200))
+        self.label_icon_none.setMaximumSize(QSize(200, 200))
+        self.label_icon_none.setObjectName("label_icon_none")
+        self.setShadowEffect(self.label_icon_none)
+        self.gridLayout_9.addWidget(self.label_icon_none, 0, 0, 1, 1)
+        self.btn_upload_image_inter_teacher_none = QPushButton(
+            self.frame_user_image_upload_inter_teacher_none)
+        self.btn_upload_image_inter_teacher_none.setMinimumSize(QSize(0, 25))
+        self.btn_upload_image_inter_teacher_none.setMaximumSize(QSize(300, 25))
+        self.btn_upload_image_inter_teacher_none.setObjectName(
+            "btn_upload_image_inter_teacher_none")
+        self.gridLayout_9.addWidget(
+            self.btn_upload_image_inter_teacher_none, 1, 0, 1, 1)
+        self.verticalLayout_55.addWidget(
+            self.frame_user_image_upload_inter_teacher_none)
+        self.groupBox_lineedit_info_none = QGroupBox(
+            self.scrollAreaWidgetInfo_none)
+        self.groupBox_lineedit_info_none.setTitle("")
+        self.groupBox_lineedit_info_none.setObjectName(
+            "groupBox_lineedit_info_none")
+        self.gridLayout_13 = QGridLayout(self.groupBox_lineedit_info_none)
+        self.gridLayout_13.setContentsMargins(10, 10, 10, 10)
+        self.gridLayout_13.setSpacing(10)
+        self.gridLayout_13.setObjectName("gridLayout_13")
+        self.lineEdit_email_id_none = QLineEdit(
+            self.groupBox_lineedit_info_none)
+        self.lineEdit_email_id_none.setMinimumSize(QSize(0, 30))
+        self.lineEdit_email_id_none.setObjectName("lineEdit_email_id_none")
+        self.gridLayout_13.addWidget(self.lineEdit_email_id_none, 2, 0, 1, 1)
+        self.lineEdit_educational_qualif_none = QLineEdit(
+            self.groupBox_lineedit_info_none)
+        self.lineEdit_educational_qualif_none.setMinimumSize(QSize(0, 30))
+        self.lineEdit_educational_qualif_none.setObjectName(
+            "lineEdit_educational_qualif_none")
+        self.gridLayout_13.addWidget(
+            self.lineEdit_educational_qualif_none, 5, 0, 1, 1)
+        self.lineEdit_personal_contact_none = QLineEdit(
+            self.groupBox_lineedit_info_none)
+        self.lineEdit_personal_contact_none.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.lineEdit_personal_contact_none.setFont(font)
+        self.lineEdit_personal_contact_none.setObjectName(
+            "lineEdit_personal_contact_none")
+        self.gridLayout_13.addWidget(
+            self.lineEdit_personal_contact_none, 1, 1, 1, 1)
+        self.lineEdit_professional_qualif_none = QLineEdit(
+            self.groupBox_lineedit_info_none)
+        self.lineEdit_professional_qualif_none.setMinimumSize(QSize(0, 30))
+        self.lineEdit_professional_qualif_none.setObjectName(
+            "lineEdit_professional_qualif_none")
+        self.gridLayout_13.addWidget(
+            self.lineEdit_professional_qualif_none, 6, 0, 1, 1)
+        self.lineEdit_full_name_none = QLineEdit(
+            self.groupBox_lineedit_info_none)
+        self.lineEdit_full_name_none.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.lineEdit_full_name_none.setFont(font)
+        self.lineEdit_full_name_none.setToolTipDuration(4)
+        self.lineEdit_full_name_none.setObjectName("lineEdit_full_name_none")
+        self.gridLayout_13.addWidget(self.lineEdit_full_name_none, 0, 0, 1, 1)
+        self.lineEdit__name_initial_none = QLineEdit(
+            self.groupBox_lineedit_info_none)
+        self.lineEdit__name_initial_none.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.lineEdit__name_initial_none.setFont(font)
+        self.lineEdit__name_initial_none.setObjectName(
+            "lineEdit__name_initial_none")
+        self.gridLayout_13.addWidget(
+            self.lineEdit__name_initial_none, 0, 1, 1, 1)
+        self.lineEdit_WOP_no_none = QLineEdit(self.groupBox_lineedit_info_none)
+        self.lineEdit_WOP_no_none.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.lineEdit_WOP_no_none.setFont(font)
+        self.lineEdit_WOP_no_none.setObjectName("lineEdit_WOP_no_none")
+        self.gridLayout_13.addWidget(self.lineEdit_WOP_no_none, 2, 1, 1, 1)
+        self.lineEdit_spouse_name_none = QLineEdit(
+            self.groupBox_lineedit_info_none)
+        self.lineEdit_spouse_name_none.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.lineEdit_spouse_name_none.setFont(font)
+        self.lineEdit_spouse_name_none.setObjectName(
+            "lineEdit_spouse_name_none")
+        self.gridLayout_13.addWidget(
+            self.lineEdit_spouse_name_none, 3, 1, 1, 1)
+        self.lineEdit_agrakara_no_none = QLineEdit(
+            self.groupBox_lineedit_info_none)
+        self.lineEdit_agrakara_no_none.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.lineEdit_agrakara_no_none.setFont(font)
+        self.lineEdit_agrakara_no_none.setObjectName(
+            "lineEdit_agrakara_no_none")
+        self.gridLayout_13.addWidget(
+            self.lineEdit_agrakara_no_none, 3, 0, 1, 1)
+        self.lineEdit_inc_no_none = QLineEdit(self.groupBox_lineedit_info_none)
+        self.lineEdit_inc_no_none.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.lineEdit_inc_no_none.setFont(font)
+        self.lineEdit_inc_no_none.setObjectName("lineEdit_inc_no_none")
+        self.gridLayout_13.addWidget(self.lineEdit_inc_no_none, 1, 0, 1, 1)
+        self.lineEdit_nature_of_appoin_none = QLineEdit(
+            self.groupBox_lineedit_info_none)
+        self.lineEdit_nature_of_appoin_none.setMinimumSize(QSize(0, 30))
+        self.lineEdit_nature_of_appoin_none.setMaximumSize(
+            QSize(16777215, 16777215))
+        self.lineEdit_nature_of_appoin_none.setSizeIncrement(QSize(0, 0))
+        self.lineEdit_nature_of_appoin_none.setObjectName(
+            "lineEdit_nature_of_appoin_none")
+        self.gridLayout_13.addWidget(
+            self.lineEdit_nature_of_appoin_none, 6, 1, 1, 1)
+        self.lineEdit_salary_none = QLineEdit(self.groupBox_lineedit_info_none)
+        self.lineEdit_salary_none.setMinimumSize(QSize(0, 30))
+        self.lineEdit_salary_none.setObjectName("lineEdit_salary_none")
+        self.gridLayout_13.addWidget(self.lineEdit_salary_none, 5, 1, 1, 1)
+        self.verticalLayout_55.addWidget(self.groupBox_lineedit_info_none)
+        self.groupBox_increment_date_none = QGroupBox(
+            self.scrollAreaWidgetInfo_none)
+        self.groupBox_increment_date_none.setMinimumSize(QSize(0, 70))
+        self.groupBox_increment_date_none.setObjectName(
+            "groupBox_increment_date_none")
+        self.horizontalLayout_25 = QHBoxLayout(
+            self.groupBox_increment_date_none)
+        self.horizontalLayout_25.setContentsMargins(10, 10, 10, 10)
+        self.horizontalLayout_25.setObjectName("horizontalLayout_25")
+        self.dateEdit_increment_date_none = QDateEdit(
+            self.groupBox_increment_date_none)
+        self.dateEdit_increment_date_none.setMinimumSize(QSize(0, 30))
+        self.dateEdit_increment_date_none.setObjectName(
+            "dateEdit_increment_date_none")
+        self.horizontalLayout_25.addWidget(self.dateEdit_increment_date_none)
+        self.verticalLayout_55.addWidget(self.groupBox_increment_date_none)
+        self.horizontalLayout_34_none = QHBoxLayout()
+        self.horizontalLayout_34_none.setContentsMargins(0, 0, -1, -1)
+        self.horizontalLayout_34_none.setSpacing(10)
+        self.horizontalLayout_34_none.setObjectName("horizontalLayout_34_none")
+        self.label_DOB_text_none = QLabel(self.scrollAreaWidgetInfo_none)
+        self.label_DOB_text_none.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.label_DOB_text_none.setFont(font)
+        self.label_DOB_text_none.setObjectName("label_DOB_text_none")
+        self.horizontalLayout_34_none.addWidget(
+            self.label_DOB_text_none, 0, Qt.AlignHCenter)
+        self.label_appointment_data_text_none = QLabel(
+            self.scrollAreaWidgetInfo_none)
+        self.label_appointment_data_text_none.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.label_appointment_data_text_none.setFont(font)
+        self.label_appointment_data_text_none.setObjectName(
+            "label_appointment_data_text_none")
+        self.horizontalLayout_34_none.addWidget(
+            self.label_appointment_data_text_none, 0, Qt.AlignHCenter)
+        self.verticalLayout_55.addLayout(self.horizontalLayout_34_none)
+        self.horizontalLayout_33_none = QHBoxLayout()
+        self.horizontalLayout_33_none.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_33_none.setSpacing(10)
+        self.horizontalLayout_33_none.setObjectName("horizontalLayout_33_none")
+        self.dateEdit_DOB_none = QDateEdit(self.scrollAreaWidgetInfo_none)
+        self.dateEdit_DOB_none.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.dateEdit_DOB_none.setFont(font)
+        self.dateEdit_DOB_none.setObjectName("dateEdit_DOB_none")
+        self.horizontalLayout_33_none.addWidget(self.dateEdit_DOB_none)
+        self.dateEdit_first_appointment_date_none = QDateEdit(
+            self.scrollAreaWidgetInfo_none)
+        self.dateEdit_first_appointment_date_none.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.dateEdit_first_appointment_date_none.setFont(font)
+        self.dateEdit_first_appointment_date_none.setObjectName(
+            "dateEdit_first_appointment_date_none")
+        self.horizontalLayout_33_none.addWidget(
+            self.dateEdit_first_appointment_date_none)
+        self.verticalLayout_55.addLayout(self.horizontalLayout_33_none)
+        self.groupBox_address_none = QGroupBox(self.scrollAreaWidgetInfo_none)
+        self.groupBox_address_none.setMaximumSize(QSize(16777215, 100))
+        self.groupBox_address_none.setTitle("")
+        self.groupBox_address_none.setObjectName("groupBox_address_none")
+        self.gridLayout_14 = QGridLayout(self.groupBox_address_none)
+        self.gridLayout_14.setObjectName("gridLayout_14")
+        self.gridLayout_14.setContentsMargins(0, 0, 0, 0)
+        self.textEdit_working_address_none = QTextEdit(
+            self.groupBox_address_none)
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.textEdit_working_address_none.setFont(font)
+        self.textEdit_working_address_none.setObjectName(
+            "textEdit_working_address_none")
+        self.gridLayout_14.addWidget(
+            self.textEdit_working_address_none, 0, 0, 1, 1)
+        self.textEdit_emergency_none = QTextEdit(self.groupBox_address_none)
+        font = QFont()
+        font.setPointSize(10)
+        self.textEdit_emergency_none.setFont(font)
+        self.textEdit_emergency_none.setObjectName("textEdit_emergency_none")
+        self.gridLayout_14.addWidget(self.textEdit_emergency_none, 0, 1, 1, 1)
+        self.verticalLayout_55.addWidget(self.groupBox_address_none)
+        self.horizontalLayout_37_none = QHBoxLayout()
+        self.horizontalLayout_37_none.setObjectName("horizontalLayout_37_none")
+        self.label_date_app_to_school_text_none = QLabel(
+            self.scrollAreaWidgetInfo_none)
+        self.label_date_app_to_school_text_none.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.label_date_app_to_school_text_none.setFont(font)
+        self.label_date_app_to_school_text_none.setObjectName(
+            "label_date_app_to_school_text_none")
+        self.horizontalLayout_37_none.addWidget(
+            self.label_date_app_to_school_text_none, 0, Qt.AlignHCenter)
+        self.verticalLayout_55.addLayout(self.horizontalLayout_37_none)
+        self.horizontalLayout_38_none = QHBoxLayout()
+        self.horizontalLayout_38_none.setObjectName("horizontalLayout_38_none")
+        self.dateEdit_appointment_date_none = QDateEdit(
+            self.scrollAreaWidgetInfo_none)
+        self.dateEdit_appointment_date_none.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.dateEdit_appointment_date_none.setFont(font)
+        self.dateEdit_appointment_date_none.setObjectName(
+            "dateEdit_appointment_date_none")
+        self.horizontalLayout_38_none.addWidget(
+            self.dateEdit_appointment_date_none)
+        self.verticalLayout_55.addLayout(self.horizontalLayout_38_none)
+        self.horizontalLayout_40_none = QHBoxLayout()
+        self.horizontalLayout_40_none.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_40_none.setSpacing(6)
+        self.horizontalLayout_40_none.setObjectName("horizontalLayout_40_none")
+        self.groupBox_civil_none = QGroupBox(self.scrollAreaWidgetInfo_none)
+        self.groupBox_civil_none.setObjectName("groupBox_civil_none")
+        self.groupBox_civil_none.setMinimumSize(QSize(0, 70))
+        self.gridLayout_15 = QGridLayout(self.groupBox_civil_none)
+        self.gridLayout_15.setObjectName("gridLayout_15")
+        self.gridLayout_15.setContentsMargins(10, 10, 10, 10)
+        self.radioButton_married_none = QRadioButton(self.groupBox_civil_none)
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.radioButton_married_none.setFont(font)
+        self.radioButton_married_none.setObjectName("radioButton_married_none")
+        self.gridLayout_15.addWidget(
+            self.radioButton_married_none, 0, 0, 1, 1, Qt.AlignCenter)
+        self.radioButton_unmarried_none = QRadioButton(
+            self.groupBox_civil_none)
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.radioButton_unmarried_none.setFont(font)
+        self.radioButton_unmarried_none.setObjectName(
+            "radioButton_unmarried_none")
+        self.gridLayout_15.addWidget(
+            self.radioButton_unmarried_none, 0, 1, 1, 1, Qt.AlignCenter)
+        self.horizontalLayout_40_none.addWidget(self.groupBox_civil_none)
+        self.groupBox_gender_none = QGroupBox(self.scrollAreaWidgetInfo_none)
+        self.groupBox_gender_none.setObjectName("groupBox_gender_none")
+        self.groupBox_gender_none.setMinimumSize(QSize(0, 70))
+        self.gridLayout_16 = QGridLayout(self.groupBox_gender_none)
+        self.gridLayout_16.setObjectName("gridLayout_16")
+        self.gridLayout_16.setContentsMargins(10, 10, 10, 10)
+        self.radioButton_other_none = QRadioButton(self.groupBox_gender_none)
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.radioButton_other_none.setFont(font)
+        self.radioButton_other_none.setObjectName("radioButton_other_none")
+        self.gridLayout_16.addWidget(
+            self.radioButton_other_none, 0, 2, 1, 1, Qt.AlignCenter)
+        self.radioButton_female_none = QRadioButton(self.groupBox_gender_none)
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.radioButton_female_none.setFont(font)
+        self.radioButton_female_none.setObjectName("radioButton_female_none")
+        self.gridLayout_16.addWidget(
+            self.radioButton_female_none, 0, 1, 1, 1, Qt.AlignCenter)
+        self.radioButton_male_none = QRadioButton(self.groupBox_gender_none)
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.radioButton_male_none.setFont(font)
+        self.radioButton_male_none.setObjectName("radioButton_male_none")
+        self.gridLayout_16.addWidget(
+            self.radioButton_male_none, 0, 0, 1, 1, Qt.AlignCenter)
+        self.horizontalLayout_40_none.addWidget(self.groupBox_gender_none)
+        self.verticalLayout_55.addLayout(self.horizontalLayout_40_none)
+        self.scrollArea_add_info_none.setWidget(self.scrollAreaWidgetInfo_none)
+        self.gridLayout_10.addWidget(self.scrollArea_add_info_none, 0, 0, 1, 1)
+        self.verticalLayout_53.addWidget(self.frame_content_inter_teacher_none)
+        self.verticalLayout_54.addWidget(
+            self.frame_main_inter_info_inter_teache_none)
+        self.stackedWidget.addWidget(self.page_add_inter_none)
+
+        self.page_add_inter = QWidget()
+        self.page_add_inter.setObjectName("page_add_inter")
+        self.verticalLayout_54 = QVBoxLayout(self.page_add_inter)
+        self.verticalLayout_54.setObjectName("verticalLayout_54")
+        self.frame_main_inter_info_inter_teacher = QFrame(self.page_add_inter)
+        self.frame_main_inter_info_inter_teacher.setMinimumSize(QSize(0, 0))
+        self.frame_main_inter_info_inter_teacher.setFrameShape(
+            QFrame.StyledPanel)
+        self.frame_main_inter_info_inter_teacher.setFrameShadow(QFrame.Raised)
+        self.frame_main_inter_info_inter_teacher.setObjectName(
+            "frame_main_inter_info_inter_teacher")
+        self.verticalLayout_53 = QVBoxLayout(
+            self.frame_main_inter_info_inter_teacher)
+        self.verticalLayout_53.setContentsMargins(5, 5, 5, 5)
+        self.verticalLayout_53.setObjectName("verticalLayout_53")
+        self.frame_content_inter_teacher = QFrame(
+            self.frame_main_inter_info_inter_teacher)
+        self.frame_content_inter_teacher.setMinimumSize(QSize(0, 0))
+        self.frame_content_inter_teacher.setFrameShape(QFrame.StyledPanel)
+        self.frame_content_inter_teacher.setFrameShadow(QFrame.Raised)
+        self.frame_content_inter_teacher.setObjectName(
+            "frame_content_inter_teacher")
+        self.gridLayout_10 = QGridLayout(self.frame_content_inter_teacher)
+        self.gridLayout_10.setContentsMargins(10, 10, 10, 10)
+        self.gridLayout_10.setObjectName("gridLayout_10")
+        self.label_show_roll_number = QLabel(self.frame_content_inter_teacher)
+        self.label_show_roll_number.setMinimumSize(QSize(0, 30))
+        self.label_show_roll_number.setMaximumSize(QSize(16777215, 30))
+        self.label_show_roll_number.setObjectName("label_show_roll_number")
+        self.gridLayout_10.addWidget(self.label_show_roll_number, 1, 0, 1, 2)
+        self.horizontalLayout_inter_2 = QHBoxLayout()
+        self.horizontalLayout_inter_2.setObjectName("horizontalLayout_inter_2")
+        self.btn_addInter_teacher = QPushButton(
+            self.frame_content_inter_teacher)
+        self.btn_addInter_teacher.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_addInter_teacher.setFont(font)
+        self.btn_addInter_teacher.setObjectName("btn_addInter_teacher")
+        self.horizontalLayout_inter_2.addWidget(self.btn_addInter_teacher)
+        self.btn_go_inter_teacher = QPushButton(
+            self.frame_content_inter_teacher)
+        self.btn_go_inter_teacher.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_go_inter_teacher.setFont(font)
+        self.btn_go_inter_teacher.setObjectName("btn_go_inter_teacher")
+        self.horizontalLayout_inter_2.addWidget(self.btn_go_inter_teacher)
+        self.gridLayout_10.addLayout(self.horizontalLayout_inter_2, 2, 0, 1, 2)
+        self.scrollArea_add_info = QScrollArea(
+            self.frame_content_inter_teacher)
         self.scrollArea_add_info.setWidgetResizable(True)
         self.scrollArea_add_info.setObjectName("scrollArea_add_info")
-        self.scrollArea_add_info.setMinimumSize(QSize(0, 0))
         self.scrollAreaWidgetInfo = QWidget()
-        self.scrollAreaWidgetInfo.setGeometry(QRect(0, 0, 813, 700))
+        self.scrollAreaWidgetInfo.setGeometry(QRect(0, -467, 835, 1000))
         self.scrollAreaWidgetInfo.setMinimumSize(QSize(0, 1000))
         self.scrollAreaWidgetInfo.setObjectName("scrollAreaWidgetInfo")
-        self.verticalLayout_55 = QVBoxLayout(
-            self.scrollAreaWidgetInfo)
+        self.verticalLayout_55 = QVBoxLayout(self.scrollAreaWidgetInfo)
         self.verticalLayout_55.setObjectName("verticalLayout_55")
-
-        self.frame_logo_icon = QFrame(self.frame_main_inter_info)
-        self.frame_logo_icon.setObjectName(u"frame_logo_icon")
-        self.frame_logo_icon.setFrameShape(QFrame.StyledPanel)
-        self.frame_logo_icon.setFrameShadow(QFrame.Raised)
-        self.frame_logo_icon.setMinimumSize(QSize(0, 300))
-        self.horizontalLayout_4 = QHBoxLayout(self.frame_logo_icon)
-        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-
-        self.frame_user_image_upload = QFrame(self.frame_logo_icon)
-        self.frame_user_image_upload.setFrameShape(QFrame.StyledPanel)
-        self.frame_user_image_upload.setFrameShadow(QFrame.Raised)
-        self.frame_user_image_upload.setObjectName("frame_user_image_upload")
-        self.gridLayout_4 = QGridLayout(self.frame_user_image_upload)
-        self.gridLayout_4.setContentsMargins(10, 10, 10, 10)
-        self.gridLayout_4.setSpacing(10)
-        self.gridLayout_4.setObjectName("gridLayout_4")
-        self.label_icon_inter = QLabel(self.frame_user_image_upload)
-        self.label_icon_inter.setMinimumSize(QSize(200, 200))
-        self.label_icon_inter.setMaximumSize(QSize(200, 200))
-        self.label_icon_inter.setObjectName("label_icon_")
-        self.setShadowEffect(self.label_icon_inter)
-        self.gridLayout_4.addWidget(self.label_icon_inter, 0, 0, 1, 1)
-        self.btn_upload_image = QPushButton(self.frame_user_image_upload)
-        self.btn_upload_image.setMinimumSize(QSize(0, 25))
-        self.btn_upload_image.setMaximumSize(QSize(300, 25))
-        self.btn_upload_image.setObjectName("btn_upload_image")
-        self.gridLayout_4.addWidget(self.btn_upload_image, 1, 0, 1, 1)
-        self.horizontalLayout_4.addWidget(self.frame_user_image_upload)
-
-        self.verticalLayout_55.addWidget(self.frame_logo_icon)
-
-        self.groupBox_lineedit_info = QGroupBox(
+        self.frame_user_image_upload_inter_teacher = QFrame(
             self.scrollAreaWidgetInfo)
+        self.frame_user_image_upload_inter_teacher.setMaximumSize(
+            QSize(16777215, 300))
+        self.frame_user_image_upload_inter_teacher.setFrameShape(
+            QFrame.StyledPanel)
+        self.frame_user_image_upload_inter_teacher.setFrameShadow(
+            QFrame.Raised)
+        self.frame_user_image_upload_inter_teacher.setObjectName(
+            "frame_user_image_upload_inter_teacher")
+        self.gridLayout_9 = QGridLayout(
+            self.frame_user_image_upload_inter_teacher)
+        self.gridLayout_9.setContentsMargins(10, 10, 10, 10)
+        self.gridLayout_9.setSpacing(10)
+        self.gridLayout_9.setObjectName("gridLayout_9")
+        self.label_icon_inter_teacher = QLabel(
+            self.frame_user_image_upload_inter_teacher)
+        self.setShadowEffect(self.label_icon_inter_teacher)
+        self.label_icon_inter_teacher.setMinimumSize(QSize(200, 200))
+        self.label_icon_inter_teacher.setMaximumSize(QSize(200, 200))
+        self.label_icon_inter_teacher.setObjectName("label_icon_inter_teacher")
+        self.gridLayout_9.addWidget(self.label_icon_inter_teacher, 0, 0, 1, 1)
+        self.btn_upload_image_inter_teacher = QPushButton(
+            self.frame_user_image_upload_inter_teacher)
+        self.btn_upload_image_inter_teacher.setMinimumSize(QSize(0, 25))
+        self.btn_upload_image_inter_teacher.setMaximumSize(QSize(300, 25))
+        self.btn_upload_image_inter_teacher.setObjectName(
+            "btn_upload_image_inter_teacher")
+        self.gridLayout_9.addWidget(
+            self.btn_upload_image_inter_teacher, 1, 0, 1, 1)
+        self.verticalLayout_55.addWidget(
+            self.frame_user_image_upload_inter_teacher)
+        self.groupBox_lineedit_info = QGroupBox(self.scrollAreaWidgetInfo)
         self.groupBox_lineedit_info.setTitle("")
         self.groupBox_lineedit_info.setObjectName("groupBox_lineedit_info")
         self.gridLayout_13 = QGridLayout(self.groupBox_lineedit_info)
         self.gridLayout_13.setContentsMargins(10, 10, 10, 10)
         self.gridLayout_13.setSpacing(10)
         self.gridLayout_13.setObjectName("gridLayout_13")
-        self.lineEdit_full_name = QLineEdit(
+        self.lineEdit_email_id = QLineEdit(self.groupBox_lineedit_info)
+        self.lineEdit_email_id.setMinimumSize(QSize(0, 30))
+        self.lineEdit_email_id.setObjectName("lineEdit_email_id")
+        self.gridLayout_13.addWidget(self.lineEdit_email_id, 2, 0, 1, 1)
+        self.lineEdit_educational_qualif = QLineEdit(
             self.groupBox_lineedit_info)
-        self.lineEdit_full_name.setMinimumSize(QSize(0, 30))
-        font = QFont()
-        font.setFamily("./src/font/segoeui.ttf")
-        font.setPointSize(10)
-        self.lineEdit_full_name.setFont(font)
-        self.lineEdit_full_name.setToolTipDuration(4)
-        self.lineEdit_full_name.setObjectName("lineEdit_full_name")
-        self.gridLayout_13.addWidget(self.lineEdit_full_name, 0, 0, 1, 1)
-        self.lineEdit__name_initial = QLineEdit(
+        self.lineEdit_educational_qualif.setMinimumSize(QSize(0, 30))
+        self.lineEdit_educational_qualif.setObjectName(
+            "lineEdit_educational_qualif")
+        self.gridLayout_13.addWidget(
+            self.lineEdit_educational_qualif, 6, 0, 1, 1)
+        self.lineEdit_professional_qualif = QLineEdit(
             self.groupBox_lineedit_info)
-        self.lineEdit__name_initial.setMinimumSize(QSize(0, 30))
-        font = QFont()
-        font.setFamily("./src/font/segoeui.ttf")
-        font.setPointSize(10)
-        self.lineEdit__name_initial.setFont(font)
-        self.lineEdit__name_initial.setObjectName("lineEdit__name_initial")
-        self.gridLayout_13.addWidget(self.lineEdit__name_initial, 0, 1, 1, 1)
-        self.lineEdit_office_no = QLineEdit(
-            self.groupBox_lineedit_info)
-        self.lineEdit_office_no.setMinimumSize(QSize(0, 30))
-        font = QFont()
-        font.setFamily("./src/font/segoeui.ttf")
-        font.setPointSize(10)
-        self.lineEdit_office_no.setFont(font)
-        self.lineEdit_office_no.setObjectName("lineEdit_office_no")
-        self.gridLayout_13.addWidget(self.lineEdit_office_no, 1, 1, 1, 1)
-        self.lineEdit_WOP_no = QLineEdit(self.groupBox_lineedit_info)
-        self.lineEdit_WOP_no.setMinimumSize(QSize(0, 30))
-        font = QFont()
-        font.setFamily("./src/font/segoeui.ttf")
-        font.setPointSize(10)
-        self.lineEdit_WOP_no.setFont(font)
-        self.lineEdit_WOP_no.setObjectName("lineEdit_WOP_no")
-        self.gridLayout_13.addWidget(self.lineEdit_WOP_no, 2, 1, 1, 1)
-        self.lineEdit_personal_contact = QLineEdit(
-            self.groupBox_lineedit_info)
+        self.lineEdit_professional_qualif.setMinimumSize(QSize(0, 30))
+        self.lineEdit_professional_qualif.setObjectName(
+            "lineEdit_professional_qualif")
+        self.gridLayout_13.addWidget(
+            self.lineEdit_professional_qualif, 6, 1, 1, 1)
+        self.lineEdit_personal_contact = QLineEdit(self.groupBox_lineedit_info)
         self.lineEdit_personal_contact.setMinimumSize(QSize(0, 30))
         font = QFont()
         font.setFamily("./src/font/segoeui.ttf")
@@ -2168,9 +2659,29 @@ class Ui_Main(object):
         self.lineEdit_personal_contact.setObjectName(
             "lineEdit_personal_contact")
         self.gridLayout_13.addWidget(
-            self.lineEdit_personal_contact, 2, 0, 1, 1)
-        self.lineEdit_spouse_name = QLineEdit(
-            self.groupBox_lineedit_info)
+            self.lineEdit_personal_contact, 1, 1, 1, 1)
+        self.lineEdit_appoint_subject = QLineEdit(self.groupBox_lineedit_info)
+        self.lineEdit_appoint_subject.setMinimumSize(QSize(0, 30))
+        self.lineEdit_appoint_subject.setObjectName("lineEdit_appoint_subject")
+        self.gridLayout_13.addWidget(self.lineEdit_appoint_subject, 5, 1, 1, 1)
+        self.lineEdit_full_name = QLineEdit(self.groupBox_lineedit_info)
+        self.lineEdit_full_name.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.lineEdit_full_name.setFont(font)
+        self.lineEdit_full_name.setToolTipDuration(4)
+        self.lineEdit_full_name.setObjectName("lineEdit_full_name")
+        self.gridLayout_13.addWidget(self.lineEdit_full_name, 0, 0, 1, 1)
+        self.lineEdit__name_initial = QLineEdit(self.groupBox_lineedit_info)
+        self.lineEdit__name_initial.setMinimumSize(QSize(0, 30))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.lineEdit__name_initial.setFont(font)
+        self.lineEdit__name_initial.setObjectName("lineEdit__name_initial")
+        self.gridLayout_13.addWidget(self.lineEdit__name_initial, 0, 1, 1, 1)
+        self.lineEdit_spouse_name = QLineEdit(self.groupBox_lineedit_info)
         self.lineEdit_spouse_name.setMinimumSize(QSize(0, 30))
         font = QFont()
         font.setFamily("./src/font/segoeui.ttf")
@@ -2178,29 +2689,15 @@ class Ui_Main(object):
         self.lineEdit_spouse_name.setFont(font)
         self.lineEdit_spouse_name.setObjectName("lineEdit_spouse_name")
         self.gridLayout_13.addWidget(self.lineEdit_spouse_name, 3, 1, 1, 1)
-        self.lineEdit_contact_no_offiec_home = QLineEdit(
-            self.groupBox_lineedit_info)
-        self.lineEdit_contact_no_offiec_home.setMinimumSize(
-            QSize(0, 30))
+        self.lineEdit_WOP_no = QLineEdit(self.groupBox_lineedit_info)
+        self.lineEdit_WOP_no.setMinimumSize(QSize(0, 30))
         font = QFont()
         font.setFamily("./src/font/segoeui.ttf")
         font.setPointSize(10)
-        self.lineEdit_contact_no_offiec_home.setFont(font)
-        self.lineEdit_contact_no_offiec_home.setObjectName(
-            "lineEdit_contact_no_offiec_home")
-        self.gridLayout_13.addWidget(
-            self.lineEdit_contact_no_offiec_home, 4, 0, 1, 1)
-        self.lineEdit_no_of_children = QLineEdit(
-            self.groupBox_lineedit_info)
-        self.lineEdit_no_of_children.setMinimumSize(QSize(0, 30))
-        font = QFont()
-        font.setFamily("./src/font/segoeui.ttf")
-        font.setPointSize(10)
-        self.lineEdit_no_of_children.setFont(font)
-        self.lineEdit_no_of_children.setObjectName("lineEdit_no_of_children")
-        self.gridLayout_13.addWidget(self.lineEdit_no_of_children, 4, 1, 1, 1)
-        self.lineEdit_agrakara_no = QLineEdit(
-            self.groupBox_lineedit_info)
+        self.lineEdit_WOP_no.setFont(font)
+        self.lineEdit_WOP_no.setObjectName("lineEdit_WOP_no")
+        self.gridLayout_13.addWidget(self.lineEdit_WOP_no, 2, 1, 1, 1)
+        self.lineEdit_agrakara_no = QLineEdit(self.groupBox_lineedit_info)
         self.lineEdit_agrakara_no.setMinimumSize(QSize(0, 30))
         font = QFont()
         font.setFamily("./src/font/segoeui.ttf")
@@ -2216,7 +2713,33 @@ class Ui_Main(object):
         self.lineEdit_inc_no.setFont(font)
         self.lineEdit_inc_no.setObjectName("lineEdit_inc_no")
         self.gridLayout_13.addWidget(self.lineEdit_inc_no, 1, 0, 1, 1)
+        self.lineEdit_teaching_regist_no = QLineEdit(
+            self.groupBox_lineedit_info)
+        self.lineEdit_teaching_regist_no.setMinimumSize(QSize(0, 30))
+        self.lineEdit_teaching_regist_no.setObjectName(
+            "lineEdit_teaching_regist_no")
+        self.gridLayout_13.addWidget(
+            self.lineEdit_teaching_regist_no, 5, 0, 1, 1)
+        self.lineEdit_nature_of_appoin = QLineEdit(self.groupBox_lineedit_info)
+        self.lineEdit_nature_of_appoin.setMinimumSize(QSize(0, 30))
+        self.lineEdit_nature_of_appoin.setMaximumSize(
+            QSize(16777215, 16777215))
+        self.lineEdit_nature_of_appoin.setSizeIncrement(QSize(0, 0))
+        self.lineEdit_nature_of_appoin.setObjectName(
+            "lineEdit_nature_of_appoin")
+        self.gridLayout_13.addWidget(
+            self.lineEdit_nature_of_appoin, 7, 0, 1, 2)
         self.verticalLayout_55.addWidget(self.groupBox_lineedit_info)
+        self.groupBox_increment_date = QGroupBox(self.scrollAreaWidgetInfo)
+        self.groupBox_increment_date.setObjectName("groupBox_increment_date")
+        self.groupBox_increment_date.setMinimumSize(QSize(0, 70))
+        self.horizontalLayout_25 = QHBoxLayout(self.groupBox_increment_date)
+        self.horizontalLayout_25.setObjectName("horizontalLayout_25")
+        self.dateEdit_increment_date = QDateEdit(self.groupBox_increment_date)
+        self.dateEdit_increment_date.setMinimumSize(QSize(0, 30))
+        self.dateEdit_increment_date.setObjectName("dateEdit_increment_date")
+        self.horizontalLayout_25.addWidget(self.dateEdit_increment_date)
+        self.verticalLayout_55.addWidget(self.groupBox_increment_date)
         self.horizontalLayout_34 = QHBoxLayout()
         self.horizontalLayout_34.setContentsMargins(0, 0, -1, -1)
         self.horizontalLayout_34.setSpacing(10)
@@ -2230,8 +2753,7 @@ class Ui_Main(object):
         self.label_DOB_text.setObjectName("label_DOB_text")
         self.horizontalLayout_34.addWidget(
             self.label_DOB_text, 0, Qt.AlignHCenter)
-        self.label_appointment_data_text = QLabel(
-            self.scrollAreaWidgetInfo)
+        self.label_appointment_data_text = QLabel(self.scrollAreaWidgetInfo)
         self.label_appointment_data_text.setMinimumSize(QSize(0, 30))
         font = QFont()
         font.setFamily("./src/font/segoeui.ttf")
@@ -2256,8 +2778,7 @@ class Ui_Main(object):
         self.horizontalLayout_33.addWidget(self.dateEdit_DOB)
         self.dateEdit_first_appointment_date = QDateEdit(
             self.scrollAreaWidgetInfo)
-        self.dateEdit_first_appointment_date.setMinimumSize(
-            QSize(0, 30))
+        self.dateEdit_first_appointment_date.setMinimumSize(QSize(0, 30))
         font = QFont()
         font.setFamily("./src/font/segoeui.ttf")
         font.setPointSize(10)
@@ -2269,33 +2790,54 @@ class Ui_Main(object):
         self.verticalLayout_55.addLayout(self.horizontalLayout_33)
         self.groupBox_address = QGroupBox(self.scrollAreaWidgetInfo)
         self.groupBox_address.setMaximumSize(QSize(16777215, 100))
+        self.groupBox_address.setMinimumSize(QSize(0, 70))
         self.groupBox_address.setTitle("")
         self.groupBox_address.setObjectName("groupBox_address")
         self.gridLayout_14 = QGridLayout(self.groupBox_address)
+        self.gridLayout_14.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_14.setObjectName("gridLayout_14")
-        self.textEdit_working_address = QTextEdit(
-            self.groupBox_address)
+        self.textEdit_working_address = QTextEdit(self.groupBox_address)
+        self.textEdit_working_address.setMinimumSize(QSize(0, 60))
         font = QFont()
         font.setFamily("./src/font/segoeui.ttf")
         font.setPointSize(10)
         self.textEdit_working_address.setFont(font)
         self.textEdit_working_address.setObjectName("textEdit_working_address")
-        self.gridLayout_14.addWidget(self.textEdit_working_address, 0, 0, 1, 1)
-        self.textEdit_permanent_address = QTextEdit(
-            self.groupBox_address)
-        font = QFont()
-        font.setFamily("./src/font/segoeui.ttf")
-        font.setPointSize(10)
-        self.textEdit_permanent_address.setFont(font)
-        self.textEdit_permanent_address.setObjectName(
-            "textEdit_permanent_address")
         self.gridLayout_14.addWidget(
-            self.textEdit_permanent_address, 0, 1, 1, 1)
+            self.textEdit_working_address, 0, 0, 1, 1)
+        self.textEdit_emergency = QTextEdit(self.groupBox_address)
+        self.textEdit_emergency.setMinimumSize(QSize(0, 60))
+        font = QFont()
+        font.setPointSize(10)
+        self.textEdit_emergency.setFont(font)
+        self.textEdit_emergency.setObjectName("textEdit_emergency")
+        self.gridLayout_14.addWidget(
+            self.textEdit_emergency, 0, 1, 1, 1)
         self.verticalLayout_55.addWidget(self.groupBox_address)
+        self.groupBox_present_grade_and_date = QGroupBox(
+            self.scrollAreaWidgetInfo)
+        self.groupBox_present_grade_and_date.setMinimumSize(QSize(0, 70))
+        self.groupBox_present_grade_and_date.setObjectName(
+            "groupBox_present_grade_and_date")
+        self.gridLayout_7 = QGridLayout(self.groupBox_present_grade_and_date)
+        self.gridLayout_7.setObjectName("gridLayout_7")
+        self.gridLayout_7.setContentsMargins(10, 10, 10, 10)
+        self.lineEdit_present_grade = QLineEdit(
+            self.groupBox_present_grade_and_date)
+        self.lineEdit_present_grade.setMinimumSize(QSize(0, 30))
+        self.lineEdit_present_grade.setObjectName("lineEdit_present_grade")
+        self.gridLayout_7.addWidget(
+            self.lineEdit_present_grade, 0, 0, 1, 1)
+        self.dateEdit_present_date = QDateEdit(
+            self.groupBox_present_grade_and_date)
+        self.dateEdit_present_date.setMinimumSize(QSize(200, 30))
+        self.dateEdit_present_date.setObjectName("dateEdit_present_date")
+        self.gridLayout_7.addWidget(
+            self.dateEdit_present_date, 0, 1, 1, 1)
+        self.verticalLayout_55.addWidget(self.groupBox_present_grade_and_date)
         self.horizontalLayout_37 = QHBoxLayout()
         self.horizontalLayout_37.setObjectName("horizontalLayout_37")
-        self.label_date_app_to_school_text = QLabel(
-            self.scrollAreaWidgetInfo)
+        self.label_date_app_to_school_text = QLabel(self.scrollAreaWidgetInfo)
         self.label_date_app_to_school_text.setMinimumSize(QSize(0, 30))
         font = QFont()
         font.setFamily("./src/font/segoeui.ttf")
@@ -2308,8 +2850,7 @@ class Ui_Main(object):
         self.verticalLayout_55.addLayout(self.horizontalLayout_37)
         self.horizontalLayout_38 = QHBoxLayout()
         self.horizontalLayout_38.setObjectName("horizontalLayout_38")
-        self.dateEdit_appointment_date = QDateEdit(
-            self.scrollAreaWidgetInfo)
+        self.dateEdit_appointment_date = QDateEdit(self.scrollAreaWidgetInfo)
         self.dateEdit_appointment_date.setMinimumSize(QSize(0, 30))
         font = QFont()
         font.setFamily("./src/font/segoeui.ttf")
@@ -2324,131 +2865,65 @@ class Ui_Main(object):
         self.horizontalLayout_40.setSpacing(6)
         self.horizontalLayout_40.setObjectName("horizontalLayout_40")
         self.groupBox_civil = QGroupBox(self.scrollAreaWidgetInfo)
-        self.groupBox_civil.setTitle("")
         self.groupBox_civil.setObjectName("groupBox_civil")
+        self.groupBox_civil.setMinimumSize(QSize(0, 70))
         self.gridLayout_15 = QGridLayout(self.groupBox_civil)
         self.gridLayout_15.setObjectName("gridLayout_15")
+        self.gridLayout_15.setContentsMargins(10, 10, 10, 10)
         self.radioButton_married = QRadioButton(self.groupBox_civil)
         font = QFont()
         font.setFamily("./src/font/segoeui.ttf")
         font.setPointSize(10)
         self.radioButton_married.setFont(font)
         self.radioButton_married.setObjectName("radioButton_married")
-        self.gridLayout_15.addWidget(self.radioButton_married, 1, 0, 1, 1)
-        self.radioButton_unmarried = QRadioButton(
-            self.groupBox_civil)
+        self.gridLayout_15.addWidget(
+            self.radioButton_married, 0, 0, 1, 1, Qt.AlignCenter)
+        self.radioButton_unmarried = QRadioButton(self.groupBox_civil)
         font = QFont()
         font.setFamily("./src/font/segoeui.ttf")
         font.setPointSize(10)
         self.radioButton_unmarried.setFont(font)
         self.radioButton_unmarried.setObjectName("radioButton_unmarried")
-        self.gridLayout_15.addWidget(self.radioButton_unmarried, 1, 1, 1, 1)
-        self.label_civil_text = QLabel(self.groupBox_civil)
-        font = QFont()
-        font.setFamily("./src/font/segoeui.ttf")
-        font.setPointSize(10)
-        self.label_civil_text.setFont(font)
-        self.label_civil_text.setObjectName("label_civil_text")
         self.gridLayout_15.addWidget(
-            self.label_civil_text, 0, 0, 1, 2, Qt.AlignHCenter)
+            self.radioButton_unmarried, 0, 1, 1, 1, Qt.AlignCenter)
         self.horizontalLayout_40.addWidget(self.groupBox_civil)
         self.groupBox_gender = QGroupBox(self.scrollAreaWidgetInfo)
-        self.groupBox_gender.setTitle("")
         self.groupBox_gender.setObjectName("groupBox_gender")
+        self.groupBox_gender.setMinimumSize(QSize(0, 70))
         self.gridLayout_16 = QGridLayout(self.groupBox_gender)
         self.gridLayout_16.setObjectName("gridLayout_16")
-        self.radioButton_female = QRadioButton(self.groupBox_gender)
-        font = QFont()
-        font.setFamily("./src/font/segoeui.ttf")
-        font.setPointSize(10)
-        self.radioButton_female.setFont(font)
-        self.radioButton_female.setObjectName("radioButton_female")
-        self.gridLayout_16.addWidget(self.radioButton_female, 1, 1, 1, 1)
+        self.gridLayout_16.setContentsMargins(10, 10, 10, 10)
         self.radioButton_other = QRadioButton(self.groupBox_gender)
         font = QFont()
         font.setFamily("./src/font/segoeui.ttf")
         font.setPointSize(10)
         self.radioButton_other.setFont(font)
         self.radioButton_other.setObjectName("radioButton_other")
-        self.gridLayout_16.addWidget(self.radioButton_other, 1, 2, 1, 1)
+        self.gridLayout_16.addWidget(
+            self.radioButton_other, 0, 2, 1, 1, Qt.AlignCenter)
+        self.radioButton_female = QRadioButton(self.groupBox_gender)
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        self.radioButton_female.setFont(font)
+        self.radioButton_female.setObjectName("radioButton_female")
+        self.gridLayout_16.addWidget(
+            self.radioButton_female, 0, 1, 1, 1, Qt.AlignCenter)
         self.radioButton_male = QRadioButton(self.groupBox_gender)
         font = QFont()
         font.setFamily("./src/font/segoeui.ttf")
         font.setPointSize(10)
         self.radioButton_male.setFont(font)
         self.radioButton_male.setObjectName("radioButton_male")
-        self.gridLayout_16.addWidget(self.radioButton_male, 1, 0, 1, 1)
-        self.label_gender_text = QLabel(self.groupBox_gender)
-        font = QFont()
-        font.setFamily("./src/font/segoeui.ttf")
-        font.setPointSize(10)
-        self.label_gender_text.setFont(font)
-        self.label_gender_text.setObjectName("label_gender_text")
         self.gridLayout_16.addWidget(
-            self.label_gender_text, 0, 0, 1, 3, Qt.AlignHCenter)
+            self.radioButton_male, 0, 0, 1, 1, Qt.AlignCenter)
         self.horizontalLayout_40.addWidget(self.groupBox_gender)
         self.verticalLayout_55.addLayout(self.horizontalLayout_40)
-        self.groupBox_more_info = QGroupBox(
-            self.scrollAreaWidgetInfo)
-        self.groupBox_more_info.setTitle("")
-        self.groupBox_more_info.setObjectName("groupBox_more_info")
-        self.horizontalLayout_39 = QHBoxLayout(
-            self.groupBox_more_info)
-        self.horizontalLayout_39.setObjectName("horizontalLayout_39")
-        self.textEdit_nature_appointment = QTextEdit(
-            self.groupBox_more_info)
-        font = QFont()
-        font.setFamily("./src/font/segoeui.ttf")
-        font.setPointSize(10)
-        self.textEdit_nature_appointment.setFont(font)
-        self.textEdit_nature_appointment.setObjectName(
-            "textEdit_nature_appointment")
-
-        self.horizontalLayout_39.addWidget(self.textEdit_nature_appointment)
-        self.textEdit_other = QTextEdit(self.groupBox_more_info)
-        font = QFont()
-        font.setFamily("./src/font/segoeui.ttf")
-        font.setPointSize(10)
-        self.textEdit_other.setFont(font)
-        self.textEdit_other.setObjectName("textEdit_other")
-        self.horizontalLayout_39.addWidget(self.textEdit_other)
-        self.verticalLayout_55.addWidget(self.groupBox_more_info)
         self.scrollArea_add_info.setWidget(self.scrollAreaWidgetInfo)
-        self.verticalLayout_45.addWidget(self.scrollArea_add_info)
-
-        self.label_emtye = QLabel(self.frame_content)
-        self.label_emtye.setObjectName(u"label_emtye")
-
-        self.verticalLayout_45.addWidget(self.label_emtye)
-
-        self.label_show_roll_number = QLabel(self.frame_content)
-        self.label_show_roll_number.setObjectName(u"label_show_roll_number")
-        self.label_show_roll_number.setMinimumSize(QSize(0, 35))
-
-        self.verticalLayout_45.addWidget(self.label_show_roll_number)
-
-        self.horizontalLayout_23 = QHBoxLayout()
-        self.horizontalLayout_23.setObjectName(u"horizontalLayout_23")
-        self.btn_addInter = QPushButton(self.frame_content)
-        self.btn_addInter.setObjectName(u"btn_addInter")
-        self.btn_addInter.setMinimumSize(QSize(0, 30))
-        self.btn_addInter.setMaximumSize(QSize(16777215, 30))
-
-        self.horizontalLayout_23.addWidget(self.btn_addInter)
-
-        self.btn_go_home = QPushButton(self.frame_content)
-        self.btn_go_home.setObjectName(u"btn_go_home")
-        self.btn_go_home.setMinimumSize(QSize(0, 30))
-        self.btn_go_home.setMaximumSize(QSize(16777215, 30))
-
-        self.horizontalLayout_23.addWidget(self.btn_go_home)
-
-        self.verticalLayout_45.addLayout(self.horizontalLayout_23)
-
-        self.verticalLayout_44.addWidget(self.frame_content)
-
-        self.verticalLayout_43.addWidget(self.frame_main_inter_info)
-
+        self.gridLayout_10.addWidget(self.scrollArea_add_info, 0, 0, 1, 1)
+        self.verticalLayout_53.addWidget(self.frame_content_inter_teacher)
+        self.verticalLayout_54.addWidget(
+            self.frame_main_inter_info_inter_teacher)
         self.stackedWidget.addWidget(self.page_add_inter)
 
         self.analytics = QWidget()
@@ -3007,6 +3482,49 @@ class Ui_Main(object):
         self.horizontalLayout_2.addWidget(self.frame_super_user)
         self.verticalLayout.addWidget(self.Content)
 
+        self.StatusBar = QFrame(self.centralwidget)
+        self.StatusBar.setMinimumSize(QSize(0, 25))
+        self.StatusBar.setFrameShape(QFrame.StyledPanel)
+        self.StatusBar.setFrameShadow(QFrame.Raised)
+        self.StatusBar.setObjectName("StatusBar")
+        self.setShadowEffect(self.StatusBar, 15, QColor(0, 0, 0, 0))
+        self.horizontalLayout_29 = QHBoxLayout(self.StatusBar)
+        self.horizontalLayout_29.setContentsMargins(10, 0, 10, 0)
+        self.horizontalLayout_29.setSpacing(10)
+        self.horizontalLayout_29.setObjectName("horizontalLayout_29")
+        self.label_status_text = QLabel(self.StatusBar)
+        self.label_status_text.setMinimumSize(QSize(250, 15))
+        font = QFont()
+        font.setPointSize(8)
+        self.label_status_text.setFont(font)
+        self.label_status_text.setObjectName("label_status_text")
+        self.horizontalLayout_29.addWidget(self.label_status_text)
+        self.analytics_status = QLabel(self.StatusBar)
+        self.analytics_status.setMinimumSize(QSize(250, 15))
+        self.analytics_status.setFont(font)
+        self.analytics_status.setObjectName("analytics_status")
+        self.horizontalLayout_29.addWidget(self.analytics_status)
+
+        self.searching_status = QLabel(self.StatusBar)
+        self.searching_status.setMinimumSize(QSize(250, 15))
+        self.searching_status.setFont(font)
+        self.searching_status.setObjectName("searching_status")
+        self.horizontalLayout_29.addWidget(self.searching_status)
+
+        self.other_status = QLabel(self.StatusBar)
+        self.other_status.setMinimumSize(QSize(250, 15))
+        self.other_status.setFont(font)
+        self.other_status.setObjectName("other_status")
+        self.horizontalLayout_29.addWidget(self.other_status)
+
+        self.status_prograss = QProgressBar(self.StatusBar)
+        self.status_prograss.setMaximumSize(QSize(16777215, 10))
+        self.status_prograss.setTextVisible(False)
+        self.status_prograss.setProperty("value", 50)
+        self.status_prograss.setObjectName("status_prograss")
+        self.horizontalLayout_29.addWidget(self.status_prograss)
+        self.verticalLayout.addWidget(self.StatusBar)
+
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -3149,19 +3667,18 @@ class Ui_Main(object):
         self.btn_edit_setting.setText(QCoreApplication.translate(
             "MainWindow", u"Edit Setting", None))
 
-        self.frame_main_inter_info.setToolTip(
+        self.frame_main_inter_info_inter_teacher.setToolTip(
             QCoreApplication.translate("MainWindow", u"Add Teachers Data", None))
 #endif // QT_CONFIG(tooltip)
 # if QT_CONFIG(tooltip)
-        self.btn_upload_image.setText(QCoreApplication.translate(
+        self.btn_upload_image_inter_teacher.setText(QCoreApplication.translate(
             "MainWindow", u"Upload Image", None))
 #endif // QT_CONFIG(tooltip)
-        self.label_emtye.setText("")
         self.label_show_roll_number.setText(QCoreApplication.translate(
             "MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Roll Number </span></p></body></html>", None))
-        self.btn_addInter.setText(QCoreApplication.translate(
+        self.btn_addInter_teacher.setText(QCoreApplication.translate(
             "MainWindow", u" Add Teachers", None))
-        self.btn_go_home.setText(QCoreApplication.translate(
+        self.btn_go_inter_teacher.setText(QCoreApplication.translate(
             "MainWindow", u"Go Home", None))
         self.frame_main_lower_info.setToolTip(
             QCoreApplication.translate("MainWindow", u"Add Students Data", None))
@@ -3401,18 +3918,12 @@ class Ui_Main(object):
             QCoreApplication.translate("MainWindow", "Name in Full"))
         self.lineEdit__name_initial.setPlaceholderText(
             QCoreApplication.translate("MainWindow", "Name With Initial"))
-        self.lineEdit_office_no.setPlaceholderText(
-            QCoreApplication.translate("MainWindow", "Office Contact No."))
         self.lineEdit_WOP_no.setPlaceholderText(
             QCoreApplication.translate("MainWindow", "W&OP No."))
         self.lineEdit_personal_contact.setPlaceholderText(
             QCoreApplication.translate("MainWindow", "Personal Contact No."))
         self.lineEdit_spouse_name.setPlaceholderText(
             QCoreApplication.translate("MainWindow", "Spouse Name"))
-        self.lineEdit_contact_no_offiec_home.setPlaceholderText(
-            QCoreApplication.translate("MainWindow", "Contact No Office / Home"))
-        self.lineEdit_no_of_children.setPlaceholderText(
-            QCoreApplication.translate("MainWindow", "No. Of Children"))
         self.lineEdit_agrakara_no.setPlaceholderText(
             QCoreApplication.translate("MainWindow", "Agrakara No. "))
         self.lineEdit_inc_no.setPlaceholderText(QCoreApplication.translate(
@@ -3425,30 +3936,120 @@ class Ui_Main(object):
             QCoreApplication.translate("MainWindow", "d/M/yyyy"))
         self.dateEdit_first_appointment_date.setDisplayFormat(
             QCoreApplication.translate("MainWindow", "d/M/yyyy"))
-        self.textEdit_working_address.setPlaceholderText(
-            QCoreApplication.translate("MainWindow", "Working Address"))
-        self.textEdit_permanent_address.setPlaceholderText(
-            QCoreApplication.translate("MainWindow", "Permanent Address"))
         self.label_date_app_to_school_text.setText(QCoreApplication.translate(
             "MainWindow", "Date of Appointment To This School"))
+        self.lineEdit_appoint_subject.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "Appointed Subject"))
+        self.btn_upload_image_inter_teacher.setText(
+            QCoreApplication.translate("MainWindow", "Upload Image"))
+        self.lineEdit_email_id.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "E-Mail ID"))
+        self.lineEdit_educational_qualif.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "Educational Qualification"))
+        self.lineEdit_professional_qualif.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "Professional Qualification"))
+        self.lineEdit_teaching_regist_no.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "Teaching Registration No"))
+        self.lineEdit_nature_of_appoin.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "Nature Of Appointment"))
+        self.groupBox_increment_date.setTitle(
+            QCoreApplication.translate("MainWindow", "Increment Date"))
+        self.textEdit_working_address.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "Address"))
+        self.textEdit_emergency.setPlaceholderText(QCoreApplication.translate(
+            "MainWindow", "Contact No And Address for Emergency"))
+        self.groupBox_present_grade_and_date.setTitle(
+            QCoreApplication.translate("MainWindow", "Present Grade And The Date"))
+        self.lineEdit_present_grade.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "Present Grade"))
+        self.dateEdit_present_date.setDisplayFormat(
+            QCoreApplication.translate("MainWindow", "d/M/yyyy"))
         self.dateEdit_appointment_date.setDisplayFormat(
             QCoreApplication.translate("MainWindow", "d/M/yyyy"))
+        self.groupBox_civil.setTitle(
+            QCoreApplication.translate("MainWindow", "Civil Status"))
         self.radioButton_married.setText(
             QCoreApplication.translate("MainWindow", "Married"))
         self.radioButton_unmarried.setText(
             QCoreApplication.translate("MainWindow", "Unmarried"))
-        self.label_civil_text.setText(
-            QCoreApplication.translate("MainWindow", "Civil Status"))
+        self.groupBox_gender.setTitle(
+            QCoreApplication.translate("MainWindow", "Gender"))
         self.radioButton_female.setText(
             QCoreApplication.translate("MainWindow", "Female"))
         self.radioButton_other.setText(
             QCoreApplication.translate("MainWindow", "Other"))
         self.radioButton_male.setText(
             QCoreApplication.translate("MainWindow", "Male"))
-        self.label_gender_text.setText(
+        self.btn_none_teaher.setText(
+            QCoreApplication.translate("MainWindow", "None-Teahers"))
+        self.btn_teahers.setText(
+            QCoreApplication.translate("MainWindow", "Teahers"))
+        self.btn_none_teaher.setToolTip(
+            QCoreApplication.translate("MainWindow", "Add None Teahers"))
+        self.btn_teahers.setToolTip(
+            QCoreApplication.translate("MainWindow", "Add Teahers"))
+        self.label_show_roll_number_none.setText(QCoreApplication.translate(
+            "MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Roll Number </span></p></body></html>"))
+        self.btn_addInter_teacher_none.setText(
+            QCoreApplication.translate("MainWindow", "Add Teaher"))
+        self.btn_go_inter_teacher_none.setText(
+            QCoreApplication.translate("MainWindow", "Go Home"))
+        self.btn_upload_image_inter_teacher_none.setText(
+            QCoreApplication.translate("MainWindow", "Upload Image"))
+        self.lineEdit_email_id_none.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "E-Mail ID"))
+        self.lineEdit_educational_qualif_none.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "Educational Qualification"))
+        self.lineEdit_personal_contact_none.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "Personal Contact No."))
+        self.lineEdit_professional_qualif_none.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "Professional Qualification"))
+        self.lineEdit_full_name_none.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "Name in Full"))
+        self.lineEdit__name_initial_none.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "Name With Initial"))
+        self.lineEdit_WOP_no_none.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "W&OP No."))
+        self.lineEdit_spouse_name_none.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "Name Of Spouse "))
+        self.lineEdit_agrakara_no_none.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "Agrakara Policy No. "))
+        self.lineEdit_inc_no_none.setPlaceholderText(QCoreApplication.translate(
+            "MainWindow", "National Identify Card No ( NIC No )"))
+        self.lineEdit_nature_of_appoin_none.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "Nature Of Appointment"))
+        self.lineEdit_salary_none.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "Salary No"))
+        self.groupBox_increment_date_none.setTitle(
+            QCoreApplication.translate("MainWindow", "Increment Date"))
+        self.label_DOB_text_none.setText(
+            QCoreApplication.translate("MainWindow", "Date Of Birth"))
+        self.label_appointment_data_text_none.setText(
+            QCoreApplication.translate("MainWindow", "First Appointment Date"))
+        self.dateEdit_DOB_none.setDisplayFormat(
+            QCoreApplication.translate("MainWindow", "d/M/yyyy"))
+        self.dateEdit_first_appointment_date_none.setDisplayFormat(
+            QCoreApplication.translate("MainWindow", "d/M/yyyy"))
+        self.textEdit_working_address_none.setPlaceholderText(
+            QCoreApplication.translate("MainWindow", "Address"))
+        self.textEdit_emergency_none.setPlaceholderText(QCoreApplication.translate(
+            "MainWindow", "Contact No And Address for Emergency"))
+        self.label_date_app_to_school_text_none.setText(
+            QCoreApplication.translate("MainWindow", "Date of Appointment To This School"))
+        self.dateEdit_appointment_date_none.setDisplayFormat(
+            QCoreApplication.translate("MainWindow", "d/M/yyyy"))
+        self.groupBox_civil_none.setTitle(
+            QCoreApplication.translate("MainWindow", "Civil Status"))
+        self.radioButton_married_none.setText(
+            QCoreApplication.translate("MainWindow", "Married"))
+        self.radioButton_unmarried_none.setText(
+            QCoreApplication.translate("MainWindow", "Unmarried"))
+        self.groupBox_gender_none.setTitle(
             QCoreApplication.translate("MainWindow", "Gender"))
-        self.textEdit_nature_appointment.setPlaceholderText(
-            QCoreApplication.translate("MainWindow", "Nature With Appointment"))
-        self.textEdit_other.setPlaceholderText(
-            QCoreApplication.translate("MainWindow", "Others"))
+        self.radioButton_other_none.setText(
+            QCoreApplication.translate("MainWindow", "Other"))
+        self.radioButton_female_none.setText(
+            QCoreApplication.translate("MainWindow", "Female"))
+        self.radioButton_male_none.setText(
+            QCoreApplication.translate("MainWindow", "Male"))
     # retranslateUi

@@ -7,7 +7,7 @@ import json
 import re
 
 from threading import Thread
-from Packages.connecter.compands.checkers import checkTheContactNum, checkTheEmail
+from Packages.connecter.compands.checkers import checkTheContactNum, checkTheEmail, checkTheUserName
 
 from Packages.uis.access.ui_access import *
 from Packages.uis.backup.ui_backup import *
@@ -51,9 +51,6 @@ class Access_Window(QDialog):
 
         # SET TITLE BAR
         self.ui.frame_title_bar.mouseMoveEvent = self.moveWindow
-
-        # set Enter button event
-        self.keyPressEvent = self.keyClickedEvent
 
         # Button connecter
         self.btn_connecter()
@@ -127,8 +124,14 @@ class Access_Window(QDialog):
         self.ui.btn_close.setIcon(icon)
 
     def defualt_theme(self):
-        self.setLightTheme()
-        self.setIconLightTheme()
+        logger.debug("The Default Theme Is Runing... [defualt_theme]")
+        setting = Setting.load_superuser()
+        if setting["Setting"]["Default-theme"] == "light":
+            self.setLightTheme()
+            self.setIconLightTheme()
+        else:
+            self.setDarkTheme()
+            self.setIconDarkTheme()
 
     def setShadow(self):
         # Set Shadow Effect
@@ -177,17 +180,6 @@ class Access_Window(QDialog):
     def mousePressEvent(self, event):
         # Mouse Press Event
         self.dragPos = event.globalPos()
-
-    def keyClickedEvent(self, event):
-        if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
-
-            logger.info("The Enter Button Clicked... [ keyClickedEvent ]")
-
-            print("The Enter Button Is Clicked ...")
-            self.shacke_window()
-
-        elif event.key() == Qt.Key_Escape or event.key == Qt.Key_Enter:
-            self.close()
 
 
 class Backup_Window(QDialog):
@@ -795,6 +787,10 @@ class Main_Window(QMainWindow):
     # window started theme [If it's True, change the theme light]
     theme_button_pressed = False
 
+    # Gender value and status
+    __gender = str()
+    __status = str()
+
     def __init__(self, parent=None, *args, **kw):
         super().__init__(parent=parent, *args, **kw)
         self.ui = Ui_Main()
@@ -807,14 +803,85 @@ class Main_Window(QMainWindow):
         # Button activity connecter
         self.btnToFunctionConnecter()
 
+        # Set The Label Text
+        self.setTheAllLabelText()
+
         self.show()
 
+    # Set The Label Text
+    def setTheAllLabelText(self):
+        __data = Setting.load_superuser()
+
+        __userinfo = Crypto.decrypt_superuser(
+            __data[SETTING]["Name"],
+            __data[SETTING]["Password"],
+            __data[SETTING]["Contact"],
+            __data[SETTING]["E-mail"]
+        )
+        self.ui.label_show_current_username.setText(
+            f""" <html>
+                    <head/>
+                    <body>
+                        <p>
+                            <span style=\" font-size:12pt; font-weight:600;\">
+                            Current User Name : {__userinfo[0]}
+                            </span>
+                        </p>
+                    </body>
+                </html>
+            """
+        )
+        self.ui.label_current_email.setText(
+            f""" <html>
+                    <head/>
+                    <body>
+                        <p>
+                            <span style=\" font-size:12pt; font-weight:600;\">
+                            Current E-mail ID : {__userinfo[2]}
+                            </span>
+                        </p>
+                    </body>
+                </html>
+            """
+        )
+        self.ui.label_show_current_contact_number.setText(
+            f""" <html>
+                    <head/>
+                    <body>
+                        <p>
+                            <span style=\" font-size:12pt; font-weight:600;\">
+                            Current Contact Number : {__userinfo[-1]}
+                            </span>
+                        </p>
+                    </body>
+                </html>
+            """
+        )
+
+    # Button Conntecter
     def btnToFunctionConnecter(self):
         logger.debug(
             "Button function connecter Actived... [ btnToFunctionConnecter ]")
 
         # THEME BUTTON FOE CHAMGE THEME
         self.ui.btn_setTheme.clicked.connect(self.setTheme)
+
+        # Chnagers
+        self.ui.btn_save_username.clicked.connect(
+            self.thread_connecter_access_name)
+        self.ui.btn_save_password.clicked.connect(
+            self.thread_connecter_access_pwd)
+        self.ui.btn_save_contact_number.clicked.connect(
+            self.thread_connecter_access_cont)
+        self.ui.btn_save_change_email.clicked.connect(
+            self.thread_connecter_access_email)
+
+        self.ui.label_status_text.setText("<p>Progress Test</p>")
+
+        # inuter user
+        self.ui.btn_addInter.clicked.connect(
+            self.store_interuser_data
+        )
 
     # light theme of window
     def connect_functiom_light(self):
@@ -845,6 +912,7 @@ class Main_Window(QMainWindow):
             lambda: UIFunctions.userSide_toggle_light_connecter(self, 300, True))
 
         # BUTTONE CONNECTER
+        self.ui.stackedWidget.setCurrentWidget(self.ui.Home)
         UIFunctions.current_page_light(self)
 
         self.ui.btn_page_home.clicked.connect(
@@ -857,7 +925,7 @@ class Main_Window(QMainWindow):
             lambda: UIFunctions.setting_light(self))
         self.ui.btn_page_analytics.clicked.connect(
             lambda: UIFunctions.analytics_light(self))
-        self.ui.btn_go_home.clicked.connect(
+        self.ui.btn_go_inter_teacher.clicked.connect(
             lambda: UIFunctions.home_light(self))
         self.ui.btn_go_home_lower.clicked.connect(
             lambda: UIFunctions.home_light(self))
@@ -884,8 +952,18 @@ class Main_Window(QMainWindow):
         self.ui.btn_primary.clicked.connect(
             lambda: UIFunctions.call_input_menu(self, self.ui.page))
 
+        # Conntect into btn_teahers
+        self.ui.btn_teahers.clicked.connect(
+            lambda: UIFunctions.call_input_menu(self, self.ui.page_add_inter)
+        )
+        # Conntect into btn_none_teaher
+        self.ui.btn_none_teaher.clicked.connect(
+            lambda: UIFunctions.call_input_menu(
+                self, self.ui.page_add_inter_none)
+        )
+
         # Go Home Button
-        self.ui.btn_go_home.clicked.connect(
+        self.ui.btn_go_inter_teacher.clicked.connect(
             lambda: UIFunctions.home_light(self))
         self.ui.btn_go_home_primary.clicked.connect(
             lambda: UIFunctions.home_light(self))
@@ -908,6 +986,8 @@ class Main_Window(QMainWindow):
         self.ui.scrollArea_advanced_add.setStyleSheet(light.SCROLLAREA)
         self.ui.scrollArea_primary_add.setStyleSheet(light.SCROLLAREA)
         self.ui.scrollArea_lower_add.setStyleSheet(light.SCROLLAREA)
+
+        self.ui.scrollArea_add_info_none.setStyleSheet(light.SCROLLAREA)
 
         self.ui.comboBox_stream_primary.setStyleSheet(light.COMBO_BOX)
 
@@ -933,23 +1013,33 @@ class Main_Window(QMainWindow):
         self.ui.btn_primary.setStyleSheet(light.PRIMARY_BTN)
         self.ui.btn_ordinary.setStyleSheet(light.ORDNARY_BTN)
         self.ui.btn_advanced.setStyleSheet(light.ADVANCED_BTN)
+        self.ui.btn_teahers.setStyleSheet(light.ADVANCED_BTN)
+        self.ui.btn_none_teaher.setStyleSheet(light.ADVANCED_BTN)
+        self.ui.frame_add_btns_inters.setStyleSheet(light.FRAME_2)
 
         # INTER USER COMPENTS
         self.ui.lineEdit_full_name.setStyleSheet(light.LINE_EDIT)
         self.ui.lineEdit__name_initial.setStyleSheet(light.LINE_EDIT)
         self.ui.lineEdit_inc_no.setStyleSheet(light.LINE_EDIT)
-        self.ui.lineEdit_office_no.setStyleSheet(light.LINE_EDIT)
         self.ui.lineEdit_personal_contact.setStyleSheet(light.LINE_EDIT)
         self.ui.lineEdit_WOP_no.setStyleSheet(light.LINE_EDIT)
         self.ui.lineEdit_agrakara_no.setStyleSheet(light.LINE_EDIT)
         self.ui.lineEdit_spouse_name.setStyleSheet(light.LINE_EDIT)
-        self.ui.lineEdit_contact_no_offiec_home.setStyleSheet(light.LINE_EDIT)
-        self.ui.lineEdit_no_of_children.setStyleSheet(light.LINE_EDIT)
 
-        self.ui.textEdit_permanent_address.setStyleSheet(light.TEXT_EDIT)
+        self.ui.lineEdit_nature_of_appoin.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit_present_grade.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit_appoint_subject.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit_personal_contact.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit_professional_qualif.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit_educational_qualif.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit_email_id.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit_teaching_regist_no.setStyleSheet(light.LINE_EDIT)
+
+        self.ui.textEdit_emergency.setStyleSheet(light.TEXT_EDIT)
         self.ui.textEdit_working_address.setStyleSheet(light.TEXT_EDIT)
-        self.ui.textEdit_other.setStyleSheet(light.TEXT_EDIT)
-        self.ui.textEdit_nature_appointment.setStyleSheet(light.TEXT_EDIT)
+
+        self.ui.dateEdit_present_date.setStyleSheet(light.DATE_EDIT)
+        self.ui.dateEdit_increment_date.setStyleSheet(light.DATE_EDIT)
 
         self.ui.dateEdit_DOB.setStyleSheet(light.DATE_EDIT)
         self.ui.dateEdit_first_appointment_date.setStyleSheet(light.DATE_EDIT)
@@ -961,8 +1051,9 @@ class Main_Window(QMainWindow):
         self.ui.radioButton_female.setStyleSheet(light.RASIO_BUTTON)
         self.ui.radioButton_other.setStyleSheet(light.RASIO_BUTTON)
 
-        self.ui.label_civil_text.setStyleSheet(light.LABEL_COLOR)
-        self.ui.label_gender_text.setStyleSheet(light.LABEL_COLOR)
+        self.ui.scrollAreaWidgetInfo.setStyleSheet(
+            light.INTER_ADD_TEACHER_BACKGROUND)
+
         self.ui.label_date_app_to_school_text.setStyleSheet(light.LABEL_COLOR)
         self.ui.label_appointment_data_text.setStyleSheet(light.LABEL_COLOR)
         self.ui.label_DOB_text.setStyleSheet(light.LABEL_COLOR)
@@ -974,7 +1065,7 @@ class Main_Window(QMainWindow):
         self.ui.info_inter_left_1.setStyleSheet(light.LABEL_INFO_INTER_1)
         self.ui.label_info_user_left_inter_1.setStyleSheet(
             light.LABEL_INFO_INTER_USER_1)
-        self.ui.label_icon_inter.setStyleSheet(light.LABEL_ICON_INTER)
+        self.ui.label_icon_inter_teacher.setStyleSheet(light.LABEL_ICON_INTER)
         self.ui.label_show_roll_number.setStyleSheet(
             light.LABEL_SHOW_ROLL_INTER)
         self.ui.label_inter_head.setStyleSheet(
@@ -982,6 +1073,8 @@ class Main_Window(QMainWindow):
 
         self.ui.groupBox_civil.setStyleSheet(light.GROUP)
         self.ui.groupBox_gender.setStyleSheet(light.GROUP)
+        self.ui.groupBox_increment_date.setStyleSheet(light.GROUP)
+        self.ui.groupBox_present_grade_and_date.setStyleSheet(light.GROUP)
 
         self.ui.widget_inter_1.setStyleSheet(light.WIDGET_INTER_1)
         self.ui.widget_inter_left_1.setStyleSheet(light.WIDGET_INTER_1)
@@ -994,17 +1087,77 @@ class Main_Window(QMainWindow):
             light.FRAME_INTER_DELETE_BAR_1)
         self.ui.frame_inter_left_btns_bar_1.setStyleSheet(
             light.FRAME_INTER_DELETE_BAR_1)
-        self.ui.frame_main_inter_info.setStyleSheet(
+        self.ui.frame_main_inter_info_inter_teacher.setStyleSheet(
             light.FRMAE_MAIN_INTER_INFO)
         self.ui.frame_inter.setStyleSheet(light.ANALYTICS_FRAME_INTER)
 
         self.ui.btn_delete_inter_1.setStyleSheet(light.DELETE_INTER_BTN_1)
         self.ui.btn_delete_inter_left_1.setStyleSheet(light.DELETE_INTER_BTN_1)
-        self.ui.btn_upload_image.setStyleSheet(light.UPLOAD_IMAGE_BTN)
-        self.ui.btn_addInter.setStyleSheet(light.ADDINTER_BTN)
-        self.ui.btn_go_home.setStyleSheet(light.GOHOME_INTER_BTN)
+        self.ui.btn_upload_image_inter_teacher.setStyleSheet(
+            light.UPLOAD_IMAGE_BTN)
+        self.ui.btn_addInter_teacher.setStyleSheet(light.ADDINTER_BTN)
+        self.ui.btn_go_inter_teacher.setStyleSheet(light.GOHOME_INTER_BTN)
 
         self.ui.page_add_inter.setStyleSheet(light.PAGE_ADD_INTER)
+        self.ui.page_inter_add.setStyleSheet(light.PAGE_ADD_INTER)
+
+        # NONE TEACHER USER COMPENTS
+        self.ui.lineEdit_nature_of_appoin_none.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit_personal_contact_none.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit_professional_qualif_none.setStyleSheet(
+            light.LINE_EDIT)
+        self.ui.lineEdit_educational_qualif_none.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit_email_id_none.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit_full_name_none.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit__name_initial_none.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit_inc_no_none.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit_personal_contact_none.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit_WOP_no_none.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit_agrakara_no_none.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit_spouse_name_none.setStyleSheet(light.LINE_EDIT)
+        self.ui.lineEdit_salary_none.setStyleSheet(light.LINE_EDIT)
+
+        self.ui.dateEdit_increment_date_none.setStyleSheet(light.DATE_EDIT)
+
+        self.ui.textEdit_emergency_none.setStyleSheet(light.TEXT_EDIT)
+        self.ui.textEdit_working_address_none.setStyleSheet(light.TEXT_EDIT)
+
+        self.ui.dateEdit_DOB_none.setStyleSheet(light.DATE_EDIT)
+        self.ui.dateEdit_first_appointment_date_none.setStyleSheet(
+            light.DATE_EDIT)
+        self.ui.dateEdit_appointment_date_none.setStyleSheet(light.DATE_EDIT)
+
+        self.ui.radioButton_married_none.setStyleSheet(light.RASIO_BUTTON)
+        self.ui.radioButton_unmarried_none.setStyleSheet(light.RASIO_BUTTON)
+        self.ui.radioButton_male_none.setStyleSheet(light.RASIO_BUTTON)
+        self.ui.radioButton_female_none.setStyleSheet(light.RASIO_BUTTON)
+        self.ui.radioButton_other_none.setStyleSheet(light.RASIO_BUTTON)
+
+        self.ui.scrollAreaWidgetInfo.setStyleSheet(
+            light.INTER_ADD_TEACHER_BACKGROUND)
+
+        self.ui.label_date_app_to_school_text_none.setStyleSheet(
+            light.LABEL_COLOR)
+        self.ui.label_appointment_data_text_none.setStyleSheet(
+            light.LABEL_COLOR)
+        self.ui.label_DOB_text_none.setStyleSheet(light.LABEL_COLOR)
+        self.ui.label_icon_none.setStyleSheet(light.LABEL_ICON_INTER)
+        self.ui.label_show_roll_number_none.setStyleSheet(
+            light.LABEL_SHOW_ROLL_INTER)
+
+        self.ui.page_add_inter_none.setStyleSheet(light.PAGE_ADD_INTER)
+
+        self.ui.frame_main_inter_info_inter_teache_none.setStyleSheet(
+            light.FRMAE_MAIN_INTER_INFO)
+
+        self.ui.groupBox_civil_none.setStyleSheet(light.GROUP)
+        self.ui.groupBox_gender_none.setStyleSheet(light.GROUP)
+        self.ui.groupBox_increment_date_none.setStyleSheet(light.GROUP)
+
+        self.ui.btn_upload_image_inter_teacher_none.setStyleSheet(
+            light.UPLOAD_IMAGE_BTN)
+        self.ui.btn_addInter_teacher_none.setStyleSheet(light.ADDINTER_BTN)
+        self.ui.btn_go_inter_teacher_none.setStyleSheet(light.GOHOME_INTER_BTN)
 
         # PRIMARY LOWER USER COMPENTS
         self.ui.dateEdit_date_of_birth_primary.setStyleSheet(light.DATE_EDIT)
@@ -1300,6 +1453,15 @@ class Main_Window(QMainWindow):
         self.ui.scrollAreaWidgetContents_2.setStyleSheet(
             light.SETTING_FRAME_SETTHEME)
 
+        self.ui.status_prograss.setStyleSheet(light.PROGRESS_BAR)
+        self.ui.label_status_text.setStyleSheet(light.STATUS_BAR_LABEL)
+        self.ui.StatusBar.setStyleSheet(light.STATUS_BAR_BACKGROUND)
+
+        self.ui.label_status_text.setStyleSheet(light.STATUS_BAR_LABEL)
+        self.ui.analytics_status.setStyleSheet(light.STATUS_BAR_LABEL)
+        self.ui.searching_status.setStyleSheet(light.STATUS_BAR_LABEL)
+        self.ui.other_status.setStyleSheet(light.STATUS_BAR_LABEL)
+
     def setIcon_for_window_light(self):
 
         logger.debug(
@@ -1326,9 +1488,10 @@ class Main_Window(QMainWindow):
         icon.addFile(light.MAIN_WINDOW_TITLE_ICON)
         self.setWindowIcon(icon)
 
-        self.ui.label_icon_inter.setText(light.LABEL_ICON_INTER_TEXT)
+        self.ui.label_icon_inter_teacher.setText(light.LABEL_ICON_INTER_TEXT)
         self.ui.label_icon_lower.setText(light.LABEL_ICON_LOWER_TEXT)
         self.ui.label.setText(light.LABEL_EDIT_TEXT)
+        self.ui.label_icon_none.setText(light.LABEL_ICON_INTER_TEXT)
 
         self.ui.label_icon_.setText(light.LABEL_ICON_LOWER_TEXT)
 
@@ -1343,12 +1506,14 @@ class Main_Window(QMainWindow):
         setIcon(self.ui.btn_edit_setting, light.ICON_GO)
 
         # USER ADD ICONS
-        setIcon(self.ui.btn_addInter, light.ICON_ADD_USER)
+        setIcon(self.ui.btn_addInter_teacher, light.ICON_ADD_USER)
+        setIcon(self.ui.btn_addInter_teacher_none, light.ICON_ADD_USER)
         setIcon(self.ui.btn_addlower, light.ICON_ADD_USER)
         setIcon(self.ui.btn_addLower_adv, light.ICON_ADD_USER)
         setIcon(self.ui.btn_addLower_primary, light.ICON_ADD_USER)
 
-        setIcon(self.ui.btn_go_home, light.ICON_GO)
+        setIcon(self.ui.btn_go_inter_teacher, light.ICON_GO)
+        setIcon(self.ui.btn_go_inter_teacher_none, light.ICON_GO)
         setIcon(self.ui.btn_go_home_lower, light.ICON_GO)
         setIcon(self.ui.btn_go_home_primary, light.ICON_GO)
         setIcon(self.ui.btn_go_home_ad, light.ICON_GO)
@@ -1375,15 +1540,35 @@ class Main_Window(QMainWindow):
             # ADD INTER USER PAGE ICONS
             setIcon_line(self.ui.lineEdit_full_name, light.ICON_USER)
             setIcon_line(self.ui.lineEdit__name_initial, light.ICON_USER)
-            setIcon_line(self.ui.lineEdit_office_no, light.ICON_PHONE)
             setIcon_line(self.ui.lineEdit_personal_contact, light.ICON_PHONE)
-            setIcon_line(self.ui.lineEdit_contact_no_offiec_home,
-                         light.ICON_PHONE)
             setIcon_line(self.ui.lineEdit_spouse_name, light.ICON_USER)
-            setIcon_line(self.ui.lineEdit_no_of_children, light.ICON_PEOPLE)
             setIcon_line(self.ui.lineEdit_agrakara_no, light.ICON_RIG_NUM)
             setIcon_line(self.ui.lineEdit_WOP_no, light.ICON_RIG_NUM)
             setIcon_line(self.ui.lineEdit_inc_no, light.ICON_RIG_NUM)
+            setIcon_line(self.ui.lineEdit_email_id, light.ICON_AT)
+            setIcon_line(self.ui.lineEdit_educational_qualif,
+                         light.ICON_QUALIF)
+            setIcon_line(self.ui.lineEdit_professional_qualif,
+                         light.ICON_QUALIF)
+            setIcon_line(self.ui.lineEdit_teaching_regist_no,
+                         light.ICON_RIG_NUM)
+            setIcon_line(self.ui.lineEdit_appoint_subject, light.ICON_SUBJECT)
+
+            # ADD INTER NONE USER ICON
+            setIcon_line(self.ui.lineEdit_full_name_none, light.ICON_USER)
+            setIcon_line(self.ui.lineEdit__name_initial_none, light.ICON_USER)
+            setIcon_line(self.ui.lineEdit_personal_contact_none,
+                         light.ICON_PHONE)
+            setIcon_line(self.ui.lineEdit_spouse_name_none, light.ICON_USER)
+            setIcon_line(self.ui.lineEdit_agrakara_no_none, light.ICON_RIG_NUM)
+            setIcon_line(self.ui.lineEdit_WOP_no_none, light.ICON_RIG_NUM)
+            setIcon_line(self.ui.lineEdit_inc_no_none, light.ICON_RIG_NUM)
+            setIcon_line(self.ui.lineEdit_email_id_none, light.ICON_AT)
+            setIcon_line(self.ui.lineEdit_educational_qualif_none,
+                         light.ICON_QUALIF)
+            setIcon_line(self.ui.lineEdit_professional_qualif_none,
+                         light.ICON_QUALIF)
+            setIcon_line(self.ui.lineEdit_salary_none, light.ICON_RIG_NUM)
 
             # ADD LOWER PRIMARY USER PAGE ICONS
             setIcon_line(self.ui.lineEdit_name_full_primary, light.ICON_USER)
@@ -1436,15 +1621,35 @@ class Main_Window(QMainWindow):
             # ADD INTER USER PAGE ICONS
             setIcon_line_(self.ui.lineEdit_full_name, light.ICON_USER)
             setIcon_line_(self.ui.lineEdit__name_initial, light.ICON_USER)
-            setIcon_line_(self.ui.lineEdit_office_no, light.ICON_PHONE)
             setIcon_line_(self.ui.lineEdit_personal_contact, light.ICON_PHONE)
-            setIcon_line_(self.ui.lineEdit_contact_no_offiec_home,
-                          light.ICON_PHONE)
             setIcon_line_(self.ui.lineEdit_spouse_name, light.ICON_USER)
-            setIcon_line_(self.ui.lineEdit_no_of_children, light.ICON_PEOPLE)
             setIcon_line_(self.ui.lineEdit_agrakara_no, light.ICON_RIG_NUM)
             setIcon_line_(self.ui.lineEdit_WOP_no, light.ICON_RIG_NUM)
             setIcon_line_(self.ui.lineEdit_inc_no, light.ICON_RIG_NUM)
+            setIcon_line_(self.ui.lineEdit_email_id, light.ICON_AT)
+            setIcon_line_(self.ui.lineEdit_educational_qualif,
+                          light.ICON_QUALIF)
+            setIcon_line_(self.ui.lineEdit_professional_qualif,
+                          light.ICON_QUALIF)
+            setIcon_line_(self.ui.lineEdit_teaching_regist_no,
+                          light.ICON_RIG_NUM)
+            setIcon_line_(self.ui.lineEdit_appoint_subject, light.ICON_SUBJECT)
+
+            # ADD INTER NONE USER ICON
+            setIcon_line_(self.ui.lineEdit_full_name_none, light.ICON_USER)
+            setIcon_line_(self.ui.lineEdit__name_initial_none, light.ICON_USER)
+            setIcon_line_(self.ui.lineEdit_personal_contact_none,
+                         light.ICON_PHONE)
+            setIcon_line_(self.ui.lineEdit_spouse_name_none, light.ICON_USER)
+            setIcon_line_(self.ui.lineEdit_agrakara_no_none, light.ICON_RIG_NUM)
+            setIcon_line_(self.ui.lineEdit_WOP_no_none, light.ICON_RIG_NUM)
+            setIcon_line_(self.ui.lineEdit_inc_no_none, light.ICON_RIG_NUM)
+            setIcon_line_(self.ui.lineEdit_email_id_none, light.ICON_AT)
+            setIcon_line_(self.ui.lineEdit_educational_qualif_none,
+                         light.ICON_QUALIF)
+            setIcon_line_(self.ui.lineEdit_professional_qualif_none,
+                         light.ICON_QUALIF)
+            setIcon_line_(self.ui.lineEdit_salary_none, light.ICON_RIG_NUM)
 
             # ADD LOWER PRIMARY USER PAGE ICONS
             setIcon_line_(self.ui.lineEdit_name_full_primary, light.ICON_USER)
@@ -1495,7 +1700,7 @@ class Main_Window(QMainWindow):
             setIcon_line_(self.ui.lineEdit_name_initial_ad, light.ICON_USER)
 
         # SUPERUSER ICON AND NAME
-        light.setSuperUserIconName(None, self.ui.label_super_icon)
+        self.setTheSuperUserSideBarText_light()
 
         # DELETE BTN ICONS
         setIcon(self.ui.btn_delete_inter_1, light.ICON_DELETE)
@@ -1530,6 +1735,20 @@ class Main_Window(QMainWindow):
         self.ui.label_info_user_left_lower_advan.setText(
             light.LAFT_LABEL_INFO_TEXT)
 
+    # Super User Side Bar Text
+    def setTheSuperUserSideBarText_light(self):
+
+        __data = Setting.load_superuser()
+        __getuser = Crypto.decrypt_superuser(
+            __data[SETTING]["Name"],
+            __data[SETTING]["Password"],
+            __data[SETTING]["Contact"],
+            __data[SETTING]["E-mail"]
+        )
+        __user = [__getuser[0], __getuser[2], __getuser[-1]]
+        light.setSuperUserIconName(__getuser[0], self.ui.label_super_icon)
+        light.setSuperUserFinform(__user, self.ui.label_infor_super)
+
     # this dark theme of window
     def connect_functiom_dark(self):
         logger.debug("Connect Function Actived... [ connect_functiom_dark ]")
@@ -1558,6 +1777,7 @@ class Main_Window(QMainWindow):
             lambda: UIFunctions.userSide_toggle_dark_connecter(self, 300, True))
 
         # BUTTONE CONNECTER
+        self.ui.stackedWidget.setCurrentWidget(self.ui.Home)
         UIFunctions.current_page_dark(self)
 
         self.ui.btn_page_home.clicked.connect(
@@ -1570,7 +1790,7 @@ class Main_Window(QMainWindow):
             lambda: UIFunctions.setting_dark(self))
         self.ui.btn_page_analytics.clicked.connect(
             lambda: UIFunctions.analytics_dark(self))
-        self.ui.btn_go_home.clicked.connect(
+        self.ui.btn_go_inter_teacher.clicked.connect(
             lambda: UIFunctions.home_dark(self))
         self.ui.btn_go_home_lower.clicked.connect(
             lambda: UIFunctions.home_dark(self))
@@ -1596,9 +1816,18 @@ class Main_Window(QMainWindow):
         # Connect into btn_primary
         self.ui.btn_primary.clicked.connect(
             lambda: UIFunctions.call_input_menu(self, self.ui.page))
+        # Conntect into btn_teahers
+        self.ui.btn_teahers.clicked.connect(
+            lambda: UIFunctions.call_input_menu(self, self.ui.page_add_inter)
+        )
+        # Conntect into btn_none_teaher
+        self.ui.btn_none_teaher.clicked.connect(
+            lambda: UIFunctions.call_input_menu(
+                self, self.ui.page_add_inter_none)
+        )
 
         # Go Home Button
-        self.ui.btn_go_home.clicked.connect(
+        self.ui.btn_go_inter_teacher.clicked.connect(
             lambda: UIFunctions.home_dark(self))
         self.ui.btn_go_home_primary.clicked.connect(
             lambda: UIFunctions.home_dark(self))
@@ -1621,6 +1850,8 @@ class Main_Window(QMainWindow):
         self.ui.scrollArea_advanced_add.setStyleSheet(dark.SCROLLAREA)
         self.ui.scrollArea_primary_add.setStyleSheet(dark.SCROLLAREA)
         self.ui.scrollArea_lower_add.setStyleSheet(dark.SCROLLAREA)
+
+        self.ui.scrollArea_add_info_none.setStyleSheet(dark.SCROLLAREA)
 
         self.ui.comboBox_stream_primary.setStyleSheet(dark.COMBO_BOX)
 
@@ -1646,25 +1877,34 @@ class Main_Window(QMainWindow):
         self.ui.btn_primary.setStyleSheet(dark.PRIMARY_BTN)
         self.ui.btn_ordinary.setStyleSheet(dark.ORDNARY_BTN)
         self.ui.btn_advanced.setStyleSheet(dark.ADVANCED_BTN)
+        self.ui.btn_teahers.setStyleSheet(dark.ADVANCED_BTN)
+        self.ui.btn_none_teaher.setStyleSheet(dark.ADVANCED_BTN)
+        self.ui.frame_add_btns_inters.setStyleSheet(dark.FRAME_2)
 
         # INTER USER COMPENTS
         self.ui.scrollArea_add_info.setStyleSheet(dark.ADD_INTER_PAGE_WIDGET)
         self.ui.lineEdit_full_name.setStyleSheet(dark.LINE_EDIT)
         self.ui.lineEdit__name_initial.setStyleSheet(dark.LINE_EDIT)
         self.ui.lineEdit_inc_no.setStyleSheet(dark.LINE_EDIT)
-        self.ui.lineEdit_office_no.setStyleSheet(dark.LINE_EDIT)
         self.ui.lineEdit_personal_contact.setStyleSheet(dark.LINE_EDIT)
         self.ui.lineEdit_WOP_no.setStyleSheet(dark.LINE_EDIT)
         self.ui.lineEdit_agrakara_no.setStyleSheet(dark.LINE_EDIT)
         self.ui.lineEdit_spouse_name.setStyleSheet(dark.LINE_EDIT)
-        self.ui.lineEdit_contact_no_offiec_home.setStyleSheet(dark.LINE_EDIT)
-        self.ui.lineEdit_no_of_children.setStyleSheet(dark.LINE_EDIT)
 
-        self.ui.textEdit_permanent_address.setStyleSheet(dark.TEXT_EDIT)
+        self.ui.lineEdit_nature_of_appoin.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit_present_grade.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit_appoint_subject.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit_personal_contact.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit_professional_qualif.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit_educational_qualif.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit_email_id.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit_teaching_regist_no.setStyleSheet(dark.LINE_EDIT)
+
+        self.ui.textEdit_emergency.setStyleSheet(dark.TEXT_EDIT)
         self.ui.textEdit_working_address.setStyleSheet(dark.TEXT_EDIT)
-        self.ui.textEdit_other.setStyleSheet(dark.TEXT_EDIT)
-        self.ui.textEdit_nature_appointment.setStyleSheet(dark.TEXT_EDIT)
 
+        self.ui.dateEdit_present_date.setStyleSheet(dark.DATE_EDIT)
+        self.ui.dateEdit_increment_date.setStyleSheet(dark.DATE_EDIT)
         self.ui.dateEdit_DOB.setStyleSheet(dark.DATE_EDIT)
         self.ui.dateEdit_first_appointment_date.setStyleSheet(dark.DATE_EDIT)
         self.ui.dateEdit_appointment_date.setStyleSheet(dark.DATE_EDIT)
@@ -1675,8 +1915,9 @@ class Main_Window(QMainWindow):
         self.ui.radioButton_female.setStyleSheet(dark.RASIO_BUTTON)
         self.ui.radioButton_other.setStyleSheet(dark.RASIO_BUTTON)
 
-        self.ui.label_civil_text.setStyleSheet(dark.LABEL_COLOR)
-        self.ui.label_gender_text.setStyleSheet(dark.LABEL_COLOR)
+        self.ui.scrollAreaWidgetInfo.setStyleSheet(
+            dark.INTER_ADD_TEACHER_BACKGROUND)
+
         self.ui.label_date_app_to_school_text.setStyleSheet(dark.LABEL_COLOR)
         self.ui.label_appointment_data_text.setStyleSheet(dark.LABEL_COLOR)
         self.ui.label_DOB_text.setStyleSheet(dark.LABEL_COLOR)
@@ -1688,7 +1929,7 @@ class Main_Window(QMainWindow):
         self.ui.info_inter_left_1.setStyleSheet(dark.LABEL_INFO_INTER_1)
         self.ui.label_info_user_left_inter_1.setStyleSheet(
             dark.LABEL_INFO_INTER_USER_1)
-        self.ui.label_icon_inter.setStyleSheet(dark.LABEL_ICON_INTER)
+        self.ui.label_icon_inter_teacher.setStyleSheet(dark.LABEL_ICON_INTER)
         self.ui.label_show_roll_number.setStyleSheet(
             dark.LABEL_SHOW_ROLL_INTER)
         self.ui.label_inter_head.setStyleSheet(
@@ -1696,6 +1937,8 @@ class Main_Window(QMainWindow):
 
         self.ui.groupBox_civil.setStyleSheet(dark.GROUP)
         self.ui.groupBox_gender.setStyleSheet(dark.GROUP)
+        self.ui.groupBox_increment_date.setStyleSheet(dark.GROUP)
+        self.ui.groupBox_present_grade_and_date.setStyleSheet(dark.GROUP)
 
         self.ui.widget_inter_1.setStyleSheet(dark.WIDGET_INTER_1)
         self.ui.widget_inter_left_1.setStyleSheet(dark.WIDGET_INTER_1)
@@ -1708,17 +1951,77 @@ class Main_Window(QMainWindow):
             dark.FRAME_INTER_DELETE_BAR_1)
         self.ui.frame_inter_left_btns_bar_1.setStyleSheet(
             dark.FRAME_INTER_DELETE_BAR_1)
-        self.ui.frame_main_inter_info.setStyleSheet(
+        self.ui.frame_main_inter_info_inter_teacher.setStyleSheet(
             dark.FRMAE_MAIN_INTER_INFO)
         self.ui.frame_inter.setStyleSheet(dark.ANALYTICS_FRAME_INTER)
 
         self.ui.btn_delete_inter_1.setStyleSheet(dark.DELETE_INTER_BTN_1)
         self.ui.btn_delete_inter_left_1.setStyleSheet(dark.DELETE_INTER_BTN_1)
-        self.ui.btn_upload_image.setStyleSheet(dark.UPLOAD_IMAGE_BTN)
-        self.ui.btn_addInter.setStyleSheet(dark.ADDINTER_BTN)
-        self.ui.btn_go_home.setStyleSheet(dark.GOHOME_INTER_BTN)
+        self.ui.btn_upload_image_inter_teacher.setStyleSheet(
+            dark.UPLOAD_IMAGE_BTN)
+        self.ui.btn_addInter_teacher.setStyleSheet(dark.ADDINTER_BTN)
+        self.ui.btn_go_inter_teacher.setStyleSheet(dark.GOHOME_INTER_BTN)
 
         self.ui.page_add_inter.setStyleSheet(dark.PAGE_ADD_INTER)
+        self.ui.page_inter_add.setStyleSheet(dark.PAGE_ADD_INTER)
+
+        # NONE TEACHER USER COMPENTS
+        self.ui.lineEdit_nature_of_appoin_none.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit_personal_contact_none.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit_professional_qualif_none.setStyleSheet(
+            dark.LINE_EDIT)
+        self.ui.lineEdit_educational_qualif_none.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit_email_id_none.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit_full_name_none.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit__name_initial_none.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit_inc_no_none.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit_personal_contact_none.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit_WOP_no_none.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit_agrakara_no_none.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit_spouse_name_none.setStyleSheet(dark.LINE_EDIT)
+        self.ui.lineEdit_salary_none.setStyleSheet(dark.LINE_EDIT)
+
+        self.ui.dateEdit_increment_date_none.setStyleSheet(dark.DATE_EDIT)
+
+        self.ui.textEdit_emergency_none.setStyleSheet(dark.TEXT_EDIT)
+        self.ui.textEdit_working_address_none.setStyleSheet(dark.TEXT_EDIT)
+
+        self.ui.dateEdit_DOB_none.setStyleSheet(dark.DATE_EDIT)
+        self.ui.dateEdit_first_appointment_date_none.setStyleSheet(
+            dark.DATE_EDIT)
+        self.ui.dateEdit_appointment_date_none.setStyleSheet(dark.DATE_EDIT)
+
+        self.ui.radioButton_married_none.setStyleSheet(dark.RASIO_BUTTON)
+        self.ui.radioButton_unmarried_none.setStyleSheet(dark.RASIO_BUTTON)
+        self.ui.radioButton_male_none.setStyleSheet(dark.RASIO_BUTTON)
+        self.ui.radioButton_female_none.setStyleSheet(dark.RASIO_BUTTON)
+        self.ui.radioButton_other_none.setStyleSheet(dark.RASIO_BUTTON)
+
+        self.ui.scrollAreaWidgetInfo.setStyleSheet(
+            dark.INTER_ADD_TEACHER_BACKGROUND)
+
+        self.ui.label_date_app_to_school_text_none.setStyleSheet(
+            dark.LABEL_COLOR)
+        self.ui.label_appointment_data_text_none.setStyleSheet(
+            dark.LABEL_COLOR)
+        self.ui.label_DOB_text_none.setStyleSheet(dark.LABEL_COLOR)
+        self.ui.label_icon_none.setStyleSheet(dark.LABEL_ICON_INTER)
+        self.ui.label_show_roll_number_none.setStyleSheet(
+            dark.LABEL_SHOW_ROLL_INTER)
+
+        self.ui.page_add_inter_none.setStyleSheet(dark.PAGE_ADD_INTER)
+
+        self.ui.frame_main_inter_info_inter_teache_none.setStyleSheet(
+            dark.FRMAE_MAIN_INTER_INFO)
+
+        self.ui.groupBox_civil_none.setStyleSheet(dark.GROUP)
+        self.ui.groupBox_gender_none.setStyleSheet(dark.GROUP)
+        self.ui.groupBox_increment_date_none.setStyleSheet(dark.GROUP)
+
+        self.ui.btn_upload_image_inter_teacher_none.setStyleSheet(
+            dark.UPLOAD_IMAGE_BTN)
+        self.ui.btn_addInter_teacher_none.setStyleSheet(dark.ADDINTER_BTN)
+        self.ui.btn_go_inter_teacher_none.setStyleSheet(dark.GOHOME_INTER_BTN)
 
         # PRIMARY LOWER USER COMPENTS
         self.ui.dateEdit_date_of_birth_primary.setStyleSheet(dark.DATE_EDIT)
@@ -2014,6 +2317,15 @@ class Main_Window(QMainWindow):
         self.ui.scrollAreaWidgetContents_2.setStyleSheet(
             dark.SETTING_FRAME_SETTHEME)
 
+        self.ui.status_prograss.setStyleSheet(dark.PROGRESS_BAR)
+        self.ui.label_status_text.setStyleSheet(dark.STATUS_BAR_LABEL)
+        self.ui.StatusBar.setStyleSheet(dark.STATUS_BAR_BACKGROUND)
+
+        self.ui.label_status_text.setStyleSheet(dark.STATUS_BAR_LABEL)
+        self.ui.analytics_status.setStyleSheet(dark.STATUS_BAR_LABEL)
+        self.ui.searching_status.setStyleSheet(dark.STATUS_BAR_LABEL)
+        self.ui.other_status.setStyleSheet(dark.STATUS_BAR_LABEL)
+
     def setIcon_for_window_dark(self):
 
         logger.debug("setIcon Function Actived... [ setIcon_for_window_dark ]")
@@ -2039,9 +2351,10 @@ class Main_Window(QMainWindow):
         icon.addFile(dark.MAIN_WINDOW_TITLE_ICON)
         self.setWindowIcon(icon)
 
-        self.ui.label_icon_inter.setText(dark.LABEL_ICON_INTER_TEXT)
+        self.ui.label_icon_inter_teacher.setText(dark.LABEL_ICON_INTER_TEXT)
         self.ui.label_icon_lower.setText(dark.LABEL_ICON_LOWER_TEXT)
         self.ui.label.setText(dark.LABEL_EDIT_TEXT)
+        self.ui.label_icon_none.setText(dark.LABEL_ICON_INTER_TEXT)
 
         self.ui.label_icon_.setText(dark.LABEL_ICON_LOWER_TEXT)
 
@@ -2055,12 +2368,14 @@ class Main_Window(QMainWindow):
         setIcon(self.ui.btn_edit_setting, dark.ICON_GO)
 
         # USER ADD ICONS
-        setIcon(self.ui.btn_addInter, dark.ICON_ADD_USER)
+        setIcon(self.ui.btn_addInter_teacher, dark.ICON_ADD_USER)
+        setIcon(self.ui.btn_addInter_teacher_none, dark.ICON_ADD_USER)
         setIcon(self.ui.btn_addlower, dark.ICON_ADD_USER)
         setIcon(self.ui.btn_addLower_adv, dark.ICON_ADD_USER)
         setIcon(self.ui.btn_addLower_primary, dark.ICON_ADD_USER)
 
-        setIcon(self.ui.btn_go_home, dark.ICON_GO)
+        setIcon(self.ui.btn_go_inter_teacher, dark.ICON_GO)
+        setIcon(self.ui.btn_go_inter_teacher_none, dark.ICON_GO)
         setIcon(self.ui.btn_go_home_lower, dark.ICON_GO)
         setIcon(self.ui.btn_go_home_primary, dark.ICON_GO)
         setIcon(self.ui.btn_go_home_ad, dark.ICON_GO)
@@ -2083,15 +2398,34 @@ class Main_Window(QMainWindow):
                 "Dark icon placer Actived... [ setIcon_for_window_dark ]")
             setIcon_line(self.ui.lineEdit_full_name, dark.ICON_USER)
             setIcon_line(self.ui.lineEdit__name_initial, dark.ICON_USER)
-            setIcon_line(self.ui.lineEdit_office_no, dark.ICON_PHONE)
             setIcon_line(self.ui.lineEdit_personal_contact, dark.ICON_PHONE)
-            setIcon_line(self.ui.lineEdit_contact_no_offiec_home,
-                         dark.ICON_PHONE)
             setIcon_line(self.ui.lineEdit_spouse_name, dark.ICON_USER)
-            setIcon_line(self.ui.lineEdit_no_of_children, dark.ICON_PEOPLE)
             setIcon_line(self.ui.lineEdit_agrakara_no, dark.ICON_RIG_NUM)
             setIcon_line(self.ui.lineEdit_WOP_no, dark.ICON_RIG_NUM)
             setIcon_line(self.ui.lineEdit_inc_no, dark.ICON_RIG_NUM)
+            setIcon_line(self.ui.lineEdit_email_id, dark.ICON_AT)
+            setIcon_line(self.ui.lineEdit_educational_qualif, dark.ICON_QUALIF)
+            setIcon_line(self.ui.lineEdit_professional_qualif,
+                         dark.ICON_QUALIF)
+            setIcon_line(self.ui.lineEdit_teaching_regist_no,
+                         dark.ICON_RIG_NUM)
+            setIcon_line(self.ui.lineEdit_appoint_subject, dark.ICON_SUBJECT)
+
+            # ADD INTER NONE USER ICON
+            setIcon_line(self.ui.lineEdit_full_name_none, dark.ICON_USER)
+            setIcon_line(self.ui.lineEdit__name_initial_none, dark.ICON_USER)
+            setIcon_line(self.ui.lineEdit_personal_contact_none,
+                         dark.ICON_PHONE)
+            setIcon_line(self.ui.lineEdit_spouse_name_none, dark.ICON_USER)
+            setIcon_line(self.ui.lineEdit_agrakara_no_none, dark.ICON_RIG_NUM)
+            setIcon_line(self.ui.lineEdit_WOP_no_none, dark.ICON_RIG_NUM)
+            setIcon_line(self.ui.lineEdit_inc_no_none, dark.ICON_RIG_NUM)
+            setIcon_line(self.ui.lineEdit_email_id_none, dark.ICON_AT)
+            setIcon_line(self.ui.lineEdit_educational_qualif_none,
+                         dark.ICON_QUALIF)
+            setIcon_line(self.ui.lineEdit_professional_qualif_none,
+                         dark.ICON_QUALIF)
+            setIcon_line(self.ui.lineEdit_salary_none, dark.ICON_RIG_NUM)
 
             # ADD LOWER PRIMARY USER PAGE ICONS
             setIcon_line(self.ui.lineEdit_name_full_primary, dark.ICON_USER)
@@ -2161,15 +2495,35 @@ class Main_Window(QMainWindow):
             # ADD INTER USER PAGE ICON
             setIcon_line_(self.ui.lineEdit_full_name, dark.ICON_USER)
             setIcon_line_(self.ui.lineEdit__name_initial, dark.ICON_USER)
-            setIcon_line_(self.ui.lineEdit_office_no, dark.ICON_PHONE)
             setIcon_line_(self.ui.lineEdit_personal_contact, dark.ICON_PHONE)
-            setIcon_line_(
-                self.ui.lineEdit_contact_no_offiec_home, dark.ICON_PHONE)
             setIcon_line_(self.ui.lineEdit_spouse_name, dark.ICON_USER)
-            setIcon_line_(self.ui.lineEdit_no_of_children, dark.ICON_PEOPLE)
             setIcon_line_(self.ui.lineEdit_agrakara_no, dark.ICON_RIG_NUM)
             setIcon_line_(self.ui.lineEdit_WOP_no, dark.ICON_RIG_NUM)
             setIcon_line_(self.ui.lineEdit_inc_no, dark.ICON_RIG_NUM)
+            setIcon_line_(self.ui.lineEdit_email_id, dark.ICON_AT)
+            setIcon_line_(self.ui.lineEdit_educational_qualif,
+                          dark.ICON_QUALIF)
+            setIcon_line_(self.ui.lineEdit_professional_qualif,
+                          dark.ICON_QUALIF)
+            setIcon_line_(self.ui.lineEdit_teaching_regist_no,
+                          dark.ICON_RIG_NUM)
+            setIcon_line_(self.ui.lineEdit_appoint_subject, dark.ICON_SUBJECT)
+
+            # ADD INTER NONE USER ICON
+            setIcon_line_(self.ui.lineEdit_full_name_none, dark.ICON_USER)
+            setIcon_line_(self.ui.lineEdit__name_initial_none, dark.ICON_USER)
+            setIcon_line_(self.ui.lineEdit_personal_contact_none,
+                          dark.ICON_PHONE)
+            setIcon_line_(self.ui.lineEdit_spouse_name_none, dark.ICON_USER)
+            setIcon_line_(self.ui.lineEdit_agrakara_no_none, dark.ICON_RIG_NUM)
+            setIcon_line_(self.ui.lineEdit_WOP_no_none, dark.ICON_RIG_NUM)
+            setIcon_line_(self.ui.lineEdit_inc_no_none, dark.ICON_RIG_NUM)
+            setIcon_line_(self.ui.lineEdit_email_id_none, dark.ICON_AT)
+            setIcon_line_(
+                self.ui.lineEdit_educational_qualif_none, dark.ICON_QUALIF)
+            setIcon_line_(self.ui.lineEdit_professional_qualif_none,
+                          dark.ICON_QUALIF)
+            setIcon_line_(self.ui.lineEdit_salary_none, dark.ICON_RIG_NUM)
 
             # ADD LOWER ORDNARY USER PAGE ICONS
             setIcon_line_(self.ui.lineEdit_name_full_lower, dark.ICON_USER)
@@ -2198,7 +2552,7 @@ class Main_Window(QMainWindow):
             setIcon_line_(self.ui.lineEdit_name_initial_ad, dark.ICON_USER)
 
         # SUPERUSER ICON AND NAME
-        dark.setSuperUserIconName(None, self.ui.label_super_icon)
+        self.setTheSuperUserSideBarText_dark()
 
         # DELETE BTN ICONS
         setIcon(self.ui.btn_delete_inter_1, dark.ICON_DELETE)
@@ -2292,6 +2646,304 @@ class Main_Window(QMainWindow):
         Setting.store_superuser(__data[SETTING])
         print(val)
 
+    # Super User Side Bar Text
+    def setTheSuperUserSideBarText_dark(self):
+
+        __data = Setting.load_superuser()
+        __getuser = Crypto.decrypt_superuser(
+            __data[SETTING]["Name"],
+            __data[SETTING]["Password"],
+            __data[SETTING]["Contact"],
+            __data[SETTING]["E-mail"]
+        )
+        __user = [__getuser[0], __getuser[2], __getuser[-1]]
+        dark.setSuperUserIconName(__getuser[0], self.ui.label_super_icon)
+        dark.setSuperUserFinform(__user, self.ui.label_infor_super)
+
+##################################################################################################
+################################ Password Changer ###################################################
+    # Thread For Access Window
+    def thread_connecter_access_pwd(self):
+        thread = Thread_Access()
+        thread.opening_window.connect(self.changeTheUserPwd)
+        thread.start()
+        thread.exec_()
+
+    # Change the Super Password
+    def changeTheUserPwd(self):
+        self.__access_window_pwd = Access_Window()
+        self.__access_window_pwd.keyPressEvent = self.access_window_event_pwd
+        self.__access_window_pwd.ui.btn_verify.clicked.connect(
+            self.checkTheCurrentSupuerUserPwd_pwd)
+
+    # Save the Superuser Password Changes
+    def save_pwd_changes(self):
+
+        logger.debug(
+            "The New Password Is Set to The Software ... [save_pwd_changes]"
+        )
+
+        __getpass = self.ui.lineEdit_passord_input.text()
+        __getpass_re = self.ui.lineEdit_repassword_input.text()
+
+        if __getpass == __getpass_re:
+            if checkThePassword(__getpass):
+                __pwd, __pwdKey = Crypto.encrypt_one(__getpass)
+                __data = Setting.load_superuser()
+                __data[SETTING]["Password"] = [__pwd, __pwdKey]
+                Setting.store_superuser(__data[SETTING])
+
+                self.setTheAllLabelText()
+                self.ui.lineEdit_repassword_input.clear()
+                self.ui.lineEdit_passord_input.clear()
+
+    # Check The User Entered Password And Current Password
+
+    def checkTheCurrentSupuerUserPwd_pwd(self):
+        __setting = Setting.load_superuser()
+        __pass = Crypto.decrypt_one(
+            [__setting[SETTING]["Password"][0], __setting[SETTING]["Password"][-1]]
+        )
+
+        getuserinput = self.__access_window_pwd.ui.lineEdit_current_password.text()
+
+        if __pass == getuserinput and getuserinput != '':
+
+            self.save_pwd_changes()
+            self.__access_window_pwd.close()
+        else:
+            self.__access_window_pwd.shacke_window()
+
+    # Access Window Event
+    def access_window_event_pwd(self, event):
+        if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
+            self.checkTheCurrentSupuerUserPwd_pwd()
+
+        elif event.key() == Qt.Key_Escape or event.key == Qt.Key_Enter:
+            self.__access_window_pwd.close()
+##################################################################################################
+
+
+##################################################################################################
+################################ Email Changer ###################################################
+    # Thread For Access Window
+
+    def thread_connecter_access_email(self):
+        thread = Thread_Access()
+        thread.opening_window.connect(self.changeTheUserEmail)
+        thread.start()
+        thread.exec_()
+
+    # Change the Super Email
+    def changeTheUserEmail(self):
+        self.__access_window_email = Access_Window()
+        self.__access_window_email.keyPressEvent = self.access_window_event_email
+        self.__access_window_email.ui.btn_verify.clicked.connect(
+            self.checkTheCurrentSupuerUserPwd_email)
+
+    # Save the Superuser Email Changes
+    def save_email_changes(self):
+        __getemail = self.ui.lineEdit_change_email_input.text()
+        logger.debug(
+            "The New Email Is Set to The Software ... [save_email_changes]"
+        )
+
+        if checkTheEmail(__getemail) and __getemail != '':
+            __email, __emailKey = Crypto.encrypt_one(__getemail)
+            __data = Setting.load_superuser()
+            __data[SETTING]["E-mail"] = [__email, __emailKey]
+            Setting.store_superuser(__data[SETTING])
+
+            self.setTheAllLabelText()
+            self.ui.lineEdit_change_email_input.clear()
+
+    # Check The User Entered Password And Current Password
+
+    def checkTheCurrentSupuerUserPwd_email(self):
+        __setting = Setting.load_superuser()
+        __pass = Crypto.decrypt_one(
+            [__setting[SETTING]["Password"][0], __setting[SETTING]["Password"][-1]]
+        )
+
+        getuserinput = self.__access_window_email.ui.lineEdit_current_password.text()
+        if getuserinput != '':
+            if __pass == getuserinput:
+                self.save_email_changes()
+                self.__access_window_email.close()
+            else:
+                self.__access_window_email.shacke_window()
+        else:
+            self.__access_window_email.shacke_window()
+
+    # Access Window Event
+    def access_window_event_email(self, event):
+        if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
+            self.checkTheCurrentSupuerUserPwd_email()
+
+        elif event.key() == Qt.Key_Escape or event.key == Qt.Key_Enter:
+            self.__access_window_email.close()
+##################################################################################################
+
+##################################################################################################
+################################ Email Changer ###################################################
+    # Thread For Access Window
+    def thread_connecter_access_cont(self):
+        thread = Thread_Access()
+        thread.opening_window.connect(self.changeTheUserCont)
+        thread.start()
+        thread.exec_()
+
+    # Change the Super Email
+    def changeTheUserCont(self):
+        self.__access_window_cont = Access_Window()
+        self.__access_window_cont.keyPressEvent = self.access_window_event_cont
+        self.__access_window_cont.ui.btn_verify.clicked.connect(
+            self.checkTheCurrentSupuerUserPwd_cont)
+
+    # Save the Superuser Email Changes
+    def save_cont_changes(self):
+        __getcont = self.ui.lineEdit_contact_number_input.text()
+
+        logger.debug(
+            "The New Contact Number Is Set to The Software ... [save_cont_changes]"
+        )
+
+        if checkTheContactNum(__getcont) and __getcont != '':
+            __cont, __contKey = Crypto.encrypt_one(__getcont)
+            __data = Setting.load_superuser()
+            __data[SETTING]["Contact"] = [__cont, __contKey]
+            Setting.store_superuser(__data[SETTING])
+
+            self.setTheAllLabelText()
+            self.ui.lineEdit_contact_number_input.clear()
+
+    # Check The User Entered Password And Current Password
+
+    def checkTheCurrentSupuerUserPwd_cont(self):
+        __setting = Setting.load_superuser()
+        __pass = Crypto.decrypt_one(
+            [__setting[SETTING]["Password"][0], __setting[SETTING]["Password"][-1]]
+        )
+
+        getuserinput = self.__access_window_cont.ui.lineEdit_current_password.text()
+        if __pass == getuserinput and getuserinput != '':
+            self.save_cont_changes()
+            self.__access_window_cont.close()
+        else:
+            self.__access_window_cont.shacke_window()
+
+    # Access Window Event
+
+    def access_window_event_cont(self, event):
+        if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
+            self.checkTheCurrentSupuerUserPwd_cont()
+
+        elif event.key() == Qt.Key_Escape or event.key == Qt.Key_Enter:
+            self.__access_window_cont.close()
+##################################################################################################
+
+
+##################################################################################################
+################################ Name Changer ###################################################
+
+    # Thread For Access Window
+
+    def thread_connecter_access_name(self):
+        thread = Thread_Access()
+        thread.opening_window.connect(self.changeTheUserName)
+        thread.start()
+        thread.exec_()
+
+    # Change the Super User Name
+    def changeTheUserName(self):
+        self.__access_window = Access_Window()
+        self.__access_window.keyPressEvent = self.access_window_event_name
+        self.__access_window.ui.btn_verify.clicked.connect(
+            self.checkTheCurrentSupuerUserPwd_name)
+
+    # Save the Superuser Name Changes
+    def save_username_changes(self):
+
+        __getuserinput = self.ui.lineEdit_username_change_input.text()
+
+        logger.debug(
+            "The New User Name Is Set to The Software ... [save_username_changes]"
+        )
+
+        if checkTheUserName(__getuserinput):
+            __name, __nameKey = Crypto.encrypt_one(__getuserinput)
+            __data = Setting.load_superuser()
+            __data[SETTING]["Name"] = [__name, __nameKey]
+            Setting.store_superuser(__data[SETTING])
+
+            self.setTheAllLabelText()
+            self.ui.lineEdit_username_change_input.clear()
+
+    # Check The User Entered Password And Current Password
+
+    def checkTheCurrentSupuerUserPwd_name(self):
+        __setting = Setting.load_superuser()
+        __pass = Crypto.decrypt_one(
+            [__setting[SETTING]["Password"][0], __setting[SETTING]["Password"][-1]]
+        )
+
+        getuserinput = self.__access_window.ui.lineEdit_current_password.text()
+        if __pass == getuserinput and getuserinput != '':
+            self.save_username_changes()
+            self.__access_window.close()
+        else:
+            self.__access_window.shacke_window()
+
+    # Access Window Event
+    def access_window_event_name(self, event):
+        if event.key() == Qt.Key_Return or event.key() == Qt.Key_Enter:
+            self.checkTheCurrentSupuerUserPwd_name()
+
+        elif event.key() == Qt.Key_Escape or event.key == Qt.Key_Enter:
+            self.__access_window.close()
+##################################################################################################
+
+    # Gender Value seter
+    def gender_radioButtonClicked(self, obj_male, obj_female, obj_other):
+        if obj_male.isChecked():
+            self.__gender = "male"
+            return True
+
+        elif obj_female.isChecked():
+            self.__gender = "female"
+            return True
+
+        elif obj_other.isChecked():
+            self.__gender = "other"
+            return True
+
+        return False
+
+##################################################################################################
+################################ Store The Inter Users ###########################################
+    def store_interuser_data(self):
+        pass
+
+    def clear_interuser_entries(self):
+        pass
+
+    def get_interuser_inputs(self):
+        pass
+
+    # Status Setter
+    def status_radioButtonClicked(self):
+        if self.ui.radioButton_married.isChecked():
+            self.__status = "married"
+            return True
+
+        elif self.ui.radioButton_unmarried.isChecked():
+            self.__status = "unmarried"
+            return True
+
+        return False
+
+##################################################################################################
+
 
 class Verifier:
     def __init__(self):
@@ -2304,7 +2956,7 @@ class Verifier:
     def run(self):
         if self.verifier:
             app = QApplication(sys.argv)
-            login = Login_Window()
+            login = Main_Window()
             app.exec_()
 
         else:

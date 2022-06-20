@@ -345,7 +345,7 @@ class UIFunctions(Main_Window):
 
     def callInter_window_light(self):
         UIFunctions.addInter_page_light(self)
-        self.ui.stackedWidget.setCurrentWidget(self.ui.page_add_inter)
+        self.ui.stackedWidget.setCurrentWidget(self.ui.page_inter_add)
 
     def callLower_window_light(self):
         UIFunctions.addLower_page_light(self)
@@ -638,7 +638,7 @@ class UIFunctions(Main_Window):
 
     def callInter_window_dark(self):
         UIFunctions.addInter_page_dark(self)
-        self.ui.stackedWidget.setCurrentWidget(self.ui.page_add_inter)
+        self.ui.stackedWidget.setCurrentWidget(self.ui.page_inter_add)
 
     def callLower_window_dark(self):
         UIFunctions.addLower_page_dark(self)
