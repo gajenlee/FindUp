@@ -5,6 +5,8 @@ import matplotlib as mtp
 import numpy as np
 import json
 import re
+import shortuuid
+
 
 from threading import Thread
 from Packages.connecter.compands.checkers import checkTheContactNum, checkTheEmail, checkTheUserName
@@ -14,6 +16,7 @@ from Packages.uis.backup.ui_backup import *
 from Packages.uis.create.ui_create import *
 from Packages.uis.login.ui_login import *
 from Packages.uis.main.ui_main import *
+from Packages.uis.error.ui_error import *
 
 from Packages.connecter.cryptography.crypto import *
 from Packages.connecter.progressBar.circular_progress import *
@@ -57,6 +60,9 @@ class Access_Window(QDialog):
 
         # Defualt theme
         self.defualt_theme()
+
+        # Animation
+        self.animation()
 
         self.show()
 
@@ -181,13 +187,79 @@ class Access_Window(QDialog):
         # Mouse Press Event
         self.dragPos = event.globalPos()
 
+    def animation(self):
+
+        self.opacity = QGraphicsOpacityEffect()
+        self.animation = QPropertyAnimation(self.opacity, b"opacity")
+        self.ui.frame_main.setGraphicsEffect(self.opacity)
+        self.animation.setDuration(500)
+        self.animation.setStartValue(0)
+        self.animation.setEndValue(1)
+
+        self.no_effect = QGraphicsOpacityEffect()
+        self.animation_two = QPropertyAnimation(self.no_effect, b"opacity")
+        self.ui.frame_main.setGraphicsEffect(self.opacity)
+        self.animation_two.setStartValue(0)
+        self.animation_two.setEndValue(1)
+        self.animation_two.setDuration(500)
+
+        self.hiding_effect = QGraphicsOpacityEffect()
+        self.animation_three = QPropertyAnimation(
+            self.hiding_effect, b"opacity")
+        self.ui.frame_main.setGraphicsEffect(self.opacity)
+        self.animation_three.setStartValue(1)
+        self.animation_three.setEndValue(0)
+        self.animation_two.setDuration(500)
+
+        self.group = QSequentialAnimationGroup()
+        self.group.addAnimation(self.animation)
+        self.group.addAnimation(self.animation_two)
+        self.group.addAnimation(self.animation_three)
+
+        self.group.start()
+
 
 class Backup_Window(QDialog):
     def __init__(self, parent=None, *args, **kw):
         super().__init__(parent=parent, *args, **kw)
         self.ui = Ui_Backup()
         self.ui.setupUi(self)
+
+        # Animation
+        self.animation()
+
         self.show()
+
+    def animation(self):
+
+        self.opacity = QGraphicsOpacityEffect()
+        self.animation = QPropertyAnimation(self.opacity, b"opacity")
+        self.ui.backup_window.setGraphicsEffect(self.opacity)
+        self.animation.setDuration(500)
+        self.animation.setStartValue(0)
+        self.animation.setEndValue(1)
+
+        self.no_effect = QGraphicsOpacityEffect()
+        self.animation_two = QPropertyAnimation(self.no_effect, b"opacity")
+        self.ui.backup_window.setGraphicsEffect(self.opacity)
+        self.animation_two.setStartValue(0)
+        self.animation_two.setEndValue(1)
+        self.animation_two.setDuration(500)
+
+        self.hiding_effect = QGraphicsOpacityEffect()
+        self.animation_three = QPropertyAnimation(
+            self.hiding_effect, b"opacity")
+        self.ui.backup_window.setGraphicsEffect(self.opacity)
+        self.animation_three.setStartValue(1)
+        self.animation_three.setEndValue(0)
+        self.animation_two.setDuration(500)
+
+        self.group = QSequentialAnimationGroup()
+        self.group.addAnimation(self.animation)
+        self.group.addAnimation(self.animation_two)
+        self.group.addAnimation(self.animation_three)
+
+        self.group.start()
 
 
 class Create_Window(QMainWindow):
@@ -373,19 +445,25 @@ class Create_Window(QMainWindow):
     # defalt theme setter
     def default_theme(self):
         logger.debug("The Default Theme Is Runing... [default_theme]")
+        try:
 
-        if SETTING_FILE in os.listdir(PATH_CONFIG_DIR):
+            if SETTING_FILE in os.listdir(PATH_CONFIG_DIR):
 
-            setting = Setting.load_superuser()
-            if setting["Setting"]["Default-theme"] == "light":
+                setting = Setting.load_superuser()
+                if setting["Setting"]["Default-theme"] == "light":
+                    self.setThemeLight()
+                    self.setIconLight()
+                    self.prograssBarLight()
+                else:
+                    self.setThemeDark()
+                    self.setIconDark()
+                    self.prograssBarDark()
+            else:
                 self.setThemeLight()
                 self.setIconLight()
                 self.prograssBarLight()
-            else:
-                self.setThemeDark()
-                self.setIconDark()
-                self.prograssBarDark()
-        else:
+
+        except FileNotFoundError:
             self.setThemeLight()
             self.setIconLight()
             self.prograssBarLight()
@@ -782,6 +860,118 @@ class Login_Window(QMainWindow):
         return False
 
 
+class Error_Window(QDialog):
+    def __init__(self, perent_wnd):
+        super().__init__(perent_wnd)
+        logger.debug("The Mesage Window is Runing.... [Error_Window]")
+        self.resize(405, 162)
+        self.ui = Ui_error()
+        self.ui.setupUi(self)
+        self.setWindowModality(Qt.ApplicationModal)
+        self.setWindowFlags(Qt.CustomizeWindowHint |
+                            Qt.WindowTitleHint | Qt.Dialog)
+
+        self.default_theme()
+        self.connect_button_function()
+
+        # remove the frame of window
+        self.setWindowFlag(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+
+        # Animation
+        self.animation()
+
+        self.show()
+
+    def connect_button_function(self):
+        self.ui.btn_okay.clicked.connect(self.close)
+
+    def dark_theme(self):
+        self.ui.frame_main_window.setStyleSheet(dark.MAIN_FRAME_STYLE)
+        self.ui.label_error_text.setStyleSheet(dark.ERROR_INFORMATION_LABEL)
+        self.ui.btn_okay.setStyleSheet(dark.ERROR_OKAY_BUTTON)
+        self.ui.label_icon.setStyleSheet(
+            "margin-top: 10px; margin-bottom: 10px;")
+
+    def light_theme(self):
+        self.ui.frame_main_window.setStyleSheet(light.MAIN_FRAME_STYLE)
+        self.ui.label_error_text.setStyleSheet(light.ERROR_INFORMATION_LABEL)
+        self.ui.btn_okay.setStyleSheet(light.ERROR_OKAY_BUTTON)
+        self.ui.label_icon.setStyleSheet(
+            "margin-top: 10px; margin-bottom: 10px;")
+
+    def default_theme(self):
+        logger.debug("The Default Theme Is Runing... [ [ERROR] default_theme]")
+        setting = Setting.load_superuser()
+        if setting["Setting"]["Default-theme"] == "light":
+            self.light_theme()
+        else:
+            self.dark_theme()
+
+    def animation(self):
+
+        self.opacity = QGraphicsOpacityEffect()
+        self.animation = QPropertyAnimation(self.opacity, b"opacity")
+        self.ui.frame_main_window.setGraphicsEffect(self.opacity)
+        self.animation.setDuration(500)
+        self.animation.setStartValue(0)
+        self.animation.setEndValue(1)
+
+        self.no_effect = QGraphicsOpacityEffect()
+        self.animation_two = QPropertyAnimation(self.no_effect, b"opacity")
+        self.ui.frame_main_window.setGraphicsEffect(self.opacity)
+        self.animation_two.setStartValue(0)
+        self.animation_two.setEndValue(1)
+        self.animation_two.setDuration(500)
+
+        self.hiding_effect = QGraphicsOpacityEffect()
+        self.animation_three = QPropertyAnimation(
+            self.hiding_effect, b"opacity")
+        self.ui.frame_main_window.setGraphicsEffect(self.opacity)
+        self.animation_three.setStartValue(1)
+        self.animation_three.setEndValue(0)
+        self.animation_two.setDuration(500)
+
+        self.group = QSequentialAnimationGroup()
+        self.group.addAnimation(self.animation)
+        self.group.addAnimation(self.animation_two)
+        self.group.addAnimation(self.animation_three)
+
+        self.group.start()
+
+
+class PickImageWindow(QFileDialog):
+
+    title = "Pick Your Image"
+    default_path = f"C:\\Users\\{os.getlogin()}\\Pictures\\"
+    file_format = "Images (*.png *.jpg *.jpeg);;All File (*)"
+    path = ""
+
+    def __init__(self):
+        super().__init__()
+
+        global path_userImage
+        if path_userImage != str():
+            self.default_path = path_userImage
+
+        self.path, _ = self.getOpenFileName(self,
+                                            self.title,
+                                            self.default_path,
+                                            self.file_format,
+                                            options=self.Options()
+                                            )
+        path_value = self.path.split("/")
+        path_value.pop()
+        path = str()
+        for name in path_value:
+            path += name + "/"
+        path_userImage = path
+        self.resize(300, 300)
+
+    def getPath(self):
+        return self.path
+
+
 class Main_Window(QMainWindow):
 
     # window started theme [If it's True, change the theme light]
@@ -790,6 +980,13 @@ class Main_Window(QMainWindow):
     # Gender value and status
     __gender = str()
     __status = str()
+
+    # Last Roll ID
+    __lastRollID = str()
+
+    # Level And Streem
+    __level = str()
+    __streem = str()
 
     def __init__(self, parent=None, *args, **kw):
         super().__init__(parent=parent, *args, **kw)
@@ -802,6 +999,12 @@ class Main_Window(QMainWindow):
 
         # Button activity connecter
         self.btnToFunctionConnecter()
+
+        # Label text coping event installer function
+        self.label_text_coping_event_installer()
+
+        # Shortcut
+        self.button_shortcutKey_connecter()
 
         # Set The Label Text
         self.setTheAllLabelText()
@@ -876,14 +1079,128 @@ class Main_Window(QMainWindow):
         self.ui.btn_save_change_email.clicked.connect(
             self.thread_connecter_access_email)
 
-        self.ui.label_status_text.setText("<p>Progress Test</p>")
-
         # inuter user
-        self.ui.btn_addInter.clicked.connect(
+        self.ui.btn_addInter_teacher.clicked.connect(
             self.store_interuser_data
         )
+        self.ui.btn_upload_image_inter_teacher.clicked.connect(
+            self.pickImageFromComputer_teachers)
+
+        # None-Inter
+        self.ui.btn_addInter_teacher_none.clicked.connect(
+            self.store_noneinteruser_data)
+        self.ui.btn_upload_image_inter_teacher_none.clicked.connect(
+            self.pickImageFromComputer_teacher_none)
+
+        # Primary
+        self.ui.btn_addLower_primary.clicked.connect(
+            self.store_primaryuser_data
+        )
+        self.ui.btn_upload_image_primary.clicked.connect(
+            self.pickImageFromComputer_primary
+        )
+
+        # Ordnary
+        self.ui.btn_addlower.clicked.connect(
+            self.store_ordnaryuser_data
+        )
+        self.ui.btn_upload_image_lower.clicked.connect(
+            self.pickImageFromComputer_ordnary
+        )
+
+        # Advanced
+        self.ui.btn_addLower_adv.clicked.connect(
+            self.store_advanceduser_data
+        )
+        self.ui.btn_upload_image_advanced.clicked.connect(
+            self.pickImageFromComputer_advanced
+        )
+
+    def label_text_coping_event_installer(self):
+        self.ui.label_show_roll_number.setTextInteractionFlags(
+            Qt.TextSelectableByMouse)
+        self.ui.label_show_roll_number.installEventFilter(self)
+        self.ui.label_show_roll_number.setCursor(QCursor(Qt.IBeamCursor))
+        self.ui.label_show_roll_number.setContextMenuPolicy(
+            QtCore.Qt.CustomContextMenu)
+
+        self.ui.label_show_roll_number_none.setTextInteractionFlags(
+            Qt.TextSelectableByMouse)
+        self.ui.label_show_roll_number_none.installEventFilter(self)
+        self.ui.label_show_roll_number_none.setCursor(QCursor(Qt.IBeamCursor))
+        self.ui.label_show_roll_number_none.setContextMenuPolicy(
+            QtCore.Qt.CustomContextMenu)
+
+        self.ui.label_show_roll_primary.setTextInteractionFlags(
+            Qt.TextSelectableByMouse)
+        self.ui.label_show_roll_primary.installEventFilter(self)
+        self.ui.label_show_roll_primary.setCursor(QCursor(Qt.IBeamCursor))
+        self.ui.label_show_roll_primary.setContextMenuPolicy(
+            QtCore.Qt.CustomContextMenu)
+
+        self.ui.label_show_roll_number_lower.setTextInteractionFlags(
+            Qt.TextSelectableByMouse)
+        self.ui.label_show_roll_number_lower.installEventFilter(self)
+        self.ui.label_show_roll_number_lower.setCursor(QCursor(Qt.IBeamCursor))
+        self.ui.label_show_roll_number_lower.setContextMenuPolicy(
+            QtCore.Qt.CustomContextMenu)
+
+        self.ui.label_show_roll_ad.setTextInteractionFlags(
+            Qt.TextSelectableByMouse)
+        self.ui.label_show_roll_ad.installEventFilter(self)
+        self.ui.label_show_roll_ad.setCursor(QCursor(Qt.IBeamCursor))
+        self.ui.label_show_roll_ad.setContextMenuPolicy(
+            QtCore.Qt.CustomContextMenu)
+
+    def button_shortcutKey_connecter(self):
+
+        self.ui.btn_teahers.setShortcut("Ctrl+t")
+        self.ui.btn_none_teaher.setShortcut("Ctrl+n")
+        self.ui.btn_primary.setShortcut("Ctrl+p")
+        self.ui.btn_advanced.setShortcut("Ctrl+a")
+        self.ui.btn_ordinary.setShortcut("Ctrl+o")
+
+        self.ui.btn_inter.setShortcut("Ctrl+Shift+i")
+        self.ui.btn_lower.setShortcut("Ctrl+Shift+l")
+
+        self.ui.btn_page_home.setShortcut("Ctrl+Shift+h")
+        self.ui.btn_page_left.setShortcut("Ctrl+Shift+r")
+        self.ui.btn_page_search.setShortcut("Ctrl+Shift+s")
+        self.ui.btn_page_analytics.setShortcut("Ctrl+Shift+a")
+        self.ui.btn_edit_setting.setShortcut("Ctrl+Shift+e")
+
+        # Inter user
+        if self.ui.stackedWidget.currentWidget() == self.ui.page_add_inter:
+            self.ui.btn_addInter_teacher.setShortcut("Return")
+            self.ui.btn_go_inter_teacher.setShortcut("Backspace")
+            self.ui.btn_upload_image_inter_teacher.setShortcut("Ctrl+u")
+
+        # None Inter user
+        elif self.ui.stackedWidget.currentWidget() == self.ui.page_add_inter_none:
+            self.ui.btn_addInter_teacher_none.setShortcut("Return")
+            self.ui.btn_go_inter_teacher_none.setShortcut("Backspace")
+            self.ui.btn_upload_image_inter_teacher_none.setShortcut("Ctrl+u")
+
+        # Primary
+        elif self.ui.stackedWidget.currentWidget() == self.ui.page:
+            self.ui.btn_addLower_primary.setShortcut("Return")
+            self.ui.btn_go_home_primary.setShortcut("Backspace")
+            self.ui.btn_upload_image_primary.setShortcut("Ctrl+u")
+
+        # Ordnary
+        elif self.ui.stackedWidget.currentWidget() == self.ui.page_add_lower:
+            self.ui.btn_addlower.setShortcut("Return")
+            self.ui.btn_go_home_lower.setShortcut("Backspace")
+            self.ui.btn_upload_image_lower.setShortcut("Ctrl+u")
+
+        # Advanced
+        elif self.ui.stackedWidget.currentWidget() == self.ui.page_add_advan:
+            self.ui.btn_addLower_adv.setShortcut("Return")
+            self.ui.btn_go_home_ad.setShortcut("Backspace")
+            self.ui.btn_upload_image_advanced.setShortcut("Ctrl+u")
 
     # light theme of window
+
     def connect_functiom_light(self):
 
         logger.debug("Connect function Actived... [ connect_functiom_light ]")
@@ -929,6 +1246,8 @@ class Main_Window(QMainWindow):
             lambda: UIFunctions.home_light(self))
         self.ui.btn_go_home_lower.clicked.connect(
             lambda: UIFunctions.home_light(self))
+        self.ui.btn_go_inter_teacher_none.clicked.connect(
+            lambda: UIFunctions.home_light(self))
 
         # Super User Btn
         self.ui.btn_edit_setting.clicked.connect(
@@ -964,6 +1283,8 @@ class Main_Window(QMainWindow):
 
         # Go Home Button
         self.ui.btn_go_inter_teacher.clicked.connect(
+            lambda: UIFunctions.home_light(self))
+        self.ui.btn_go_inter_teacher_none.clicked.connect(
             lambda: UIFunctions.home_light(self))
         self.ui.btn_go_home_primary.clicked.connect(
             lambda: UIFunctions.home_light(self))
@@ -1075,6 +1396,9 @@ class Main_Window(QMainWindow):
         self.ui.groupBox_gender.setStyleSheet(light.GROUP)
         self.ui.groupBox_increment_date.setStyleSheet(light.GROUP)
         self.ui.groupBox_present_grade_and_date.setStyleSheet(light.GROUP)
+        self.ui.groupBox_gender_primary.setStyleSheet(light.GROUP)
+        self.ui.groupBox_gender_advanced.setStyleSheet(light.GROUP)
+        self.ui.groupBox_gender_lower.setStyleSheet(light.GROUP)
 
         self.ui.widget_inter_1.setStyleSheet(light.WIDGET_INTER_1)
         self.ui.widget_inter_left_1.setStyleSheet(light.WIDGET_INTER_1)
@@ -1639,16 +1963,17 @@ class Main_Window(QMainWindow):
             setIcon_line_(self.ui.lineEdit_full_name_none, light.ICON_USER)
             setIcon_line_(self.ui.lineEdit__name_initial_none, light.ICON_USER)
             setIcon_line_(self.ui.lineEdit_personal_contact_none,
-                         light.ICON_PHONE)
+                          light.ICON_PHONE)
             setIcon_line_(self.ui.lineEdit_spouse_name_none, light.ICON_USER)
-            setIcon_line_(self.ui.lineEdit_agrakara_no_none, light.ICON_RIG_NUM)
+            setIcon_line_(self.ui.lineEdit_agrakara_no_none,
+                          light.ICON_RIG_NUM)
             setIcon_line_(self.ui.lineEdit_WOP_no_none, light.ICON_RIG_NUM)
             setIcon_line_(self.ui.lineEdit_inc_no_none, light.ICON_RIG_NUM)
             setIcon_line_(self.ui.lineEdit_email_id_none, light.ICON_AT)
             setIcon_line_(self.ui.lineEdit_educational_qualif_none,
-                         light.ICON_QUALIF)
+                          light.ICON_QUALIF)
             setIcon_line_(self.ui.lineEdit_professional_qualif_none,
-                         light.ICON_QUALIF)
+                          light.ICON_QUALIF)
             setIcon_line_(self.ui.lineEdit_salary_none, light.ICON_RIG_NUM)
 
             # ADD LOWER PRIMARY USER PAGE ICONS
@@ -1794,6 +2119,8 @@ class Main_Window(QMainWindow):
             lambda: UIFunctions.home_dark(self))
         self.ui.btn_go_home_lower.clicked.connect(
             lambda: UIFunctions.home_dark(self))
+        self.ui.btn_go_inter_teacher_none.clicked.connect(
+            lambda: UIFunctions.home_dark(self))
 
         # Super User Btn
         self.ui.btn_edit_setting.clicked.connect(
@@ -1835,11 +2162,12 @@ class Main_Window(QMainWindow):
             lambda: UIFunctions.home_dark(self))
         self.ui.btn_go_home_ad.clicked.connect(
             lambda: UIFunctions.home_dark(self))
+        self.ui.btn_go_inter_teacher_none.clicked.connect(
+            lambda: UIFunctions.home_dark(self))
 
     def setTheme_for_window_dark(self):
         logger.debug(
             "setTheme Function Actived... [ setTheme_for_window_dark ]")
-
         self.ui.scrollArea_2.setStyleSheet(dark.SCROLLAREA)
         self.ui.scrollArea.setStyleSheet(dark.SCROLLAREA)
         self.ui.scrollArea_resalt.setStyleSheet(dark.SCROLLAREA)
@@ -1939,6 +2267,9 @@ class Main_Window(QMainWindow):
         self.ui.groupBox_gender.setStyleSheet(dark.GROUP)
         self.ui.groupBox_increment_date.setStyleSheet(dark.GROUP)
         self.ui.groupBox_present_grade_and_date.setStyleSheet(dark.GROUP)
+        self.ui.groupBox_gender_primary.setStyleSheet(dark.GROUP)
+        self.ui.groupBox_gender_advanced.setStyleSheet(dark.GROUP)
+        self.ui.groupBox_gender_lower.setStyleSheet(dark.GROUP)
 
         self.ui.widget_inter_1.setStyleSheet(dark.WIDGET_INTER_1)
         self.ui.widget_inter_left_1.setStyleSheet(dark.WIDGET_INTER_1)
@@ -2919,39 +3250,852 @@ class Main_Window(QMainWindow):
 
         return False
 
-##################################################################################################
-################################ Store The Inter Users ###########################################
-    def store_interuser_data(self):
-        pass
+    # Pick Teacher Image From Computer
+    def pickImageFromComputer_teachers(self):
+        global TEACHER_FACE_IMAGE_CONUT
 
-    def clear_interuser_entries(self):
-        pass
+        obj = PickImageWindow()
+        path = obj.getPath()
 
-    def get_interuser_inputs(self):
-        pass
+        if path != "":
+
+            self.__lastRollID = self.generateRollId()
+            theUserOutPutImagePath = PATH_STORE_FACE_IMAGE_INTER + \
+                self.__lastRollID + IMAGE_FORMAT
+
+            if face_recognition(path, theUserOutPutImagePath,
+                                self.ui.status_prograss.setValue, self.ui.label_status_text, change_image(
+                                    theUserOutPutImagePath, "ADD TEACHERS"),
+                                self.ui.label_icon_inter_teacher, TEACHER_FACE_PATH_LIST) == True:
+                logger.debug(
+                    "The Face Image is detected.. [pickImageFromComputer_teachers]")
+
+            else:
+                error = Error_Window(self)
+                error.ui.label_error_text.setText(dark.TEXT_FOR_FACE_DETECTION)
+                error.ui.label_icon.setPixmap(QPixmap(dark.ICON_WARNING))
+                logger.warning(
+                    "The Face Image is not detected.. [pickImageFromComputer_teachers]")
+                self.__lastRollID = str()
+
+    # Pick None-Teacher Image From Computer
+    def pickImageFromComputer_teacher_none(self):
+        global NONE_TEACHER_FACE_IMAGE_CONUT
+
+        obj = PickImageWindow()
+        path = obj.getPath()
+
+        if path != "":
+
+            self.__lastRollID = self.generateRollId()
+            theUserOutPutImagePath = PATH_STORE_FACE_IMAGE_INTER_NONE + \
+                self.__lastRollID + IMAGE_FORMAT
+
+            if face_recognition(path, theUserOutPutImagePath, self.ui.status_prograss.setValue,
+                                self.ui.label_status_text,  change_image(
+                                    theUserOutPutImagePath, "ADD TEACHERS"),
+                                self.ui.label_icon_none, NONE_TEACHER_FACE_PATH_LIST):
+                logger.debug(
+                    "The Face Image is detected.. [pickImageFromComputer_teacher_none]")
+
+            else:
+                error = Error_Window(self)
+                error.ui.label_error_text.setText(dark.TEXT_FOR_FACE_DETECTION)
+                error.ui.label_icon.setPixmap(QPixmap(dark.ICON_WARNING))
+                logger.warning(
+                    "The Face Image is not detected.. [pickImageFromComputer_teacher_none]")
+
+                self.__lastRollID = str()
+
+    # Pick Primary Image From Computer
+    def pickImageFromComputer_primary(self):
+        global PRAYMARY_FACE_IMAGE_COUNT
+
+        obj = PickImageWindow()
+        path = obj.getPath()
+
+        if path != "":
+
+            self.__lastRollID = self.generateRollId()
+            theUserOutPutImagePath = PATH_STORE_FACE_IMAGE_PRIMARY + \
+                self.__lastRollID + IMAGE_FORMAT
+
+            if face_recognition(path, theUserOutPutImagePath, self.ui.status_prograss.setValue,
+                                self.ui.label_status_text,  change_image(
+                                    theUserOutPutImagePath, "ADD SUDENTS"),
+                                self.ui.label_icon_primary, PRAYMARY_FACE_PATH_LIST):
+                logger.debug(
+                    "The Face Image is detected.. [pickImageFromComputer_primary]")
+
+            else:
+                error = Error_Window(self)
+                error.ui.label_error_text.setText(dark.TEXT_FOR_FACE_DETECTION)
+                error.ui.label_icon.setPixmap(QPixmap(dark.ICON_WARNING))
+                logger.warning(
+                    "The Face Image is not detected.. [pickImageFromComputer_primary]")
+                self.__lastRollID = str()
+
+    # Pick Ordnary Image From Computer
+    def pickImageFromComputer_ordnary(self):
+        global ORDNARY_FACE_IMAGE_COUNT
+
+        obj = PickImageWindow()
+        path = obj.getPath()
+
+        if path != "":
+
+            self.__lastRollID = self.generateRollId()
+            theUserOutPutImagePath = PATH_STORE_FACE_IMAGE_ORDNARY + \
+                self.__lastRollID + IMAGE_FORMAT
+
+            if face_recognition(path, theUserOutPutImagePath, self.ui.status_prograss.setValue,
+                                self.ui.label_status_text,  change_image(
+                                    theUserOutPutImagePath, "ADD SUDENTS"),
+                                self.ui.label_icon_lower, ORDNARY_FACE_PATH_LIST):
+                logger.debug(
+                    "The Face Image is detected.. [pickImageFromComputer_ordnary]")
+
+            else:
+                error = Error_Window(self)
+                error.ui.label_error_text.setText(dark.TEXT_FOR_FACE_DETECTION)
+                error.ui.label_icon.setPixmap(QPixmap(dark.ICON_WARNING))
+                logger.warning(
+                    "The Face Image is not detected.. [pickImageFromComputer_ordnary]")
+                self.__lastRollID = str()
+
+    # Pick Advnaced Image From Computer
+    def pickImageFromComputer_advanced(self):
+        global ADVANCED_FACE_IMAGE_COUNT
+
+        obj = PickImageWindow()
+        path = obj.getPath()
+
+        if path != "":
+
+            self.__lastRollID = self.generateRollId()
+            theUserOutPutImagePath = PATH_STORE_FACE_IMAGE_ADVANCED + \
+                self.__lastRollID + IMAGE_FORMAT
+
+            if face_recognition(path, theUserOutPutImagePath, self.ui.status_prograss.setValue,
+                                self.ui.label_status_text,  change_image(
+                                    theUserOutPutImagePath, "ADD SUDENTS"),
+                                self.ui.label_icon_, ADVANCED_FACE_PATH_LIST):
+                logger.debug(
+                    "The Face Image is detected.. [pickImageFromComputer_advanced]")
+
+            else:
+                error = Error_Window(self)
+                error.ui.label_error_text.setText(dark.TEXT_FOR_FACE_DETECTION)
+                error.ui.label_icon.setPixmap(QPixmap(dark.ICON_WARNING))
+                logger.warning(
+                    "The Face Image is not detected.. [pickImageFromComputer_advanced]")
+                self.__lastRollID = str()
+
+    # Generate Roll Number
+    def generateRollId(self):
+        return shortuuid.uuid()
 
     # Status Setter
-    def status_radioButtonClicked(self):
-        if self.ui.radioButton_married.isChecked():
+    def status_radioButtonClicked(self, radio_marr, radio_unmarr):
+        if radio_marr.isChecked():
             self.__status = "married"
             return True
 
-        elif self.ui.radioButton_unmarried.isChecked():
+        elif radio_unmarr.isChecked():
             self.__status = "unmarried"
             return True
 
         return False
 
+
 ##################################################################################################
+################################ Store The Inter Users ###########################################
+
+    def store_interuser_data(self):
+
+        def clear():
+            clear_dict_value(the_layout_of_teachers)
+            self.clear_interuser_entries()
+
+        __target_user = self.get_interuser_inputs()
+        if __target_user != False:
+
+            thread_store = ThreadStorePrograssBar(dark.LABEL_ICON_INTER_TEXT, the_layout_of_teachers, PATH_STORE_DATA_FILE_INTER,
+                                                  INTERUSER, __target_user, rollIDShower(self.__lastRollID), "Storing...")
+            thread_store.prograss_bar.connect(self.ui.status_prograss.setValue)
+            thread_store.prograss_text.connect(
+                self.ui.label_status_text.setText)
+            thread_store.encrypt_function.connect(Crypto.encrypt_interuser)
+            thread_store.store_function.connect(Store.append_json)
+            thread_store.setRollIDLabelText.connect(
+                self.ui.label_show_roll_number.setText)
+            thread_store.theMainUserImage.connect(
+                self.ui.label_icon_inter_teacher.setText)
+            thread_store.finished.connect(clear)
+            thread_store.start()
+            thread_store.exec_()
+
+            logger.debug("The Information is stored [store_interuser_data]")
+
+        else:
+            error = Error_Window(self)
+            error.ui.label_error_text.setText(dark.TEXT_FOR_SOMETHING_MISSED)
+            error.ui.label_icon.setPixmap(QPixmap(dark.ICON_WARNING))
+            logger.warning("The some Entries are empty [store_interuser_data]")
+
+    def clear_interuser_entries(self):
+        self.ui.lineEdit_full_name.clear()
+        self.ui.lineEdit__name_initial.clear()
+        self.ui.lineEdit_inc_no.clear()
+        self.ui.lineEdit_personal_contact.clear()
+        self.ui.lineEdit_email_id.clear()
+        self.ui.lineEdit_WOP_no.clear()
+        self.ui.lineEdit_agrakara_no.clear()
+        self.ui.lineEdit_spouse_name.clear()
+        self.ui.lineEdit_teaching_regist_no.clear()
+        self.ui.lineEdit_appoint_subject.clear()
+        self.ui.lineEdit_educational_qualif.clear()
+        self.ui.lineEdit_professional_qualif.clear()
+        self.ui.lineEdit_nature_of_appoin.clear()
+        self.ui.textEdit_working_address.clear()
+        self.ui.textEdit_emergency.clear()
+        self.ui.lineEdit_present_grade.clear()
+        self.ui.dateEdit_present_date.clear()
+
+    def get_interuser_inputs(self):
+
+        __image_path = str()
+        lastUserID_stored = str()
+
+        try:
+            __image_path = TEACHER_FACE_PATH_LIST[-1]
+        except IndexError:
+            pass
+
+        # Check the Roll ID
+        try:
+            data_inter = Store.read_json(PATH_STORE_DATA_FILE_INTER)
+            lastUserId = data_inter[INTERUSER][-1]
+            lastUserId = Crypto.decrypt_ID(lastUserId, lastUserID_stored)
+        except IndexError:
+            pass
+        except FileNotFoundError:
+            pass
+        except KeyError:
+            pass
+
+        finally:
+
+            if self.__lastRollID == '' or self.__lastRollID == lastUserID_stored:
+                __rollNumber = self.generateRollId()
+            else:
+                __rollNumber = self.__lastRollID
+
+            __name_in_full = self.ui.lineEdit_full_name.text()
+            __name_with_initial = self.ui.lineEdit__name_initial.text()
+            __nic = self.ui.lineEdit_inc_no.text()
+            __contact_num = self.ui.lineEdit_personal_contact.text()
+            __email_id = self.ui.lineEdit_email_id.text()
+            __wop_num = self.ui.lineEdit_WOP_no.text()
+            __agrakara_num = self.ui.lineEdit_agrakara_no.text()
+            __spouse_name = self.ui.lineEdit_spouse_name.text()
+            __teaching_reg_num = self.ui.lineEdit_teaching_regist_no.text()
+            __appointed_subject = self.ui.lineEdit_appoint_subject.text()
+            __educational_qualifi = self.ui.lineEdit_educational_qualif.text()
+            __professional_qualifi = self.ui.lineEdit_professional_qualif.text()
+            __nature_of_appointment = self.ui.lineEdit_nature_of_appoin.text()
+            __icrement_date = self.ui.dateEdit_increment_date.date().toString()
+            __date_of_birth = self.ui.dateEdit_DOB.date().toString()
+            __date_first_appoint = self.ui.dateEdit_first_appointment_date.date().toString()
+            __address = self.ui.textEdit_working_address.toPlainText()
+            __contact_address_emergency = self.ui.textEdit_emergency.toPlainText()
+            __present_grade = self.ui.lineEdit_present_grade.text()
+            __date_present_grade = self.ui.dateEdit_present_date.text()
+            __date_appointment_this_school = self.ui.dateEdit_appointment_date.date().toString()
+
+            if self.gender_radioButtonClicked(
+                self.ui.radioButton_male,
+                self.ui.radioButton_female,
+                self.ui.radioButton_other) and\
+                    self.status_radioButtonClicked(self.ui.radioButton_married, self.ui.radioButton_unmarried) and\
+                    __name_in_full != '' and __name_with_initial != '' and __address != '' and \
+                    __contact_num != '':
+
+                __target_user = [
+                    __rollNumber, __name_in_full, __name_with_initial, __nic, __contact_num, __email_id,  __wop_num, __agrakara_num,
+                    __spouse_name, __teaching_reg_num, __appointed_subject, __educational_qualifi,
+                    __professional_qualifi, __nature_of_appointment, __icrement_date, __date_of_birth,
+                    __date_first_appoint, __address, __contact_address_emergency, __present_grade,
+                    __date_present_grade, __date_appointment_this_school, self.__status, self.__gender, __image_path
+                ]
+
+                self.__lastRollID = __rollNumber
+
+                for index in range(len(__target_user)):
+                    if __target_user[index] == '':
+                        __target_user[index] = None
+
+                return __target_user
+
+        return False
+
+
+##################################################################################################
+################################ Store The None - Inter Users ####################################
+
+    def store_noneinteruser_data(self):
+        def clear():
+            clear_dict_value(the_layout_of_none_teacher)
+            self.clear_noneinteruser_entries()
+
+        __target_user = self.get_noneinteruser_inputs()
+        if __target_user != False:
+            thread_store = ThreadStorePrograssBar(dark.LABEL_ICON_INTER_TEXT, the_layout_of_none_teacher, PATH_STORE_DATA_FILE_INTER_NONE,
+                                                  NONEINTERUSER, __target_user, rollIDShower(self.__lastRollID), "Storing...")
+            thread_store.prograss_bar.connect(self.ui.status_prograss.setValue)
+            thread_store.prograss_text.connect(
+                self.ui.label_status_text.setText)
+            thread_store.encrypt_function.connect(Crypto.encrypt_interuser)
+            thread_store.store_function.connect(Store.append_json)
+            thread_store.setRollIDLabelText.connect(
+                self.ui.label_show_roll_number_none.setText)
+            thread_store.theMainUserImage.connect(
+                self.ui.label_icon_none.setText)
+            thread_store.finished.connect(clear)
+            thread_store.start()
+            thread_store.exec_()
+
+            logger.debug(
+                "The Information is stored [store_noneinteruser_data]")
+
+        else:
+            error = Error_Window(self)
+            error.ui.label_error_text.setText(dark.TEXT_FOR_SOMETHING_MISSED)
+            error.ui.label_icon.setPixmap(QPixmap(dark.ICON_WARNING))
+            logger.warning(
+                "The some Entries are empty [store_noneinteruser_data]")
+
+    def clear_noneinteruser_entries(self):
+        self.ui.lineEdit_full_name_none.clear()
+        self.ui.lineEdit__name_initial_none.clear()
+        self.ui.lineEdit_inc_no_none.clear()
+        self.ui.lineEdit_personal_contact_none.clear()
+        self.ui.lineEdit_email_id_none.clear()
+        self.ui.lineEdit_WOP_no_none.clear()
+        self.ui.lineEdit_agrakara_no_none.clear()
+        self.ui.lineEdit_spouse_name_none.clear()
+        self.ui.lineEdit_educational_qualif_none.clear()
+        self.ui.lineEdit_professional_qualif_none.clear()
+        self.ui.lineEdit_nature_of_appoin_none.clear()
+        self.ui.textEdit_working_address_none.clear()
+        self.ui.textEdit_emergency_none.clear()
+        self.ui.lineEdit_salary_none.clear()
+
+    def get_noneinteruser_inputs(self):
+
+        __image_path = str()
+        lastUserID_stored = str()
+
+        try:
+            __image_path = NONE_TEACHER_FACE_PATH_LIST[-1]
+        except IndexError:
+            pass
+
+        # Check the Roll ID
+        try:
+            data_inter = Store.read_json(PATH_STORE_DATA_FILE_INTER_NONE)
+            lastUserId = data_inter[NONEINTERUSER][-1]
+            Crypto.decrypt_ID(lastUserId, lastUserID_stored)
+
+        except IndexError:
+            pass
+        except FileNotFoundError:
+            pass
+        except KeyError:
+            pass
+
+        finally:
+
+            if self.__lastRollID == '' or self.__lastRollID == lastUserID_stored:
+                __rollNumber = self.generateRollId()
+            else:
+                __rollNumber = self.__lastRollID
+
+            __name_in_full = self.ui.lineEdit_full_name_none.text()
+            __name_with_initial = self.ui.lineEdit__name_initial_none.text()
+            __nic = self.ui.lineEdit_inc_no_none.text()
+            __contact_num = self.ui.lineEdit_personal_contact_none.text()
+            __email_id = self.ui.lineEdit_email_id_none.text()
+            __wop_num = self.ui.lineEdit_WOP_no_none.text()
+            __agrakara_num = self.ui.lineEdit_agrakara_no_none.text()
+            __spouse_name = self.ui.lineEdit_spouse_name_none.text()
+            __educational_qualifi = self.ui.lineEdit_educational_qualif_none.text()
+            __professional_qualifi = self.ui.lineEdit_professional_qualif_none.text()
+            __nature_of_appointment = self.ui.lineEdit_nature_of_appoin_none.text()
+            __icrement_date = self.ui.dateEdit_increment_date_none.date().toString()
+            __date_of_birth = self.ui.dateEdit_DOB_none.date().toString()
+            __date_first_appoint = self.ui.dateEdit_first_appointment_date_none.date().toString()
+            __address = self.ui.textEdit_working_address_none.toPlainText()
+            __contact_address_emergency = self.ui.textEdit_emergency_none.toPlainText()
+            __date_appointment_this_school = self.ui.dateEdit_appointment_date_none.date().toString()
+            __salary_no = self.ui.lineEdit_salary_none.text()
+
+            if self.gender_radioButtonClicked(
+                self.ui.radioButton_male_none,
+                self.ui.radioButton_female_none,
+                self.ui.radioButton_other_none) and\
+                    self.status_radioButtonClicked(self.ui.radioButton_married_none, self.ui.radioButton_unmarried_none) and\
+                    __name_in_full != '' and __name_with_initial != '' and __address != '' and \
+                    __contact_num != '':
+
+                __target_user = [
+                    __rollNumber, __name_in_full, __name_with_initial, __nic, __contact_num, __email_id,  __wop_num, __agrakara_num,
+                    __spouse_name,  __educational_qualifi, __salary_no,
+                    __professional_qualifi, __nature_of_appointment, __icrement_date, __date_of_birth,
+                    __date_first_appoint, __address, __contact_address_emergency,  __date_appointment_this_school,
+                    self.__status, self.__gender, __image_path
+                ]
+
+                self.__lastRollID = __rollNumber
+
+                for index in range(len(__target_user)):
+                    if __target_user[index] == '':
+                        __target_user[index] = None
+
+                return __target_user
+
+        return False
+
+##################################################################################################
+################################ Store The Primary Users #########################################
+
+    def store_primaryuser_data(self):
+
+        def clear():
+            clear_dict_value(the_layout_of_primary)
+            self.clear_primaryuser_entries()
+
+        __target_user = self.get_primaryuser_inputs()
+        if __target_user != False:
+
+            thread_store = ThreadStorePrograssBar(dark.LABEL_ICON_LOWER_TEXT, the_layout_of_primary, PATH_STORE_DATA_FILE_PRIMARY,
+                                                  PRIMARYLOWER, __target_user, rollIDShower(self.__lastRollID), "Storing...", self.__level)
+            thread_store.prograss_bar.connect(self.ui.status_prograss.setValue)
+            thread_store.prograss_text.connect(
+                self.ui.label_status_text.setText)
+            thread_store.encrypt_function.connect(Crypto.encrypt_interuser)
+            thread_store.store_function.connect(Store.append_json)
+            thread_store.setRollIDLabelText.connect(
+                self.ui.label_show_roll_primary.setText)
+            thread_store.theMainUserImage.connect(
+                self.ui.label_icon_primary.setText)
+            thread_store.finished.connect(clear)
+            thread_store.start()
+            thread_store.exec_()
+
+            logger.debug(
+                "The Information is stored [store_primaryuser_data]")
+
+        else:
+            error = Error_Window(self)
+            error.ui.label_error_text.setText(dark.TEXT_FOR_SOMETHING_MISSED)
+            error.ui.label_icon.setPixmap(QPixmap(dark.ICON_WARNING))
+            logger.warning(
+                "The some Entries are empty [store_primaryuser_data]")
+
+    def clear_primaryuser_entries(self):
+        self.ui.lineEdit_name_full_primary.clear()
+        self.ui.lineEdit_name_initial_primary.clear()
+        self.ui.textEdit_address_home.clear()
+        self.ui.textEdit_address_office.clear()
+        self.ui.lineEdit_father_name_primary.clear()
+        self.ui.lineEdit_mather_name_primary.clear()
+        self.ui.lineEdit_no_siblings_primary.clear()
+        self.ui.lineEdit_religion_primary.clear()
+        self.ui.lineEdit_admission_no_primary.clear()
+        self.ui.lineEdit_father_job_primary.clear()
+        self.ui.lineEdit_mather_job_primary.clear()
+        self.ui.lineEdit_parent_contact_primary.clear()
+
+    def get_primaryuser_inputs(self):
+
+        __image_path = str()
+        lastUserID_stored = str()
+
+        try:
+            __image_path = PRAYMARY_FACE_PATH_LIST[-1]
+        except IndexError:
+            pass
+
+        # Check the Roll ID
+        try:
+            data_inter = Store.read_json(PATH_STORE_DATA_FILE_PRIMARY)
+            lastUserId = data_inter[PRIMARYLOWER][self.__level][-1]
+            Crypto.decrypt_ID(lastUserId, lastUserID_stored)
+
+        except IndexError:
+            pass
+        except FileNotFoundError:
+            pass
+        except KeyError:
+            pass
+
+        finally:
+
+            if self.__lastRollID == '' or self.__lastRollID == lastUserID_stored:
+                __rollNumber = self.generateRollId()
+            else:
+                __rollNumber = self.__lastRollID
+
+            __name_full = self.ui.lineEdit_name_full_primary.text()
+            __name_initial = self.ui.lineEdit_name_initial_primary.text()
+            __address = self.ui.textEdit_address_home.toPlainText()
+            __address_office = self.ui.textEdit_address_office.toPlainText()
+            __father_name = self.ui.lineEdit_father_name_primary.text()
+            __mather_name = self.ui.lineEdit_mather_name_primary.text()
+            __number_siblings = self.ui.lineEdit_no_siblings_primary.text()
+            __level = self.ui.comboBox_stream_primary.currentText()
+            __religion = self.ui.lineEdit_religion_primary.text()
+            __admission_num = self.ui.lineEdit_admission_no_primary.text()
+            __father_job = self.ui.lineEdit_father_job_primary.text()
+            __mather_job = self.ui.lineEdit_mather_job_primary.text()
+            __perent_guardian_num = self.ui.lineEdit_parent_contact_primary.text()
+            __data_birth = self.ui.dateEdit_date_of_birth_primary.date().toString()
+            __date_admission = self.ui.dateEdit_date_admission_primary.date().toString()
+
+            if self.gender_radioButtonClicked(
+                self.ui.radioButton_male_primary_2,
+                self.ui.radioButton_female_primary_2,
+                self.ui.radioButton_other_primary_2) and\
+                    __name_full != '' and __name_initial != '' and __address != '' and \
+                    __perent_guardian_num != '':
+
+                __target_user = [
+                    __rollNumber, __name_full, __name_initial, __address, __address_office, __father_name, __mather_name,
+                    __number_siblings, __level, __religion, __admission_num, __father_job, __mather_job,
+                    __perent_guardian_num, __data_birth, __date_admission, self.__gender, __image_path
+                ]
+
+                self.__lastRollID = __rollNumber
+                self.__level = __level
+
+                for index in range(len(__target_user)):
+                    if __target_user[index] == '':
+                        __target_user[index] = None
+
+                return __target_user
+        return False
+
+##################################################################################################
+################################ Store The Ordnary Users #########################################
+    def store_ordnaryuser_data(self):
+        def clear():
+            clear_dict_value(the_layout_of_ordnary)
+            self.clear_ordnaryuser_entries()
+
+        __target_user = self.get_ordnaryuser_inputs()
+        if __target_user != False:
+            thread_store = ThreadStorePrograssBar(dark.LABEL_ICON_LOWER_TEXT, the_layout_of_ordnary, PATH_STORE_DATA_FILE_ORDNARY,
+                                                  ORDNARYLOWER, __target_user, rollIDShower(self.__lastRollID), "Storing...", self.__level)
+            thread_store.prograss_bar.connect(self.ui.status_prograss.setValue)
+            thread_store.prograss_text.connect(
+                self.ui.label_status_text.setText)
+            thread_store.encrypt_function.connect(Crypto.encrypt_interuser)
+            thread_store.store_function.connect(Store.append_json)
+            thread_store.setRollIDLabelText.connect(
+                self.ui.label_show_roll_number_lower.setText)
+            thread_store.theMainUserImage.connect(
+                self.ui.label_icon_lower.setText)
+            thread_store.finished.connect(clear)
+            thread_store.start()
+            thread_store.exec_()
+
+            logger.debug(
+                "The Information is stored [store_primaryuser_data]")
+
+        else:
+            error = Error_Window(self)
+            error.ui.label_error_text.setText(dark.TEXT_FOR_SOMETHING_MISSED)
+            error.ui.label_icon.setPixmap(QPixmap(dark.ICON_WARNING))
+            logger.warning(
+                "The some Entries are empty [store_ordnaryuser_data]")
+
+    def clear_ordnaryuser_entries(self):
+        self.ui.lineEdit_name_full_lower.clear()
+        self.ui.lineEdit_name_initial_lower.clear()
+        self.ui.textEdit_address_home_lower.clear()
+        self.ui.textEdit_address_office_lower.clear()
+        self.ui.lineEdit_father_job_lower.clear()
+        self.ui.lineEdit_mather_name_lower.clear()
+        self.ui.lineEdit_no_siblings_lower.clear()
+        self.ui.lineEdit_religion_lower.clear()
+        self.ui.lineEdit_admission_no_lower.clear()
+        self.ui.lineEdit_father_job_lower.clear()
+        self.ui.lineEdit_mather_job_lower.clear()
+        self.ui.lineEdit_parent_contact_lower.clear()
+
+    def get_ordnaryuser_inputs(self):
+        __image_path = str()
+        lastUserID_stored = str()
+
+        try:
+            __image_path = ORDNARY_FACE_PATH_LIST[-1]
+        except IndexError:
+            pass
+
+        # Check the Roll ID
+        try:
+            data_inter = Store.read_json(PATH_STORE_DATA_FILE_ORDNARY)
+            lastUserId = data_inter[ORDNARYLOWER][self.__level][-1]
+            Crypto.decrypt_ID(lastUserId, lastUserID_stored)
+
+        except IndexError:
+            pass
+        except FileNotFoundError:
+            pass
+        except KeyError:
+            pass
+
+        finally:
+
+            if self.__lastRollID == '' or self.__lastRollID == lastUserID_stored:
+                __rollNumber = self.generateRollId()
+            else:
+                __rollNumber = self.__lastRollID
+
+            __name_full = self.ui.lineEdit_name_full_lower.text()
+            __name_initial = self.ui.lineEdit_name_initial_lower.text()
+            __address = self.ui.textEdit_address_home_lower.toPlainText()
+            __address_office = self.ui.textEdit_address_office_lower.toPlainText()
+            __father_name = self.ui.lineEdit_father_name_lower.text()
+            __mather_name = self.ui.lineEdit_mather_name_lower.text()
+            __number_siblings = self.ui.lineEdit_no_siblings_lower.text()
+            __level = self.ui.comboBox_stream_lower.currentText()
+            __religion = self.ui.lineEdit_religion_lower.text()
+            __admission_num = self.ui.lineEdit_admission_no_lower.text()
+            __father_job = self.ui.lineEdit_father_job_lower.text()
+            __mather_job = self.ui.lineEdit_mather_job_lower.text()
+            __perent_guardian_num = self.ui.lineEdit_parent_contact_lower.text()
+            __data_birth = self.ui.dateEdit_date_of_birth_lower.date().toString()
+            __date_admission = self.ui.dateEdit_date_admission_lower.date().toString()
+
+            if self.gender_radioButtonClicked(
+                self.ui.radioButton_male_lower_2,
+                self.ui.radioButton_female_lower_2,
+                self.ui.radioButton_other_lower_2) and\
+                    __name_full != '' and __name_initial != '' and __address != '' and \
+                    __perent_guardian_num != '':
+
+                __target_user = [
+                    __rollNumber, __name_full, __name_initial, __address, __address_office, __father_name, __mather_name,
+                    __number_siblings, __level, __religion, __admission_num, __father_job, __mather_job,
+                    __perent_guardian_num, __data_birth, __date_admission, self.__gender, __image_path
+                ]
+
+                self.__lastRollID = __rollNumber
+                self.__level = __level
+
+                for index in range(len(__target_user)):
+                    if __target_user[index] == '':
+                        __target_user[index] = None
+
+                return __target_user
+        return False
+
+##################################################################################################
+################################ Store The Advnaced Users ########################################
+    def store_advanceduser_data(self):
+        def clear():
+            clear_dict_value(the_layout_of_advanced)
+            self.clear_advanceduser_entries()
+
+        __target_user = self.get_advnaceduser_inputs()
+        if __target_user != False:
+            thread_store = ThreadStorePrograssBar(dark.LABEL_ICON_LOWER_TEXT, the_layout_of_advanced, PATH_STORE_DATA_FILE_ADVNACED,
+                                                  ADVNACEDLOWER, __target_user, rollIDShower(self.__lastRollID), "Storing...", self.__level, self.__streem.replace(" ", "-"))
+            thread_store.prograss_bar.connect(self.ui.status_prograss.setValue)
+            thread_store.prograss_text.connect(
+                self.ui.label_status_text.setText)
+            thread_store.encrypt_function.connect(Crypto.encrypt_interuser)
+            thread_store.store_function.connect(Store.append_json)
+            thread_store.setRollIDLabelText.connect(
+                self.ui.label_show_roll_ad.setText)
+            thread_store.theMainUserImage.connect(self.ui.label_icon_.setText)
+            thread_store.finished.connect(clear)
+            thread_store.start()
+            thread_store.exec_()
+
+            logger.debug(
+                "The Information is stored [store_advanceduser_data]")
+
+        else:
+            error = Error_Window(self)
+            error.ui.label_error_text.setText(dark.TEXT_FOR_SOMETHING_MISSED)
+            error.ui.label_icon.setPixmap(QPixmap(dark.ICON_WARNING))
+            logger.warning(
+                "The some Entries are empty [store_advanceduser_data]")
+
+    def clear_advanceduser_entries(self):
+        self.ui.lineEdit_name_full_ad.clear()
+        self.ui.lineEdit_name_initial_ad.clear()
+        self.ui.lineEdit_home_address_ad.clear()
+        self.ui.lineEdit_address_office_ad.clear()
+        self.ui.lineEdit_father_name_ad.clear()
+        self.ui.lineEdit_mather_name_ad.clear()
+        self.ui.lineEdit_siblings_ad.clear()
+        self.ui.lineEdit_religion_ad.clear()
+        self.ui.lineEdit_admission_no_ad.clear()
+        self.ui.lineEdit_father_job_ad.clear()
+        self.ui.lineEdit_mather_job_ad.clear()
+        self.ui.lineEdit_parent_contact_no_ad.clear()
+
+    def get_advnaceduser_inputs(self):
+        __image_path = str()
+        lastUserID_stored = str()
+
+        try:
+            __image_path = ADVANCED_FACE_PATH_LIST[-1]
+        except IndexError:
+            pass
+
+        # Check the Roll ID
+        try:
+            data_inter = Store.read_json(PATH_STORE_DATA_FILE_ADVNACED)
+            lastUserId = data_inter[ADVNACEDLOWER][self.__level][self.__streem.replace(
+                " ", "-")][-1]
+            Crypto.decrypt_ID(lastUserId, lastUserID_stored)
+
+        except IndexError:
+            pass
+        except FileNotFoundError:
+            pass
+        except KeyError:
+            pass
+
+        finally:
+
+            if self.__lastRollID == '' or self.__lastRollID == lastUserID_stored:
+                __rollNumber = self.generateRollId()
+            else:
+                __rollNumber = self.__lastRollID
+
+            __name_full = self.ui.lineEdit_name_full_ad.text()
+            __name_initial = self.ui.lineEdit_name_initial_ad.text()
+            __address = self.ui.lineEdit_home_address_ad.toPlainText()
+            __address_office = self.ui.lineEdit_address_office_ad.toPlainText()
+            __father_name = self.ui.lineEdit_father_name_ad.text()
+            __mather_name = self.ui.lineEdit_mather_name_ad.text()
+            __number_siblings = self.ui.lineEdit_siblings_ad.text()
+            __level = self.ui.comboBox_level_ad.currentText()
+            __streem = self.ui.comboBox_stream.currentText()
+            __religion = self.ui.lineEdit_religion_ad.text()
+            __admission_num = self.ui.lineEdit_admission_no_ad.text()
+            __father_job = self.ui.lineEdit_father_job_ad.text()
+            __mather_job = self.ui.lineEdit_mather_job_ad.text()
+            __perent_guardian_num = self.ui.lineEdit_parent_contact_no_ad.text()
+            __data_birth = self.ui.dateEdit_date_of_birth_ad.date().toString()
+            __date_admission = self.ui.dateEdit_date_of_admission_ad.date().toString()
+
+            if self.gender_radioButtonClicked(
+                self.ui.radioButton_male_ad,
+                self.ui.radioButton_female_ad,
+                self.ui.radioButton_other_ad) and\
+                    __name_full != '' and __name_initial != '' and __address != '' and \
+                    __perent_guardian_num != '':
+
+                __target_user = [
+                    __rollNumber, __name_full, __name_initial, __address, __address_office, __father_name, __mather_name,
+                    __number_siblings, __level, __streem, __religion, __admission_num, __father_job, __mather_job,
+                    __perent_guardian_num, __data_birth, __date_admission, self.__gender, __image_path
+                ]
+
+                self.__lastRollID = __rollNumber
+                self.__level = __level
+                self.__streem = __streem
+
+                for index in range(len(__target_user)):
+                    if __target_user[index] == '':
+                        __target_user[index] = None
+
+                return __target_user
+        return False
+##################################################################################################
+
+    # Event Filter For Press Event
+    def eventFilter(self, source: QtCore.QObject, event: QtCore.QEvent):
+
+        text = None
+
+        if event.type() == QEvent.KeyPress and event == QKeySequence.Copy:
+
+            # Roll Number For Users
+            if self.ui.label_show_roll_number.hasSelectedText():
+                text = self.ui.label_show_roll_number.selectedText()
+            elif self.ui.label_show_roll_number_none.hasSelectedText():
+                text = self.ui.label_show_roll_number_none.selectedText()
+            elif self.ui.label_show_roll_primary.hasSelectedText():
+                text = self.ui.label_show_roll_primary.selectedText()
+            elif self.ui.label_show_roll_number_lower.hasSelectedText():
+                text = self.ui.label_show_roll_number_lower.selectedText()
+            elif self.ui.label_show_roll_ad.hasSelectedText():
+                text = self.ui.label_show_roll_ad.selectedText()
+
+            if text != None and text:
+                QApplication.clipboard().setText(text)
+
+        elif event.type() == QEvent.ContextMenu and (source is self.ui.label_show_roll_number or
+                                                     source is self.ui.label_show_roll_number_none or source is self.ui.label_show_roll_primary or
+                                                     source is self.ui.label_show_roll_number_lower or source is self.ui.label_show_roll_ad):
+
+            # Roll Number For Users
+            if self.ui.label_show_roll_number.hasSelectedText():
+                text = self.ui.label_show_roll_number.selectedText()
+            elif self.ui.label_show_roll_number_none.hasSelectedText():
+                text = self.ui.label_show_roll_number_none.selectedText()
+            elif self.ui.label_show_roll_primary.hasSelectedText():
+                text = self.ui.label_show_roll_primary.selectedText()
+            elif self.ui.label_show_roll_number_lower.hasSelectedText():
+                text = self.ui.label_show_roll_number_lower.selectedText()
+            elif self.ui.label_show_roll_ad.hasSelectedText():
+                text = self.ui.label_show_roll_ad.selectedText()
+
+            menu = QMenu(self)
+
+            setting = Setting.load_superuser()
+            if setting["Setting"]["Default-theme"] == "light":
+                menu.setStyleSheet(light.MENU)
+            else:
+                menu.setStyleSheet(dark.MENU)
+
+            copyAction = menu.addAction("Copy")
+            copyAction.setShortcut("Ctrl+C")
+
+            paste = menu.addAction("Paste")
+            paste.setShortcut("Ctrl+V")
+            paste.setEnabled(False)
+
+            if not text and text is None:
+                copyAction.setEnabled(False)
+
+            res = menu.exec_(QCursor.pos())
+            if res == copyAction:
+                QApplication.clipboard().setText(text)
+
+        return super().eventFilter(source, event)
 
 
 class Verifier:
     def __init__(self):
-        self.path = os.listdir(PATH_CONFIG_DIR)
-        self.verifier = False
-        if SETTING_FILE in self.path:
-            __data = Setting.load_superuser()
-            self.verifier = __data[SETTING]['Create']
+        try:
+
+            self.path = os.listdir(PATH_CONFIG_DIR)
+            self.verifier = False
+            if SETTING_FILE in self.path:
+                __data = Setting.load_superuser()
+                self.verifier = __data[SETTING]['Create']
+
+        except FileNotFoundError:
+            self.verifier = False
 
     def run(self):
         if self.verifier:

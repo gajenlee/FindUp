@@ -353,6 +353,7 @@ class UIFunctions(Main_Window):
 
     def call_input_menu(self, obj):
         self.ui.stackedWidget.setCurrentWidget(obj)
+        self.button_shortcutKey_connecter()
 
     # dark theme window
     # Toggle Menu Button

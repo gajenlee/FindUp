@@ -14,10 +14,40 @@ PATH_STORE_DATA_DIR_ACTIVE = os.path.join(
 PATH_STORE_DATA_DIR_RECYCLE = os.path.join(
     f"C:/Users/{os.getlogin()}/.findup/store/recycle/")
 
+# Store Face Images
+PATH_STORE_FACE_IMAGE_INTER = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/faces/active/inter/")
+PATH_STORE_FACE_IMAGE_INTER_NONE = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/faces/active/none_inter/")
+
+PATH_STORE_FACE_IMAGE_PRIMARY = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/faces/active/primary/")
+PATH_STORE_FACE_IMAGE_ORDNARY = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/faces/active/ordnary/")
+PATH_STORE_FACE_IMAGE_ADVANCED = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/faces/active/advanced/")
+
+# Store Face Images Left
+PATH_STORE_FACE_IMAGE_INTER_LEFT = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/faces/left/inter/")
+PATH_STORE_FACE_IMAGE_INTER_NONE_LEFT = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/faces/left/none_inter/")
+
+PATH_STORE_FACE_IMAGE_PRIMARY_LEFT = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/faces/left/primary/")
+PATH_STORE_FACE_IMAGE_ORDNARY_LEFT = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/faces/left/ordnary/")
+PATH_STORE_FACE_IMAGE_ADVANCED_LEFT = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/faces/left/advanced/")
+
+IMAGE_FORMAT = ".png"
+
 
 # Lower data Location
 PATH_STORE_DATA_FILE_INTER = os.path.join(
     f"C:/Users/{os.getlogin()}/.findup/store/active/Idata.json")
+PATH_STORE_DATA_FILE_INTER_NONE = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/active/INdata.json")
 PATH_STORE_DATA_FILE_PRIMARY = os.path.join(
     f"C:/Users/{os.getlogin()}/.findup/store/active/Pdata.json")
 PATH_STORE_DATA_FILE_ORDNARY = os.path.join(
@@ -28,6 +58,8 @@ PATH_STORE_DATA_FILE_ADVNACED = os.path.join(
 # Lower data Location FOR RECYLE
 PATH_STORE_DATA_FILE_INTER_LIFT = os.path.join(
     f"C:/Users/{os.getlogin()}/.findup/store/recycle/LIdata.json")
+PATH_STORE_DATA_FILE_INTER_LIFT_NONE = os.path.join(
+    f"C:/Users/{os.getlogin()}/.findup/store/active/LINdata.json")
 PATH_STORE_DATA_FILE_PRIMARY_LIFT = os.path.join(
     f"C:/Users/{os.getlogin()}/.findup/store/recycle/LPdata.json")
 PATH_STORE_DATA_FILE_ORDNARY_LIFT = os.path.join(
@@ -56,6 +88,7 @@ ADVANCED_FILE_LEFT = 'LAdata.json'
 # User Key Word
 SETTING = 'Setting'
 INTERUSER = 'INTERUSER'
+NONEINTERUSER = 'NONEINTERUSER'
 PRIMARYLOWER = 'Lower-User-Primary'
 ORDNARYLOWER = 'Lower-User-Ordinary'
 ADVNACEDLOWER = 'Lower-User-Advanced'
@@ -103,6 +136,19 @@ class Store(object):
 
         # Create Folder For Data
         try:
+            # Folder Makeing functions
+            os.makedirs(PATH_STORE_FACE_IMAGE_INTER)
+            os.makedirs(PATH_STORE_FACE_IMAGE_INTER_NONE)
+            os.makedirs(PATH_STORE_FACE_IMAGE_PRIMARY)
+            os.makedirs(PATH_STORE_FACE_IMAGE_ORDNARY)
+            os.makedirs(PATH_STORE_FACE_IMAGE_ADVANCED)
+
+            os.makedirs(PATH_STORE_FACE_IMAGE_INTER_LEFT)
+            os.makedirs(PATH_STORE_FACE_IMAGE_INTER_NONE_LEFT)
+            os.makedirs(PATH_STORE_FACE_IMAGE_PRIMARY_LEFT)
+            os.makedirs(PATH_STORE_FACE_IMAGE_ORDNARY_LEFT)
+            os.makedirs(PATH_STORE_FACE_IMAGE_ADVANCED_LEFT)
+
             os.makedirs(PATH_STORE_DATA_DIR_ACTIVE)
             os.makedirs(PATH_STORE_DATA_DIR_RECYCLE)
 
@@ -213,7 +259,7 @@ class Store(object):
             loaded_data[userType][levelKey][streemKey].append(data)
             Store.write_json(loaded_data, filePath)
 
-        elif levelKey != None:
+        elif levelKey != None and streemKey == None:
 
             logger.debug(
                 "The store class append json level function is runing... [append_json]")

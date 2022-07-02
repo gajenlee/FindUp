@@ -966,6 +966,23 @@ DATE_EDIT = """
         border-radius: 5px;
     }
 """
+MENU = """
+    QMenu {
+        background-color:  rgb(49, 50, 63);
+        color: white;
+    }
+    QMenu::item {
+        background-color: none;
+        color: white;
+    }
+    QMenu::item:selected {
+        background-color: rgb(61, 152, 212);
+        color: white;
+    }
+    QMenu::item:disabled {
+        color: gray;
+    }
+"""
 
 LINE_EDIT = """
     QLineEdit{
@@ -985,6 +1002,23 @@ LINE_EDIT = """
     QLineEdit:focus{
         border: 2px solid rgb(61, 152, 212);
     }
+
+    QMenu {
+        background-color:  rgb(49, 50, 63);
+        color: white;
+    }
+    QMenu::item {
+        background-color: none;
+        color: white;
+    }
+    QMenu::item:selected {
+        background-color: rgb(61, 152, 212);
+        color: white;
+    }
+    QMenu::item:disabled {
+        color: gray;
+    }
+
 """
 FRAME_CONTENT_ADVANCED_2 = "background-color: none;"
 
@@ -1692,6 +1726,7 @@ LABEL_ICON_INTER_TEXT = """
         </body>
     </html>
 """
+
 LABEL_ICON_LOWER_TEXT = """
     <html>
         <head/>
@@ -1918,3 +1953,51 @@ BTN_VARIFY = """
     }
 """
 ICON_CLOSE = "./src/icon/light-icon/x.svg"
+
+
+###############################################################################################
+# Error Window
+###############################################################################################
+
+MAIN_FRAME_STYLE = """
+    QFrame#frame_main_window {
+        background-color: rgb(69, 71, 89);
+        border-radius: 10px;
+        border: 1px solid white;
+    }
+"""
+
+ERROR_INFORMATION_LABEL = """
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+"""
+ERROR_OKAY_BUTTON = """
+    QPushButton{
+        color: rgb(255, 255, 255);
+        background-color: rgb(0, 127, 226);
+        border: 0px solid;
+        border-radius: 5px;
+    }
+    QPushButton:hover{
+        background-color: rgb(85, 170, 255);
+    }
+    QPushButton:pressed{
+        background-color: rgba(85, 170, 255, 100);
+    }
+"""
+
+ICON_WARNING = "./src/img/term/warning.svg"
+ICON_INFROMATION = "./src/img/term/infromation.svg"
+ICON_ERROR = "./src/img/term/error.svg"
+
+TEXT_FOR_SOMETHING_MISSED = """
+    <body>
+        <h3>You missed some entries; therefore, <br>you fill it and then continue.</h3>
+    </body>
+"""
+TEXT_FOR_FACE_DETECTION = """
+    <body>
+        <h3>Your image is trouble to recognise; therefore, <br>use another image to complete the task.</h3>
+    </body>
+"""

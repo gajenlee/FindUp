@@ -3520,7 +3520,6 @@ class Ui_Main(object):
         self.status_prograss = QProgressBar(self.StatusBar)
         self.status_prograss.setMaximumSize(QSize(16777215, 10))
         self.status_prograss.setTextVisible(False)
-        self.status_prograss.setProperty("value", 50)
         self.status_prograss.setObjectName("status_prograss")
         self.horizontalLayout_29.addWidget(self.status_prograss)
         self.verticalLayout.addWidget(self.StatusBar)
@@ -3616,7 +3615,7 @@ class Ui_Main(object):
         self.btn_nameSearch.setText(
             QCoreApplication.translate("MainWindow", u" Search", None))
         self.lineEdit_rollSearch.setPlaceholderText(
-            QCoreApplication.translate("MainWindow", u"Search Roll Number", None))
+            QCoreApplication.translate("MainWindow", u"Search Roll ID", None))
         self.btn_rollSearch.setText(
             QCoreApplication.translate("MainWindow", u" Search", None))
 # if QT_CONFIG(tooltip)
@@ -3675,7 +3674,7 @@ class Ui_Main(object):
             "MainWindow", u"Upload Image", None))
 #endif // QT_CONFIG(tooltip)
         self.label_show_roll_number.setText(QCoreApplication.translate(
-            "MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Roll Number </span></p></body></html>", None))
+            "MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Roll ID </span></p></body></html>", None))
         self.btn_addInter_teacher.setText(QCoreApplication.translate(
             "MainWindow", u" Add Teachers", None))
         self.btn_go_inter_teacher.setText(QCoreApplication.translate(
@@ -3687,7 +3686,7 @@ class Ui_Main(object):
         self.btn_upload_image_lower.setText(QCoreApplication.translate(
             "MainWindow", u"Upload Image", None))
         self.label_show_roll_number_lower.setText(QCoreApplication.translate(
-            "MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Roll Number </span></p></body></html>", None))
+            "MainWindow", u"<html><head/><body><p><span style=\" font-size:12pt;\">Roll ID </span></p></body></html>", None))
         self.btn_addlower.setText(QCoreApplication.translate(
             "MainWindow", u" Add Students", None))
         self.btn_go_home_lower.setText(
@@ -3783,7 +3782,7 @@ class Ui_Main(object):
         self.comboBox_level_ad.setItemText(
             1, QCoreApplication.translate("MainWindow", "Level - 13"))
         self.label_show_roll_ad.setText(QCoreApplication.translate(
-            "MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Roll Number </span></p></body></html>"))
+            "MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Roll ID </span></p></body></html>"))
         self.btn_addLower_adv.setText(
             QCoreApplication.translate("MainWindow", "Add Students"))
         self.btn_go_home_ad.setText(
@@ -3894,7 +3893,7 @@ class Ui_Main(object):
             QCoreApplication.translate("MainWindow", "Parent / Guardian Contact Number"))
 
         self.label_show_roll_primary.setText(QCoreApplication.translate(
-            "MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Roll Number </span></p></body></html>"))
+            "MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Roll ID </span></p></body></html>"))
         self.btn_addLower_primary.setText(
             QCoreApplication.translate("MainWindow", "Add Students"))
         self.btn_go_home_primary.setText(
@@ -3989,7 +3988,7 @@ class Ui_Main(object):
         self.btn_teahers.setToolTip(
             QCoreApplication.translate("MainWindow", "Add Teahers"))
         self.label_show_roll_number_none.setText(QCoreApplication.translate(
-            "MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Roll Number </span></p></body></html>"))
+            "MainWindow", "<html><head/><body><p><span style=\" font-size:12pt; font-weight:600;\">Roll ID </span></p></body></html>"))
         self.btn_addInter_teacher_none.setText(
             QCoreApplication.translate("MainWindow", "Add Teaher"))
         self.btn_go_inter_teacher_none.setText(
