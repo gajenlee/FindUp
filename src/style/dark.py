@@ -1786,6 +1786,7 @@ ICON_JOB = "./src/icon/light-icon/briefcase.svg"
 ICON_RIL = ""
 ICON_QUALIF = "./src/icon/light-icon/badge-check.svg"
 ICON_SUBJECT = "./src/icon/light-icon/book.svg"
+ICON_EDIT = "./src/icon/light-icon/edit.svg"
 
 ICON_THEME_BTN = "./src/icon/light-icon/brightness-2.svg"
 
