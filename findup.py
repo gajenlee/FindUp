@@ -1011,7 +1011,7 @@ class Main_Window(QMainWindow):
 
         # random
         self.randomiser_data()
-        
+
         self.show()
 
     def randomiser_data(self):
@@ -1433,6 +1433,8 @@ class Main_Window(QMainWindow):
         self.ui.btn_go_inter_teacher.setStyleSheet(light.GOHOME_INTER_BTN)
         self.ui.btn_edit_interuser.setStyleSheet(light.DELETE_INTER_BTN_1)
         self.ui.btn_edit_interuser_left.setStyleSheet(light.DELETE_INTER_BTN_1)
+        self.ui.btn_view_interuser.setStyleSheet(light.DELETE_INTER_BTN_1)
+        self.ui.btn_view_interuser_left.setStyleSheet(light.DELETE_INTER_BTN_1)
 
         self.ui.page_add_inter.setStyleSheet(light.PAGE_ADD_INTER)
         self.ui.page_inter_add.setStyleSheet(light.PAGE_ADD_INTER)
@@ -1490,6 +1492,7 @@ class Main_Window(QMainWindow):
 
         self.ui.btn_delete_noneinter.setStyleSheet(light.DELETE_INTER_BTN_1)
         self.ui.btn_edit_noneinteruser.setStyleSheet(light.DELETE_INTER_BTN_1)
+        self.ui.btn_view_noneinteruser.setStyleSheet(light.DELETE_INTER_BTN_1)
 
         self.ui.label_info_user_noneinter_left.setStyleSheet(
             light.LABEL_INFO_INTER_USER_1)
@@ -1501,6 +1504,8 @@ class Main_Window(QMainWindow):
         self.ui.btn_delete_noneinter_left.setStyleSheet(
             light.DELETE_INTER_BTN_1)
         self.ui.btn_edit_noneinteruser_left.setStyleSheet(
+            light.DELETE_INTER_BTN_1)
+        self.ui.btn_view_noneinteruser_left.setStyleSheet(
             light.DELETE_INTER_BTN_1)
         self.ui.page_add_inter_none.setStyleSheet(light.PAGE_ADD_INTER)
 
@@ -1585,6 +1590,8 @@ class Main_Window(QMainWindow):
         self.ui.btn_upload_image_primary.setStyleSheet(light.UPLOAD_IMAGE_BTN)
         self.ui.btn_edit_lower.setStyleSheet(light.DELETE_PRIMARY_BTN_1)
         self.ui.btn_edit_lower_left.setStyleSheet(light.DELETE_PRIMARY_BTN_1)
+        self.ui.btn_view_lower.setStyleSheet(light.DELETE_PRIMARY_BTN_1)
+        self.ui.btn_view_lower_left.setStyleSheet(light.DELETE_PRIMARY_BTN_1)
 
         # ORDNARY LOWER USER COMPENTS
         self.ui.lineEdit_name_full_lower.setStyleSheet(light.LINE_EDIT)
@@ -1645,6 +1652,8 @@ class Main_Window(QMainWindow):
         self.ui.btn_go_home_lower.setStyleSheet(light.GOHOME_LOWER_BTN)
         self.ui.btn_edit_pri.setStyleSheet(light.DELETE_LOWER_BTN_1)
         self.ui.btn_edit_pri_left.setStyleSheet(light.DELETE_LOWER_BTN_1)
+        self.ui.btn_view_pri.setStyleSheet(light.DELETE_LOWER_BTN_1)
+        self.ui.btn_view_pri_left.setStyleSheet(light.DELETE_LOWER_BTN_1)
 
         self.ui.page_add_lower.setStyleSheet(light.PAGE_ADD_LOWER)
 
@@ -1716,6 +1725,8 @@ class Main_Window(QMainWindow):
         self.ui.btn_upload_image_advanced.setStyleSheet(light.UPLOAD_IMAGE_BTN)
         self.ui.btn_edit_advan.setStyleSheet(light.DELETE_ADVANCED_BTN_1)
         self.ui.btn_edit_advan_left.setStyleSheet(light.DELETE_ADVANCED_BTN_1)
+        self.ui.btn_view_advan.setStyleSheet(light.DELETE_ADVANCED_BTN_1)
+        self.ui.btn_view_advan_left.setStyleSheet(light.DELETE_ADVANCED_BTN_1)
 
         self.ui.widget_lower_advan.setStyleSheet(light.WIDGET_ADVANCED_1)
         self.ui.widget_lower_left_advan.setStyleSheet(light.WIDGET_ADVANCED_1)
@@ -2098,6 +2109,18 @@ class Main_Window(QMainWindow):
         setIcon(self.ui.btn_edit_advan, light.ICON_EDIT)
         setIcon(self.ui.btn_edit_pri, light.ICON_EDIT)
 
+        setIcon(self.ui.btn_view_interuser_left, light.ICON_VIEW)
+        setIcon(self.ui.btn_view_noneinteruser_left, light.ICON_VIEW)
+        setIcon(self.ui.btn_view_lower_left, light.ICON_VIEW)
+        setIcon(self.ui.btn_view_advan_left, light.ICON_VIEW)
+        setIcon(self.ui.btn_view_pri_left, light.ICON_VIEW)
+
+        setIcon(self.ui.btn_view_interuser, light.ICON_VIEW)
+        setIcon(self.ui.btn_view_noneinteruser, light.ICON_VIEW)
+        setIcon(self.ui.btn_view_lower, light.ICON_VIEW)
+        setIcon(self.ui.btn_view_advan, light.ICON_VIEW)
+        setIcon(self.ui.btn_view_pri, light.ICON_VIEW)
+
         # ABOUT LABEL ICON
         self.ui.label_logo_adout.setText(light.ICON_LABEL_TEXT)
 
@@ -2349,6 +2372,8 @@ class Main_Window(QMainWindow):
         self.ui.btn_delete_inter_1.setStyleSheet(dark.DELETE_INTER_BTN_1)
         self.ui.btn_edit_interuser.setStyleSheet(dark.DELETE_INTER_BTN_1)
         self.ui.btn_edit_interuser_left.setStyleSheet(dark.DELETE_INTER_BTN_1)
+        self.ui.btn_view_interuser.setStyleSheet(dark.DELETE_INTER_BTN_1)
+        self.ui.btn_view_interuser_left.setStyleSheet(dark.DELETE_INTER_BTN_1)
         self.ui.btn_delete_inter_left_1.setStyleSheet(dark.DELETE_INTER_BTN_1)
         self.ui.btn_upload_image_inter_teacher.setStyleSheet(
             dark.UPLOAD_IMAGE_BTN)
@@ -2411,6 +2436,7 @@ class Main_Window(QMainWindow):
 
         self.ui.btn_delete_noneinter.setStyleSheet(dark.DELETE_INTER_BTN_1)
         self.ui.btn_edit_noneinteruser.setStyleSheet(dark.DELETE_INTER_BTN_1)
+        self.ui.btn_view_noneinteruser.setStyleSheet(dark.DELETE_INTER_BTN_1)
 
         self.ui.label_info_user_noneinter_left.setStyleSheet(
             dark.LABEL_INFO_INTER_USER_1)
@@ -2422,6 +2448,8 @@ class Main_Window(QMainWindow):
         self.ui.btn_delete_noneinter_left.setStyleSheet(
             dark.DELETE_INTER_BTN_1)
         self.ui.btn_edit_noneinteruser_left.setStyleSheet(
+            dark.DELETE_INTER_BTN_1)
+        self.ui.btn_view_noneinteruser_left.setStyleSheet(
             dark.DELETE_INTER_BTN_1)
 
         self.ui.page_add_inter_none.setStyleSheet(dark.PAGE_ADD_INTER)
@@ -2506,6 +2534,8 @@ class Main_Window(QMainWindow):
             dark.DELETE_PRIMARY_BTN_1)
         self.ui.btn_edit_lower.setStyleSheet(dark.DELETE_PRIMARY_BTN_1)
         self.ui.btn_edit_lower_left.setStyleSheet(dark.DELETE_PRIMARY_BTN_1)
+        self.ui.btn_view_lower.setStyleSheet(dark.DELETE_PRIMARY_BTN_1)
+        self.ui.btn_view_lower_left.setStyleSheet(dark.DELETE_PRIMARY_BTN_1)
         self.ui.btn_upload_image_primary.setStyleSheet(dark.UPLOAD_IMAGE_BTN)
 
         # ORDNARY LOWER USER COMPENTS
@@ -2564,6 +2594,8 @@ class Main_Window(QMainWindow):
         self.ui.btn_delete_lower_left_1.setStyleSheet(dark.DELETE_LOWER_BTN_1)
         self.ui.btn_edit_pri.setStyleSheet(dark.DELETE_LOWER_BTN_1)
         self.ui.btn_edit_pri_left.setStyleSheet(dark.DELETE_LOWER_BTN_1)
+        self.ui.btn_view_pri.setStyleSheet(dark.DELETE_LOWER_BTN_1)
+        self.ui.btn_view_pri_left.setStyleSheet(dark.DELETE_LOWER_BTN_1)
         self.ui.btn_upload_image_lower.setStyleSheet(dark.UPLOAD_IMAGE_BTN)
         self.ui.btn_addlower.setStyleSheet(dark.ADDLOWER_LOWER_BTN)
         self.ui.btn_go_home_lower.setStyleSheet(dark.GOHOME_LOWER_BTN)
@@ -2637,6 +2669,8 @@ class Main_Window(QMainWindow):
             dark.DELETE_ADVANCED_BTN_1)
         self.ui.btn_edit_advan.setStyleSheet(dark.DELETE_ADVANCED_BTN_1)
         self.ui.btn_edit_advan_left.setStyleSheet(dark.DELETE_ADVANCED_BTN_1)
+        self.ui.btn_view_advan.setStyleSheet(dark.DELETE_ADVANCED_BTN_1)
+        self.ui.btn_view_advan_left.setStyleSheet(dark.DELETE_ADVANCED_BTN_1)
         self.ui.btn_upload_image_advanced.setStyleSheet(dark.UPLOAD_IMAGE_BTN)
 
         self.ui.widget_lower_advan.setStyleSheet(dark.WIDGET_ADVANCED_1)
@@ -3007,6 +3041,18 @@ class Main_Window(QMainWindow):
         setIcon(self.ui.btn_edit_advan, dark.ICON_EDIT)
         setIcon(self.ui.btn_edit_pri, dark.ICON_EDIT)
 
+        setIcon(self.ui.btn_view_interuser_left, dark.ICON_VIEW)
+        setIcon(self.ui.btn_view_noneinteruser_left, dark.ICON_VIEW)
+        setIcon(self.ui.btn_view_lower_left, dark.ICON_VIEW)
+        setIcon(self.ui.btn_view_advan_left, dark.ICON_VIEW)
+        setIcon(self.ui.btn_view_pri_left, dark.ICON_VIEW)
+
+        setIcon(self.ui.btn_view_interuser, dark.ICON_VIEW)
+        setIcon(self.ui.btn_view_noneinteruser, dark.ICON_VIEW)
+        setIcon(self.ui.btn_view_lower, dark.ICON_VIEW)
+        setIcon(self.ui.btn_view_advan, dark.ICON_VIEW)
+        setIcon(self.ui.btn_view_pri, dark.ICON_VIEW)
+
         # ABOUT LABEL ICON
         self.ui.label_logo_adout.setText(dark.ICON_LABEL_TEXT)
 
@@ -3170,6 +3216,7 @@ class Main_Window(QMainWindow):
 ################################ Email Changer ###################################################
     # Thread For Access Window
 
+
     def thread_connecter_access_email(self):
         thread = Thread_Access()
         thread.opening_window.connect(self.changeTheUserEmail)
@@ -3289,7 +3336,6 @@ class Main_Window(QMainWindow):
 ################################ Name Changer ###################################################
 
     # Thread For Access Window
-
 
     def thread_connecter_access_name(self):
         thread = Thread_Access()
@@ -3523,6 +3569,7 @@ class Main_Window(QMainWindow):
 ##################################################################################################
 ################################ Store The Inter Users ###########################################
 
+
     def store_interuser_data(self):
 
         def clear():
@@ -3655,6 +3702,7 @@ class Main_Window(QMainWindow):
 
 ##################################################################################################
 ################################ Store The None - Inter Users ####################################
+
 
     def store_noneinteruser_data(self):
         def clear():
@@ -4262,7 +4310,6 @@ class Main_Window(QMainWindow):
                 self.ui.widget_inter_1
             )
             logger.debug("Randomiser runing [randomize_inter]")
-            
 
         except FileNotFoundError:
             self.notAvailable(
@@ -4492,7 +4539,6 @@ class Main_Window(QMainWindow):
                 self.ui.widget_lower_advan
             )
             logger.exception("FileNotFoundError Advanced Random")
-            
 
         except IndexError:
             self.notAvailable(
@@ -4503,7 +4549,6 @@ class Main_Window(QMainWindow):
                 self.ui.widget_lower_advan
             )
             logger.exception("IndexError Advanced Random")
-            
 
         except ValueError:
             self.notAvailable(
@@ -4526,7 +4571,6 @@ class Main_Window(QMainWindow):
 
 ##################################################################################################
     # Event Filter For Press Event
-
 
     def eventFilter(self, source: QtCore.QObject, event: QtCore.QEvent):
 

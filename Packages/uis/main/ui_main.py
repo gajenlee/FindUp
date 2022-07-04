@@ -1019,6 +1019,19 @@ class Ui_Main(object):
 
         self.horizontalLayout_12.addWidget(self.label_info_user_inter_1)
 
+        self.btn_view_interuser = QPushButton(
+            self.frame_inter_delet_bar_1)
+        self.btn_view_interuser.setMinimumSize(QSize(100, 25))
+        self.btn_view_interuser.setMaximumSize(QSize(100, 40))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_view_interuser.setFont(font)
+        self.btn_view_interuser.setObjectName("btn_view_noneinteruser")
+        self.horizontalLayout_12.addWidget(self.btn_view_interuser)
+
         self.btn_edit_interuser = QPushButton(
             self.frame_inter_delet_bar_1)
         self.btn_edit_interuser.setMinimumSize(QSize(100, 25))
@@ -1094,6 +1107,18 @@ class Ui_Main(object):
         self.label_info_user_noneinter.setObjectName(
             "label_info_user_noneinter")
         self.horizontalLayout_33.addWidget(self.label_info_user_noneinter)
+        self.btn_view_noneinteruser = QPushButton(
+            self.frame_noneinter_delet_bar)
+        self.btn_view_noneinteruser.setMinimumSize(QSize(100, 25))
+        self.btn_view_noneinteruser.setMaximumSize(QSize(100, 40))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_view_noneinteruser.setFont(font)
+        self.btn_view_noneinteruser.setObjectName("btn_view_noneinteruser")
+        self.horizontalLayout_33.addWidget(self.btn_view_noneinteruser)
         self.btn_edit_noneinteruser = QPushButton(
             self.frame_noneinter_delet_bar)
         self.btn_edit_noneinteruser.setMinimumSize(QSize(100, 25))
@@ -1174,6 +1199,19 @@ class Ui_Main(object):
         self.btn_edit_lower.setObjectName("btn_edit_noneinteruser")
         self.horizontalLayout_14.addWidget(self.btn_edit_lower)
 
+        self.btn_view_lower = QPushButton(
+            self.frame_inter_delet_bar_3)
+        self.btn_view_lower.setMinimumSize(QSize(100, 25))
+        self.btn_view_lower.setMaximumSize(QSize(100, 40))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_view_lower.setFont(font)
+        self.btn_view_lower.setObjectName("btn_view_noneinteruser")
+        self.horizontalLayout_14.addWidget(self.btn_view_lower)
+
         self.btn_delete_lower_1 = QPushButton(self.frame_inter_delet_bar_3)
         self.btn_delete_lower_1.setObjectName(u"btn_delete_lower_1")
         self.btn_delete_lower_1.setMinimumSize(QSize(100, 25))
@@ -1228,6 +1266,19 @@ class Ui_Main(object):
         self.label_info_user_lower_pri.setAlignment(Qt.AlignLeft)
 
         self.horizontalLayout_pri.addWidget(self.label_info_user_lower_pri)
+
+        self.btn_view_pri = QPushButton(
+            self.frame_inter_delet_bar_pri)
+        self.btn_view_pri.setMinimumSize(QSize(100, 25))
+        self.btn_view_pri.setMaximumSize(QSize(100, 40))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_view_pri.setFont(font)
+        self.btn_view_pri.setObjectName("btn_view_noneinteruser")
+        self.horizontalLayout_pri.addWidget(self.btn_view_pri)
 
         self.btn_edit_pri = QPushButton(
             self.frame_inter_delet_bar_pri)
@@ -1298,6 +1349,19 @@ class Ui_Main(object):
         self.label_info_user_lower_advan.setAlignment(Qt.AlignLeft)
 
         self.horizontalLayout_advan.addWidget(self.label_info_user_lower_advan)
+
+        self.btn_view_advan = QPushButton(
+            self.frame_inter_delet_bar_advan)
+        self.btn_view_advan.setMinimumSize(QSize(100, 25))
+        self.btn_view_advan.setMaximumSize(QSize(100, 40))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_view_advan.setFont(font)
+        self.btn_view_advan.setObjectName("btn_view_advan")
+        self.horizontalLayout_advan.addWidget(self.btn_view_advan)
 
         self.btn_edit_advan = QPushButton(
             self.frame_inter_delet_bar_advan)
@@ -1407,6 +1471,22 @@ class Ui_Main(object):
 
         self.horizontalLayout_8.addWidget(self.label_info_user_left_inter_1)
 
+
+        self.btn_view_interuser_left = QPushButton(
+            self.frame_inter_left_btns_bar_1)
+        self.btn_view_interuser_left.setMinimumSize(QSize(100, 25))
+        self.btn_view_interuser_left.setMaximumSize(QSize(100, 40))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_view_interuser_left.setFont(font)
+        self.btn_view_interuser_left.setObjectName(
+            "btn_view_interuser_left")
+        self.horizontalLayout_8.addWidget(
+            self.btn_view_interuser_left)
+
         self.btn_edit_interuser_left = QPushButton(
             self.frame_inter_left_btns_bar_1)
         self.btn_edit_interuser_left.setMinimumSize(QSize(100, 25))
@@ -1487,6 +1567,22 @@ class Ui_Main(object):
             "label_info_user_noneinter_left")
         self.horizontalLayout_33_left.addWidget(
             self.label_info_user_noneinter_left)
+
+        self.btn_view_noneinteruser_left = QPushButton(
+            self.frame_noneinter_delet_bar_left)
+        self.btn_view_noneinteruser_left.setMinimumSize(QSize(100, 25))
+        self.btn_view_noneinteruser_left.setMaximumSize(QSize(100, 40))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_view_noneinteruser_left.setFont(font)
+        self.btn_view_noneinteruser_left.setObjectName(
+            "btn_view_noneinteruser_left")
+        self.horizontalLayout_33_left.addWidget(
+            self.btn_view_noneinteruser_left)
+
         self.btn_edit_noneinteruser_left = QPushButton(
             self.frame_noneinter_delet_bar_left)
         self.btn_edit_noneinteruser_left.setMinimumSize(QSize(100, 25))
@@ -1566,6 +1662,21 @@ class Ui_Main(object):
 
         self.horizontalLayout_10.addWidget(self.label_info_user_left_lower_1)
 
+        self.btn_view_lower_left = QPushButton(
+            self.frame_lower_left_btns_bar_1)
+        self.btn_view_lower_left.setMinimumSize(QSize(100, 25))
+        self.btn_view_lower_left.setMaximumSize(QSize(100, 40))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_view_lower_left.setFont(font)
+        self.btn_view_lower_left.setObjectName(
+            "btn_view_lower_left")
+        self.horizontalLayout_10.addWidget(
+            self.btn_view_lower_left)
+
         self.btn_edit_lower_left = QPushButton(
             self.frame_lower_left_btns_bar_1)
         self.btn_edit_lower_left.setMinimumSize(QSize(100, 25))
@@ -1642,6 +1753,21 @@ class Ui_Main(object):
 
         self.horizontalLayout_pri.addWidget(
             self.label_info_user_left_lower_pri)
+
+        self.btn_view_pri_left = QPushButton(
+            self.frame_lower_btns_bar_pri)
+        self.btn_view_pri_left.setMinimumSize(QSize(100, 25))
+        self.btn_view_pri_left.setMaximumSize(QSize(100, 40))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_view_pri_left.setFont(font)
+        self.btn_view_pri_left.setObjectName(
+            "btn_view_pri_left")
+        self.horizontalLayout_pri.addWidget(
+            self.btn_view_pri_left)
 
         self.btn_edit_pri_left = QPushButton(
             self.frame_lower_btns_bar_pri)
@@ -1721,6 +1847,21 @@ class Ui_Main(object):
 
         self.horizontalLayout_advan.addWidget(
             self.label_info_user_left_lower_advan)
+
+        self.btn_view_advan_left = QPushButton(
+            self.frame_lower_btns_bar_advan)
+        self.btn_view_advan_left.setMinimumSize(QSize(100, 25))
+        self.btn_view_advan_left.setMaximumSize(QSize(100, 40))
+        font = QFont()
+        font.setFamily("./src/font/segoeui.ttf")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_view_advan_left.setFont(font)
+        self.btn_view_advan_left.setObjectName(
+            "btn_view_advan_left")
+        self.horizontalLayout_advan.addWidget(
+            self.btn_view_advan_left)
 
         self.btn_edit_advan_left = QPushButton(
             self.frame_lower_btns_bar_advan)
@@ -4317,14 +4458,10 @@ class Ui_Main(object):
             QCoreApplication.translate("MainWindow", "Female"))
         self.radioButton_male_none.setText(
             QCoreApplication.translate("MainWindow", "Male"))
-        self.btn_edit_noneinteruser.setText(
-            QCoreApplication.translate("MainWindow", "Edit"))
         self.btn_delete_noneinter.setText(
             QCoreApplication.translate("MainWindow", " Delete"))
         self.label_info_user_noneinter.setText(QCoreApplication.translate(
             "MainWindow", "This <b>\"Delete\"</b> is Add in to Left Status "))
-        self.btn_edit_noneinteruser_left.setText(
-            QCoreApplication.translate("MainWindow", " Restore"))
         self.btn_delete_noneinter_left.setText(
             QCoreApplication.translate("MainWindow", " Delete"))
         self.label_info_user_noneinter_left.setText(QCoreApplication.translate(
@@ -4332,14 +4469,29 @@ class Ui_Main(object):
 
         self.btn_edit_interuser.setText(
             QCoreApplication.translate("MainWindow", "Edit"))
+        self.btn_edit_noneinteruser.setText(
+            QCoreApplication.translate("MainWindow", "Edit"))
         self.btn_edit_lower.setText(
             QCoreApplication.translate("MainWindow", "Edit"))
         self.btn_edit_pri.setText(
             QCoreApplication.translate("MainWindow", "Edit"))
         self.btn_edit_advan.setText(
             QCoreApplication.translate("MainWindow", "Edit"))
+        
+        self.btn_view_interuser.setText(
+            QCoreApplication.translate("MainWindow", "View"))
+        self.btn_view_noneinteruser.setText(
+            QCoreApplication.translate("MainWindow", "View"))
+        self.btn_view_lower.setText(
+            QCoreApplication.translate("MainWindow", "View"))
+        self.btn_view_pri.setText(
+            QCoreApplication.translate("MainWindow", "View"))
+        self.btn_view_advan.setText(
+            QCoreApplication.translate("MainWindow", "View"))
 
         self.btn_edit_interuser_left.setText(
+            QCoreApplication.translate("MainWindow", " Restore"))
+        self.btn_edit_noneinteruser_left.setText(
             QCoreApplication.translate("MainWindow", " Restore"))
         self.btn_edit_lower_left.setText(
             QCoreApplication.translate("MainWindow", " Restore"))
@@ -4347,4 +4499,15 @@ class Ui_Main(object):
             QCoreApplication.translate("MainWindow", " Restore"))
         self.btn_edit_advan_left.setText(
             QCoreApplication.translate("MainWindow", " Restore"))
+        
+        self.btn_view_interuser_left.setText(
+            QCoreApplication.translate("MainWindow", "View"))
+        self.btn_view_noneinteruser_left.setText(
+            QCoreApplication.translate("MainWindow", "View"))
+        self.btn_view_lower_left.setText(
+            QCoreApplication.translate("MainWindow", "View"))
+        self.btn_view_pri_left.setText(
+            QCoreApplication.translate("MainWindow", "View"))
+        self.btn_view_advan_left.setText(
+            QCoreApplication.translate("MainWindow", "View"))
     # retranslateUi

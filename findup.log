@@ -16257,3 +16257,215 @@ IndexError: Cannot choose from an empty sequence
 2022-07-04 01:32:47,334:DEBUG:logging_findup:Randomiser runing [randomize_inter]
 2022-07-04 01:33:17,018:DEBUG:logging_findup:The Information is stored [store_interuser_data]
 2022-07-04 01:33:17,032:DEBUG:logging_findup:The Face Image is detected.. [pickImageFromComputer_teachers]
+2022-07-04 02:23:55,442:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:24:10,202:DEBUG:logging_findup:init function is runing ... [connect ui of main]
+2022-07-04 02:24:10,203:DEBUG:logging_findup:set the default theme of findup... [ default_theme ]
+2022-07-04 02:24:10,204:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:24:10,204:DEBUG:logging_findup:setIcon Function Actived... [ setIcon_for_window_dark ]
+2022-07-04 02:24:10,385:DEBUG:logging_findup:Dark icon placer Actived... [ setIcon_for_window_dark ]
+2022-07-04 02:24:10,571:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:24:10,636:DEBUG:logging_findup:setTheme Function Actived... [ setTheme_for_window_dark ]
+2022-07-04 02:24:11,578:DEBUG:logging_findup:Connect Function Actived... [ connect_functiom_dark ]
+2022-07-04 02:24:11,590:DEBUG:logging_findup:Button function connecter Actived... [ btnToFunctionConnecter ]
+2022-07-04 02:24:11,672:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:24:11,690:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:24:11,709:ERROR:logging_findup:ValueError Inter Random
+Traceback (most recent call last):
+  File "findup.py", line 4276, in randomize_inter
+    self.randomizer(
+  File "findup.py", line 4176, in randomizer
+    random_index = random.randint(0, len(data[userType]) - 1)
+  File "C:\Program Files\Python38\lib\random.py", line 248, in randint
+    return self.randrange(a, b+1)
+  File "C:\Program Files\Python38\lib\random.py", line 226, in randrange
+    raise ValueError("empty range for randrange() (%d, %d, %d)" % (istart, istop, width))
+ValueError: empty range for randrange() (0, 0, 0)
+2022-07-04 02:24:11,740:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:24:11,757:ERROR:logging_findup:ValueError None-Inter Random
+Traceback (most recent call last):
+  File "findup.py", line 4332, in randomise_noneinter
+    self.randomizer(
+  File "findup.py", line 4192, in randomizer
+    random_index = random.randint(0, len(data[userType]) - 1)
+  File "C:\Program Files\Python38\lib\random.py", line 248, in randint
+    return self.randrange(a, b+1)
+  File "C:\Program Files\Python38\lib\random.py", line 226, in randrange
+    raise ValueError("empty range for randrange() (%d, %d, %d)" % (istart, istop, width))
+ValueError: empty range for randrange() (0, 0, 0)
+2022-07-04 02:24:11,759:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:24:11,780:ERROR:logging_findup:IndexError Primary Random
+Traceback (most recent call last):
+  File "findup.py", line 4386, in randomise_primary
+    self.randomizer(
+  File "findup.py", line 4210, in randomizer
+    random_index_level = random.choice(level)
+  File "C:\Program Files\Python38\lib\random.py", line 290, in choice
+    raise IndexError('Cannot choose from an empty sequence') from None
+IndexError: Cannot choose from an empty sequence
+2022-07-04 02:24:11,785:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:24:11,797:ERROR:logging_findup:IndexError Ordnary Random
+Traceback (most recent call last):
+  File "findup.py", line 4441, in randomise_ordnary
+    self.randomizer(
+  File "findup.py", line 4231, in randomizer
+    random_index_level = random.choice(avariable_level)
+  File "C:\Program Files\Python38\lib\random.py", line 290, in choice
+    raise IndexError('Cannot choose from an empty sequence') from None
+IndexError: Cannot choose from an empty sequence
+2022-07-04 02:24:11,802:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:24:11,821:ERROR:logging_findup:IndexError Advanced Random
+Traceback (most recent call last):
+  File "findup.py", line 4496, in randomise_advanced
+    self.randomizer(
+  File "findup.py", line 4254, in randomizer
+    random_index_streem_level = random.choice(LevelStreem)
+  File "C:\Program Files\Python38\lib\random.py", line 290, in choice
+    raise IndexError('Cannot choose from an empty sequence') from None
+IndexError: Cannot choose from an empty sequence
+2022-07-04 02:25:08,093:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:31:06,570:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:31:20,828:DEBUG:logging_findup:init function is runing ... [connect ui of main]
+2022-07-04 02:31:20,829:DEBUG:logging_findup:set the default theme of findup... [ default_theme ]
+2022-07-04 02:31:20,829:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:31:20,830:DEBUG:logging_findup:setIcon Function Actived... [ setIcon_for_window_dark ]
+2022-07-04 02:31:20,871:DEBUG:logging_findup:Dark icon placer Actived... [ setIcon_for_window_dark ]
+2022-07-04 02:31:20,991:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:31:21,007:DEBUG:logging_findup:setTheme Function Actived... [ setTheme_for_window_dark ]
+2022-07-04 02:31:21,586:DEBUG:logging_findup:Connect Function Actived... [ connect_functiom_dark ]
+2022-07-04 02:31:21,595:DEBUG:logging_findup:Button function connecter Actived... [ btnToFunctionConnecter ]
+2022-07-04 02:31:21,597:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:31:21,599:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:31:21,642:ERROR:logging_findup:ValueError Inter Random
+Traceback (most recent call last):
+  File "findup.py", line 4276, in randomize_inter
+    self.randomizer(
+  File "findup.py", line 4176, in randomizer
+    random_index = random.randint(0, len(data[userType]) - 1)
+  File "C:\Program Files\Python38\lib\random.py", line 248, in randint
+    return self.randrange(a, b+1)
+  File "C:\Program Files\Python38\lib\random.py", line 226, in randrange
+    raise ValueError("empty range for randrange() (%d, %d, %d)" % (istart, istop, width))
+ValueError: empty range for randrange() (0, 0, 0)
+2022-07-04 02:31:21,685:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:31:21,727:ERROR:logging_findup:ValueError None-Inter Random
+Traceback (most recent call last):
+  File "findup.py", line 4332, in randomise_noneinter
+    self.randomizer(
+  File "findup.py", line 4192, in randomizer
+    random_index = random.randint(0, len(data[userType]) - 1)
+  File "C:\Program Files\Python38\lib\random.py", line 248, in randint
+    return self.randrange(a, b+1)
+  File "C:\Program Files\Python38\lib\random.py", line 226, in randrange
+    raise ValueError("empty range for randrange() (%d, %d, %d)" % (istart, istop, width))
+ValueError: empty range for randrange() (0, 0, 0)
+2022-07-04 02:31:21,730:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:31:21,758:ERROR:logging_findup:IndexError Primary Random
+Traceback (most recent call last):
+  File "findup.py", line 4386, in randomise_primary
+    self.randomizer(
+  File "findup.py", line 4210, in randomizer
+    random_index_level = random.choice(level)
+  File "C:\Program Files\Python38\lib\random.py", line 290, in choice
+    raise IndexError('Cannot choose from an empty sequence') from None
+IndexError: Cannot choose from an empty sequence
+2022-07-04 02:31:21,763:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:31:21,775:ERROR:logging_findup:IndexError Ordnary Random
+Traceback (most recent call last):
+  File "findup.py", line 4441, in randomise_ordnary
+    self.randomizer(
+  File "findup.py", line 4231, in randomizer
+    random_index_level = random.choice(avariable_level)
+  File "C:\Program Files\Python38\lib\random.py", line 290, in choice
+    raise IndexError('Cannot choose from an empty sequence') from None
+IndexError: Cannot choose from an empty sequence
+2022-07-04 02:31:21,779:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:31:21,813:ERROR:logging_findup:IndexError Advanced Random
+Traceback (most recent call last):
+  File "findup.py", line 4496, in randomise_advanced
+    self.randomizer(
+  File "findup.py", line 4254, in randomizer
+    random_index_streem_level = random.choice(LevelStreem)
+  File "C:\Program Files\Python38\lib\random.py", line 290, in choice
+    raise IndexError('Cannot choose from an empty sequence') from None
+IndexError: Cannot choose from an empty sequence
+2022-07-04 02:35:53,180:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:35:53,262:DEBUG:logging_findup:The store class append json function is runing.. [append_json]
+2022-07-04 02:35:53,263:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:35:53,267:DEBUG:logging_findup:The store class write json function is runing... [write_json]
+2022-07-04 02:35:57,902:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:35:58,940:DEBUG:logging_findup:Randomiser runing [randomize_inter]
+2022-07-04 02:36:17,163:DEBUG:logging_findup:The Information is stored [store_interuser_data]
+2022-07-04 02:36:17,172:DEBUG:logging_findup:The Face Image is detected.. [pickImageFromComputer_teachers]
+2022-07-04 02:53:10,761:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:53:32,046:DEBUG:logging_findup:init function is runing ... [connect ui of main]
+2022-07-04 02:53:32,047:DEBUG:logging_findup:set the default theme of findup... [ default_theme ]
+2022-07-04 02:53:32,050:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:53:32,053:DEBUG:logging_findup:setIcon Function Actived... [ setIcon_for_window_dark ]
+2022-07-04 02:53:32,248:DEBUG:logging_findup:Dark icon placer Actived... [ setIcon_for_window_dark ]
+2022-07-04 02:53:32,613:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:53:32,731:DEBUG:logging_findup:setTheme Function Actived... [ setTheme_for_window_dark ]
+2022-07-04 02:53:33,759:DEBUG:logging_findup:Connect Function Actived... [ connect_functiom_dark ]
+2022-07-04 02:53:33,771:DEBUG:logging_findup:Button function connecter Actived... [ btnToFunctionConnecter ]
+2022-07-04 02:53:33,856:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:53:33,873:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:53:33,893:ERROR:logging_findup:ValueError Inter Random
+Traceback (most recent call last):
+  File "findup.py", line 4300, in randomize_inter
+    self.randomizer(
+  File "findup.py", line 4200, in randomizer
+    random_index = random.randint(0, len(data[userType]) - 1)
+  File "C:\Program Files\Python38\lib\random.py", line 248, in randint
+    return self.randrange(a, b+1)
+  File "C:\Program Files\Python38\lib\random.py", line 226, in randrange
+    raise ValueError("empty range for randrange() (%d, %d, %d)" % (istart, istop, width))
+ValueError: empty range for randrange() (0, 0, 0)
+2022-07-04 02:53:33,935:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:53:33,952:ERROR:logging_findup:ValueError None-Inter Random
+Traceback (most recent call last):
+  File "findup.py", line 4356, in randomise_noneinter
+    self.randomizer(
+  File "findup.py", line 4216, in randomizer
+    random_index = random.randint(0, len(data[userType]) - 1)
+  File "C:\Program Files\Python38\lib\random.py", line 248, in randint
+    return self.randrange(a, b+1)
+  File "C:\Program Files\Python38\lib\random.py", line 226, in randrange
+    raise ValueError("empty range for randrange() (%d, %d, %d)" % (istart, istop, width))
+ValueError: empty range for randrange() (0, 0, 0)
+2022-07-04 02:53:33,955:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:53:34,017:ERROR:logging_findup:IndexError Primary Random
+Traceback (most recent call last):
+  File "findup.py", line 4410, in randomise_primary
+    self.randomizer(
+  File "findup.py", line 4234, in randomizer
+    random_index_level = random.choice(level)
+  File "C:\Program Files\Python38\lib\random.py", line 290, in choice
+    raise IndexError('Cannot choose from an empty sequence') from None
+IndexError: Cannot choose from an empty sequence
+2022-07-04 02:53:34,020:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:53:34,058:ERROR:logging_findup:IndexError Ordnary Random
+Traceback (most recent call last):
+  File "findup.py", line 4465, in randomise_ordnary
+    self.randomizer(
+  File "findup.py", line 4255, in randomizer
+    random_index_level = random.choice(avariable_level)
+  File "C:\Program Files\Python38\lib\random.py", line 290, in choice
+    raise IndexError('Cannot choose from an empty sequence') from None
+IndexError: Cannot choose from an empty sequence
+2022-07-04 02:53:34,059:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:53:34,095:ERROR:logging_findup:IndexError Advanced Random
+Traceback (most recent call last):
+  File "findup.py", line 4520, in randomise_advanced
+    self.randomizer(
+  File "findup.py", line 4278, in randomizer
+    random_index_streem_level = random.choice(LevelStreem)
+  File "C:\Program Files\Python38\lib\random.py", line 290, in choice
+    raise IndexError('Cannot choose from an empty sequence') from None
+IndexError: Cannot choose from an empty sequence
+2022-07-04 02:54:32,804:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:54:33,159:DEBUG:logging_findup:The store class append json function is runing.. [append_json]
+2022-07-04 02:54:33,160:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:54:33,163:DEBUG:logging_findup:The store class write json function is runing... [write_json]
+2022-07-04 02:54:37,694:DEBUG:logging_findup:The store class read json function is runing... [read_json]
+2022-07-04 02:54:38,292:DEBUG:logging_findup:Randomiser runing [randomize_inter]
+2022-07-04 02:54:47,834:DEBUG:logging_findup:The Information is stored [store_interuser_data]
+2022-07-04 02:54:47,852:DEBUG:logging_findup:The Face Image is detected.. [pickImageFromComputer_teachers]

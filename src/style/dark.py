@@ -1789,6 +1789,7 @@ ICON_SUBJECT = "./src/icon/light-icon/book.svg"
 ICON_EDIT = "./src/icon/light-icon/edit.svg"
 
 ICON_THEME_BTN = "./src/icon/light-icon/brightness-2.svg"
+ICON_VIEW = "./src/icon/light-icon/view-list.svg"
 
 
 # SUPERUSER ICON BAR NAME AND ICON FUNCTION

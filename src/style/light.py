@@ -1786,6 +1786,7 @@ ICON_RIL = ""
 ICON_QUALIF = "./src/icon/dark-icon/badge-check.svg"
 ICON_SUBJECT = "./src/icon/dark-icon/book.svg"
 ICON_EDIT = "./src/icon-dark/edit.svg"
+ICON_VIEW = "./src/icon/light-icon/view-list.svg"
 
 ICON_THEME_BTN = "./src/icon/dark-icon/brightness.svg"
 
