@@ -1837,6 +1837,10 @@ ICON_LABEL_TEXT = """
     </html>
 """
 
+# Randomise Label Text
+RANDOMISE_SUDENT  = "<h1 align=\'center\'>Sudents Data Are Not Available</h1>"
+RANDOMISE_TEACHER  = "<h1 align=\'center\'>Teachers Data Are Not Available</h1>"
+
 #  USER INFORMATION TEXT FOR ACTIVE AND LEFT
 ACTIVE_LABEL_INFO_TEXT = """
     <html>

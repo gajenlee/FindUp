@@ -76,11 +76,13 @@ PATH_STORE_DATA_SETTING = os.path.join(
 SETTING_FILE = "setting.json"
 
 INTER_FILE = 'Idata.json'
+NONEINTER_FILE = 'INdata.json'
 PRIMARY_FILE = 'Pdata.json'
 ORDNARY_FILE = 'Odata.json'
 ADVANCED_FILE = 'Adata.json'
 
 INTER_FILE_LEFT = 'LIdata.json'
+NONEINTER_FILE_LEFT = 'LINdata.json'
 PRIMARY_FILE_LEFT = 'LPdata.json'
 ORDNARY_FILE_LEFT = 'LOdata.json'
 ADVANCED_FILE_LEFT = 'LAdata.json'
@@ -162,6 +164,10 @@ class Store(object):
             data = {'INTERUSER': []}
             Store.write_json(data, PATH_STORE_DATA_FILE_INTER)
 
+        if NONEINTER_FILE not in os.listdir(PATH_STORE_DATA_DIR_ACTIVE):
+            data = {'NONEINTERUSER': []}
+            Store.write_json(data, PATH_STORE_DATA_FILE_INTER_NONE)
+
         if PRIMARY_FILE not in os.listdir(PATH_STORE_DATA_DIR_ACTIVE):
             data = {
                 "Lower-User-Primary":
@@ -219,6 +225,10 @@ class Store(object):
             Store.write_json(
                 data, PATH_STORE_DATA_FILE_INTER_LIFT)
 
+        if NONEINTER_FILE_LEFT not in os.listdir(PATH_STORE_DATA_DIR_RECYCLE):
+            data = {'NONEINTERUSER': []}
+            Store.write_json(data, PATH_STORE_DATA_FILE_INTER_LIFT_NONE)
+
         if PRIMARY_FILE_LEFT not in os.listdir(PATH_STORE_DATA_DIR_RECYCLE):
             data = {"Lower-User-Primary": []}
             Store.write_json(
@@ -264,6 +274,7 @@ class Store(object):
             logger.debug(
                 "The store class append json level function is runing... [append_json]")
             loaded_data = Store.read_json(filePath)
+            print(levelKey, filePath)
             loaded_data[userType][levelKey].append(data)
             Store.write_json(loaded_data, filePath)
 

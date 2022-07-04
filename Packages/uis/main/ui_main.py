@@ -1087,11 +1087,10 @@ class Ui_Main(object):
         self.label_info_user_noneinter = QLabel(self.frame_noneinter_delet_bar)
         font = QFont()
         font.setFamily("./src/font/segoeui.ttf")
-        font.setPointSize(9)
+        font.setPointSize(11)
         font.setBold(False)
         font.setWeight(50)
         self.label_info_user_noneinter.setFont(font)
-        self.label_info_user_noneinter.setAlignment(Qt.AlignCenter)
         self.label_info_user_noneinter.setObjectName(
             "label_info_user_noneinter")
         self.horizontalLayout_33.addWidget(self.label_info_user_noneinter)
@@ -4084,7 +4083,7 @@ class Ui_Main(object):
         self.comboBox_stream_primary.setItemText(
             1, QCoreApplication.translate("MainWindow", "Level - 02"))
         self.comboBox_stream_primary.setItemText(
-            2, QCoreApplication.translate("MainWindow", "Level - 03 "))
+            2, QCoreApplication.translate("MainWindow", "Level - 03"))
         self.comboBox_stream_primary.setItemText(
             3, QCoreApplication.translate("MainWindow", "Level - 04"))
         self.comboBox_stream_primary.setItemText(
@@ -4135,7 +4134,7 @@ class Ui_Main(object):
         self.comboBox_stream_lower.setItemText(
             1, QCoreApplication.translate("MainWindow", "Level - 07"))
         self.comboBox_stream_lower.setItemText(
-            2, QCoreApplication.translate("MainWindow", "Level - 08 "))
+            2, QCoreApplication.translate("MainWindow", "Level - 08"))
         self.comboBox_stream_lower.setItemText(
             3, QCoreApplication.translate("MainWindow", "Level - 09"))
         self.comboBox_stream_lower.setItemText(

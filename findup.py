@@ -1009,7 +1009,17 @@ class Main_Window(QMainWindow):
         # Set The Label Text
         self.setTheAllLabelText()
 
+        # random
+        self.randomiser_data()
+        
         self.show()
+
+    def randomiser_data(self):
+        self.randomize_inter()
+        self.randomise_noneinter()
+        self.randomise_primary()
+        self.randomise_ordnary()
+        self.randomise_advanced()
 
     # Set The Label Text
     def setTheAllLabelText(self):
@@ -3160,7 +3170,6 @@ class Main_Window(QMainWindow):
 ################################ Email Changer ###################################################
     # Thread For Access Window
 
-
     def thread_connecter_access_email(self):
         thread = Thread_Access()
         thread.opening_window.connect(self.changeTheUserEmail)
@@ -3280,6 +3289,7 @@ class Main_Window(QMainWindow):
 ################################ Name Changer ###################################################
 
     # Thread For Access Window
+
 
     def thread_connecter_access_name(self):
         thread = Thread_Access()
@@ -3513,7 +3523,6 @@ class Main_Window(QMainWindow):
 ##################################################################################################
 ################################ Store The Inter Users ###########################################
 
-
     def store_interuser_data(self):
 
         def clear():
@@ -3529,12 +3538,13 @@ class Main_Window(QMainWindow):
             thread_store.prograss_text.connect(
                 self.ui.label_status_text.setText)
             thread_store.encrypt_function.connect(Crypto.encrypt_interuser)
-            thread_store.store_function.connect(Store.append_json)
+            thread_store.store_function_inter.connect(Store.append_json)
             thread_store.setRollIDLabelText.connect(
                 self.ui.label_show_roll_number.setText)
             thread_store.theMainUserImage.connect(
                 self.ui.label_icon_inter_teacher.setText)
             thread_store.finished.connect(clear)
+            thread_store.finished.connect(self.addInterUserRandomizerRuner)
             thread_store.start()
             thread_store.exec_()
 
@@ -3646,7 +3656,6 @@ class Main_Window(QMainWindow):
 ##################################################################################################
 ################################ Store The None - Inter Users ####################################
 
-
     def store_noneinteruser_data(self):
         def clear():
             clear_dict_value(the_layout_of_none_teacher)
@@ -3660,12 +3669,13 @@ class Main_Window(QMainWindow):
             thread_store.prograss_text.connect(
                 self.ui.label_status_text.setText)
             thread_store.encrypt_function.connect(Crypto.encrypt_interuser)
-            thread_store.store_function.connect(Store.append_json)
+            thread_store.store_function_inter.connect(Store.append_json)
             thread_store.setRollIDLabelText.connect(
                 self.ui.label_show_roll_number_none.setText)
             thread_store.theMainUserImage.connect(
                 self.ui.label_icon_none.setText)
             thread_store.finished.connect(clear)
+            thread_store.finished.connect(self.addNoneInterUserRandomizerRuner)
             thread_store.start()
             thread_store.exec_()
 
@@ -3788,12 +3798,13 @@ class Main_Window(QMainWindow):
             thread_store.prograss_text.connect(
                 self.ui.label_status_text.setText)
             thread_store.encrypt_function.connect(Crypto.encrypt_interuser)
-            thread_store.store_function.connect(Store.append_json)
+            thread_store.store_function_ord.connect(Store.append_json)
             thread_store.setRollIDLabelText.connect(
                 self.ui.label_show_roll_primary.setText)
             thread_store.theMainUserImage.connect(
                 self.ui.label_icon_primary.setText)
             thread_store.finished.connect(clear)
+            thread_store.finished.connect(self.addPrimaryUserRandomizerRuner)
             thread_store.start()
             thread_store.exec_()
 
@@ -3905,12 +3916,13 @@ class Main_Window(QMainWindow):
             thread_store.prograss_text.connect(
                 self.ui.label_status_text.setText)
             thread_store.encrypt_function.connect(Crypto.encrypt_interuser)
-            thread_store.store_function.connect(Store.append_json)
+            thread_store.store_function_ord.connect(Store.append_json)
             thread_store.setRollIDLabelText.connect(
                 self.ui.label_show_roll_number_lower.setText)
             thread_store.theMainUserImage.connect(
                 self.ui.label_icon_lower.setText)
             thread_store.finished.connect(clear)
+            thread_store.finished.connect(self.addOrdnaryUserRandomizerRuner)
             thread_store.start()
             thread_store.exec_()
 
@@ -3999,6 +4011,8 @@ class Main_Window(QMainWindow):
                 self.__lastRollID = __rollNumber
                 self.__level = __level
 
+                print(__level)
+
                 for index in range(len(__target_user)):
                     if __target_user[index] == '':
                         __target_user[index] = None
@@ -4021,11 +4035,12 @@ class Main_Window(QMainWindow):
             thread_store.prograss_text.connect(
                 self.ui.label_status_text.setText)
             thread_store.encrypt_function.connect(Crypto.encrypt_interuser)
-            thread_store.store_function.connect(Store.append_json)
+            thread_store.store_function_advan.connect(Store.append_json)
             thread_store.setRollIDLabelText.connect(
                 self.ui.label_show_roll_ad.setText)
             thread_store.theMainUserImage.connect(self.ui.label_icon_.setText)
             thread_store.finished.connect(clear)
+            thread_store.finished.connect(self.addAdvnacedUserRandomizerRuner)
             thread_store.start()
             thread_store.exec_()
 
@@ -4125,7 +4140,394 @@ class Main_Window(QMainWindow):
         return False
 ##################################################################################################
 
+##################################################################################################
+    def randomizer(self, file_path, randomizer_list, target_dict, label_text, face_label, frame_bar, userType, widget):
+
+        if userType == 'INTERUSER':
+            randomizer_list.clear()
+
+            frame_bar.setVisible(True)
+            face_label.setVisible(True)
+            widget.setMinimumSize(QSize(0, 500))
+
+            data = Store.read_json(file_path)
+            random_index = random.randint(0, len(data[userType]) - 1)
+            Crypto.decrypt_interuser(data[userType][random_index], target_dict)
+            html_obj = make_html_obj(target_dict, userType)
+            image = f"<p align= \'center\'><img src=\'{target_dict['Image']}\'></p>"
+            label_text.setText(html_obj)
+            face_label.setText(image)
+            randomizer_list.append(random_index)
+
+        elif userType == 'NONEINTERUSER':
+            randomizer_list.clear()
+
+            frame_bar.setVisible(True)
+            face_label.setVisible(True)
+            widget.setMinimumSize(QSize(0, 500))
+
+            data = Store.read_json(file_path)
+            random_index = random.randint(0, len(data[userType]) - 1)
+            Crypto.decrypt_interuser(data[userType][random_index], target_dict)
+            html_obj = make_html_obj(target_dict, userType)
+            image = f"<p align= \'center\'><img src=\'{target_dict['Image']}\'></p>"
+            label_text.setText(html_obj)
+            face_label.setText(image)
+            randomizer_list.append(random_index)
+
+        elif userType == 'Lower-User-Primary':
+            randomizer_list.clear()
+
+            frame_bar.setVisible(True)
+            face_label.setVisible(True)
+            widget.setMinimumSize(QSize(0, 500))
+
+            data = Store.read_json(file_path)
+            level = [level for level in data[userType]
+                     if data[userType][level] != []]
+            random_index_level = random.choice(level)
+            random_index = random.randint(
+                0, len(data[userType][random_index_level]) - 1)
+            Crypto.decrypt_interuser(
+                data[userType][random_index_level][random_index], target_dict)
+            html_obj = make_html_obj(target_dict, userType)
+            image = f"<p align= \'center\'><img src=\'{target_dict['Image']}\'></p>"
+            label_text.setText(html_obj)
+            face_label.setText(image)
+            randomizer_list.append((random_index_level, random_index))
+
+        elif userType == 'Lower-User-Ordinary':
+            randomizer_list.clear()
+
+            frame_bar.setVisible(True)
+            face_label.setVisible(True)
+            widget.setMinimumSize(QSize(0, 500))
+
+            data = Store.read_json(file_path)
+            avariable_level = [
+                level for level in data[userType] if data[userType][level] != []]
+            random_index_level = random.choice(avariable_level)
+            random_index = random.randint(
+                0, len(data[userType][random_index_level]) - 1)
+            Crypto.decrypt_interuser(
+                data[userType][random_index_level][random_index], target_dict)
+            html_obj = make_html_obj(target_dict, userType)
+            image = f"<p align= \'center\'><img src=\'{target_dict['Image']}\'></p>"
+            label_text.setText(html_obj)
+            face_label.setText(image)
+            randomizer_list.append(
+                (random_index_level, random_index))
+
+        else:
+            randomizer_list.clear()
+
+            frame_bar.setVisible(True)
+            face_label.setVisible(True)
+            widget.setMinimumSize(QSize(0, 500))
+
+            data = Store.read_json(file_path)
+            LevelStreem = [(level, streem) for level in data[userType]
+                           for streem in data[userType][level] if data[userType][level][streem] != []]
+
+            random_index_streem_level = random.choice(LevelStreem)
+            random_index = random.randint(0, len(
+                data[userType][random_index_streem_level[0]][random_index_streem_level[-1]])-1)
+            Crypto.decrypt_interuser(data[userType][random_index_streem_level[0]]
+                                     [random_index_streem_level[-1]][random_index], target_dict)
+            html_obj = make_html_obj(target_dict, userType)
+            image = f"<p align= \'center\'><img src=\'{target_dict['Image']}\'></p>"
+            label_text.setText(html_obj)
+            face_label.setText(image)
+            randomizer_list.append(
+                (random_index_streem_level, random_index))
+
+    def notAvailable(self, text, label_text, face_label, frame_bar, widget):
+        label_text.setText(text)
+        face_label.setVisible(False)
+        frame_bar.setVisible(False)
+        widget.setMinimumSize(QSize(0, 200))
+
+##################################################################################################
+############################################ Randomize the Inter #################################
+    def randomize_inter(self):
+        try:
+            self.randomizer(
+                PATH_STORE_DATA_FILE_INTER,
+                TEACHER_RANDOM_INDEX,
+                TEACHER_TARGET,
+                self.ui.label_info_Inter_1,
+                self.ui.label_info_Inter_face,
+                self.ui.frame_inter_delet_bar_1,
+                INTERUSER,
+                self.ui.widget_inter_1
+            )
+            logger.debug("Randomiser runing [randomize_inter]")
+            
+
+        except FileNotFoundError:
+            self.notAvailable(
+                dark.RANDOMISE_TEACHER,
+                self.ui.label_info_Inter_1,
+                self.ui.label_info_Inter_face,
+                self.ui.frame_inter_delet_bar_1,
+                self.ui.widget_inter_1
+            )
+            logger.exception("FileNotFoundError Inter Random")
+
+        except IndexError:
+            self.notAvailable(
+                dark.RANDOMISE_TEACHER,
+                self.ui.label_info_Inter_1,
+                self.ui.label_info_Inter_face,
+                self.ui.frame_inter_delet_bar_1,
+                self.ui.widget_inter_1
+            )
+            logger.exception("IndexError Inter Random")
+
+        except ValueError:
+            self.notAvailable(
+                dark.RANDOMISE_TEACHER,
+                self.ui.label_info_Inter_1,
+                self.ui.label_info_Inter_face,
+                self.ui.frame_inter_delet_bar_1,
+                self.ui.widget_inter_1
+            )
+            logger.exception("ValueError Inter Random")
+
+    def addInterUserRandomizerRuner(self):
+        thread = Thread_Randomize("Randomising Teacher Data...")
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_label.connect(self.ui.label_status_text.setText)
+        thread.randomizer.connect(self.randomize_inter)
+        thread.start()
+        thread.exec_()
+
+##################################################################################################
+############################################ Randomize the None Inter ############################
+    def randomise_noneinter(self):
+
+        try:
+            self.randomizer(
+                PATH_STORE_DATA_FILE_INTER_NONE,
+                NONE_TEACHER_RANDOM_INDEX,
+                NONE_TEACHER_TARGET,
+                self.ui.label_info_noneinter,
+                self.ui.label_info_NoneInter_face,
+                self.ui.frame_noneinter_delet_bar,
+                NONEINTERUSER,
+                self.ui.widget_noneinter
+            )
+            logger.debug("Randomiser runing [randomise_noneinter]")
+
+        except FileNotFoundError:
+            self.notAvailable(
+                dark.RANDOMISE_TEACHER,
+                self.ui.label_info_noneinter,
+                self.ui.label_info_NoneInter_face,
+                self.ui.frame_noneinter_delet_bar,
+                self.ui.widget_noneinter
+            )
+            logger.exception("FileNotFoundError None-Inter Random")
+
+        except IndexError:
+            self.notAvailable(
+                dark.RANDOMISE_TEACHER,
+                self.ui.label_info_noneinter,
+                self.ui.label_info_NoneInter_face,
+                self.ui.frame_noneinter_delet_bar,
+                self.ui.widget_noneinter
+            )
+            logger.exception("IndexError None-Inter Random")
+
+        except ValueError:
+            self.notAvailable(
+                dark.RANDOMISE_TEACHER,
+                self.ui.label_info_noneinter,
+                self.ui.label_info_NoneInter_face,
+                self.ui.frame_noneinter_delet_bar,
+                self.ui.widget_noneinter
+            )
+            logger.exception("ValueError None-Inter Random")
+
+    def addNoneInterUserRandomizerRuner(self):
+        thread = Thread_Randomize("Randomising Teacher Data...")
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_label.connect(self.ui.label_status_text.setText)
+        thread.randomizer.connect(self.randomise_noneinter)
+        thread.start()
+        thread.exec_()
+
+##################################################################################################
+############################################ Randomize the Primary ###############################
+    def randomise_primary(self):
+        try:
+            self.randomizer(
+                PATH_STORE_DATA_FILE_PRIMARY,
+                PRAYMARY_RANDOM_INDEX,
+                PRIMARY_TARGET,
+                self.ui.label_info_lower_pri,
+                self.ui.label_info_pri_face,
+                self.ui.frame_inter_delet_bar_pri,
+                PRIMARYLOWER,
+                self.ui.widget_lower_pri
+            )
+            logger.debug("Randomiser runing [randomise_primary]")
+
+        except FileNotFoundError:
+            self.notAvailable(
+                dark.RANDOMISE_SUDENT,
+                self.ui.label_info_lower_pri,
+                self.ui.label_info_pri_face,
+                self.ui.frame_inter_delet_bar_pri,
+                self.ui.widget_lower_pri
+            )
+            logger.exception("FileNotFoundError Primary Random")
+
+        except IndexError:
+            self.notAvailable(
+                dark.RANDOMISE_SUDENT,
+                self.ui.label_info_lower_pri,
+                self.ui.label_info_pri_face,
+                self.ui.frame_inter_delet_bar_pri,
+                self.ui.widget_lower_pri
+            )
+            logger.exception("IndexError Primary Random")
+
+        except ValueError:
+            self.notAvailable(
+                dark.RANDOMISE_SUDENT,
+                self.ui.label_info_lower_pri,
+                self.ui.label_info_pri_face,
+                self.ui.frame_inter_delet_bar_pri,
+                self.ui.widget_lower_pri
+            )
+            logger.exception("Value Error Primary Random")
+
+    def addPrimaryUserRandomizerRuner(self):
+        thread = Thread_Randomize("Randomising Sudents Data...")
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_label.connect(self.ui.label_status_text.setText)
+        thread.randomizer.connect(self.randomise_primary)
+        thread.start()
+        thread.exec_()
+
+##################################################################################################
+############################################ Randomize the Ordnary ###############################
+    def randomise_ordnary(self):
+
+        try:
+            self.randomizer(
+                PATH_STORE_DATA_FILE_ORDNARY,
+                ORDNARY_RANDOM_INDEX,
+                ORNARY_TARGET,
+                self.ui.label_info_lower_1,
+                self.ui.label_info_lower_face,
+                self.ui.frame_inter_delet_bar_3,
+                ORDNARYLOWER,
+                self.ui.widget_lower_1
+            )
+            logger.debug("Randomiser runing [randomise_ordnary]")
+
+        except FileNotFoundError:
+            self.notAvailable(
+                dark.RANDOMISE_SUDENT,
+                self.ui.label_info_lower_1,
+                self.ui.label_info_lower_face,
+                self.ui.frame_inter_delet_bar_3,
+                self.ui.widget_lower_1
+            )
+            logger.exception("FileNotFoundError Ordnary Random")
+
+        except IndexError:
+            self.notAvailable(
+                dark.RANDOMISE_SUDENT,
+                self.ui.label_info_lower_1,
+                self.ui.label_info_lower_face,
+                self.ui.frame_inter_delet_bar_3,
+                self.ui.widget_lower_1
+            )
+            logger.exception("IndexError Ordnary Random")
+
+        except ValueError:
+            self.notAvailable(
+                dark.RANDOMISE_SUDENT,
+                self.ui.label_info_lower_1,
+                self.ui.label_info_lower_face,
+                self.ui.frame_inter_delet_bar_3,
+                self.ui.widget_lower_1
+            )
+            logger.exception("ValueError Ordnary Random")
+
+    def addOrdnaryUserRandomizerRuner(self):
+        thread = Thread_Randomize("Randomising Sudents Data...")
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_label.connect(self.ui.label_status_text.setText)
+        thread.randomizer.connect(self.randomise_ordnary)
+        thread.start()
+        thread.exec_()
+
+##################################################################################################
+############################################ Randomize the Advnaced ##############################
+    def randomise_advanced(self):
+
+        try:
+            self.randomizer(
+                PATH_STORE_DATA_FILE_ADVNACED,
+                ADVANCED_RANDOM_INDEX,
+                ADVANCED_TARGET,
+                self.ui.label_info_lower_advan,
+                self.ui.label_info_advan_face,
+                self.ui.frame_inter_delet_bar_advan,
+                ADVNACEDLOWER,
+                self.ui.widget_lower_advan
+            )
+            logger.debug("Randomiser runing [randomise_advanced]")
+
+        except FileNotFoundError:
+            self.notAvailable(
+                dark.RANDOMISE_SUDENT,
+                self.ui.label_info_lower_advan,
+                self.ui.label_info_advan_face,
+                self.ui.frame_inter_delet_bar_advan,
+                self.ui.widget_lower_advan
+            )
+            logger.exception("FileNotFoundError Advanced Random")
+            
+
+        except IndexError:
+            self.notAvailable(
+                dark.RANDOMISE_SUDENT,
+                self.ui.label_info_lower_advan,
+                self.ui.label_info_advan_face,
+                self.ui.frame_inter_delet_bar_advan,
+                self.ui.widget_lower_advan
+            )
+            logger.exception("IndexError Advanced Random")
+            
+
+        except ValueError:
+            self.notAvailable(
+                dark.RANDOMISE_SUDENT,
+                self.ui.label_info_lower_advan,
+                self.ui.label_info_advan_face,
+                self.ui.frame_inter_delet_bar_advan,
+                self.ui.widget_lower_advan
+            )
+            logger.exception("ValueError Advanced Random")
+
+    def addAdvnacedUserRandomizerRuner(self):
+        thread = Thread_Randomize("Randomising Sudents Data...")
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_label.connect(self.ui.label_status_text.setText)
+        thread.randomizer.connect(self.randomise_advanced)
+        thread.start()
+        thread.exec_()
+
+
+##################################################################################################
     # Event Filter For Press Event
+
+
     def eventFilter(self, source: QtCore.QObject, event: QtCore.QEvent):
 
         text = None

@@ -5,6 +5,9 @@ from PyQt5.QtGui import *
 from time import sleep
 
 import cv2 as cv
+import random
+
+from httpx import stream
 
 
 # THREAD FOR THEME CHANGER BUTTON
@@ -70,7 +73,7 @@ class Thread_Prograss(QThread):
     def run(self):
         self.prograss_text.emit(self.text_value)
         self.face_recognition()
-        for i in range(0, 101, 5):
+        for i in range(0, 101, 30):
             sleep(.5)
             self.prograss_bar.emit(i)
         self.prograss_text.emit("Complete...")
@@ -86,7 +89,7 @@ class Thread_Prograss(QThread):
 
         for (x, y, w, h) in faces:
             faces = img[y - 50: y + h + 50, x - 50: x + w + 50]
-            img = cv.resize(faces, (100, 100), interpolation=cv.INTER_AREA)
+            img = cv.resize(faces, (75, 75), interpolation=cv.INTER_AREA)
             cv.imwrite(self.output_file_path, img)
 
 
@@ -96,9 +99,9 @@ class ThreadStorePrograssBar(QThread):
     prograss_bar = pyqtSignal(int)
     prograss_text = pyqtSignal(str)
 
-    store_function = pyqtSignal(dict, str, str)
-    store_function = pyqtSignal(dict, str, str, str)
-    store_function = pyqtSignal(dict, str, str, str, str)
+    store_function_inter = pyqtSignal(dict, str, str)
+    store_function_ord = pyqtSignal(dict, str, str, str)
+    store_function_advan = pyqtSignal(dict, str, str, str, str)
 
     encrypt_function = pyqtSignal(list, dict)
     setRollIDLabelText = pyqtSignal(str)
@@ -124,14 +127,15 @@ class ThreadStorePrograssBar(QThread):
 
             self.prograss_text.emit(self.pro_text)
             self.encrypt_function.emit(self.target_list, self.data_dict)
-            self.store_function.emit(self.data_dict, self.path, self.userType)
+            self.store_function_inter.emit(
+                self.data_dict, self.path, self.userType)
 
-            for i in range(0, 101, 20):
+            for i in range(0, 101, 30):
                 sleep(.5)
                 self.prograss_bar.emit(i)
             self.prograss_text.emit("Complete...")
             self.setRollIDLabelText.emit(self.rollIdText)
-            sleep(2)
+            sleep(1)
             self.prograss_bar.emit(0)
             self.theMainUserImage.emit(self.setting_image)
 
@@ -139,15 +143,15 @@ class ThreadStorePrograssBar(QThread):
 
             self.prograss_text.emit(self.pro_text)
             self.encrypt_function.emit(self.target_list, self.data_dict)
-            self.store_function.emit(
+            self.store_function_ord.emit(
                 self.data_dict, self.path, self.userType, self.level)
 
-            for i in range(0, 101, 20):
+            for i in range(0, 101, 30):
                 sleep(.5)
                 self.prograss_bar.emit(i)
             self.prograss_text.emit("Complete...")
             self.setRollIDLabelText.emit(self.rollIdText)
-            sleep(2)
+            sleep(1)
             self.prograss_bar.emit(0)
             self.theMainUserImage.emit(self.setting_image)
 
@@ -155,14 +159,41 @@ class ThreadStorePrograssBar(QThread):
 
             self.prograss_text.emit(self.pro_text)
             self.encrypt_function.emit(self.target_list, self.data_dict)
-            self.store_function.emit(
+            self.store_function_advan.emit(
                 self.data_dict, self.path, self.userType, self.level, self.streem)
 
-            for i in range(0, 101, 20):
+            for i in range(0, 101, 30):
                 sleep(.5)
                 self.prograss_bar.emit(i)
             self.prograss_text.emit("Complete...")
             self.setRollIDLabelText.emit(self.rollIdText)
-            sleep(2)
+            sleep(1)
             self.prograss_bar.emit(0)
             self.theMainUserImage.emit(self.setting_image)
+
+
+# The Randomise For Stored Data
+class Thread_Randomize(QThread):
+
+    prograss_bar = pyqtSignal(int)
+    prograss_label = pyqtSignal(str)
+
+    randomizer = pyqtSignal()
+
+    def __init__(self, status_label_text):
+        super().__init__()
+        self.status_label_text = status_label_text
+
+    def run(self):
+        self.prograss_label.emit(self.status_label_text)
+
+        for i in range(0, 101, 50):
+            self.prograss_bar.emit(i)
+            sleep(.5)
+
+        self.randomizer.emit()
+
+        self.prograss_bar.emit(0)
+        self.prograss_label.emit("Complete...")
+        sleep(1)
+        self.prograss_label.emit("")

@@ -222,15 +222,173 @@ def rollIDShower(number):
 
 # FaceImage Path List
 TEACHER_FACE_PATH_LIST = []
-
 NONE_TEACHER_FACE_PATH_LIST = []
-
 PRAYMARY_FACE_PATH_LIST = []
-
 ORDNARY_FACE_PATH_LIST = []
-
-
 ADVANCED_FACE_PATH_LIST = []
+
+# Randomize Index
+TEACHER_RANDOM_INDEX = []
+NONE_TEACHER_RANDOM_INDEX = []
+PRAYMARY_RANDOM_INDEX = []
+ORDNARY_RANDOM_INDEX = []
+ADVANCED_RANDOM_INDEX = []
+
+# Target User Dict
+TEACHER_TARGET = {}
+NONE_TEACHER_TARGET = {}
+PRIMARY_TARGET = {}
+ORNARY_TARGET = {}
+ADVANCED_TARGET = {}
+
+
+# Make Html Object
+def make_html_obj(dict_obj: dict, userType):
+
+    if userType == 'INTERUSER':
+        return f"""
+
+        <html>
+            </head>
+
+            <body>
+                <p> Roll ID :{dict_obj["ID"]}</p> 
+                <p> Name In Full :{dict_obj["Name-full"]}</p>
+                <p> Name With Initial :{dict_obj["Name-Initial"]}</p>
+                <p> NIC :{dict_obj["NIC"]}</p>
+                <p> Contact Number :{dict_obj["Contact-Number"]}</p>
+                <p> E-Mail :{dict_obj["E-Mail"]}</p>
+                <p> W&OP Number :{dict_obj["WOP-Number"]}</p>
+                <p> Agrakara Number :{dict_obj["Agrakara-Number"]}</p>
+                <p> Spouse Name :{dict_obj["Spouse-Name"]}</p>
+                <p> Teaching Registration Number :{dict_obj["Teaching-Reg-Number"]}</p>
+                <p> Appointed Subject :{dict_obj["Appointed-Subject"]}</p>
+                <p> Educational Qulification :{dict_obj["Educational-Qulification"]}</p>
+                <p> Professional Qulification :{dict_obj["Professional-Qulification"]}</p>
+                <p> Nature Of Appointment :{dict_obj["Nature-Appointment"]}</p>
+                <p> Increment Date :{dict_obj["Increment-Date"]}</p>
+                <p> Date Of Birth :{dict_obj["Date-Birth"]}</p>
+                <p> First Appointment Date :{dict_obj["First-Appointment-Date"]}</p>
+                <p> Address :{dict_obj["Address"]}</p>
+                <p> Emergency Address and Contact :{dict_obj["Emergency"]}</p>
+                <p> Present Grade :{dict_obj["Present-Grade"]}</p>
+                <p> Date Present Grade :{dict_obj["Date-Present-Grade"]}</p>
+                <p> Date Of Appointment To This School :{dict_obj["Date-Appointment-To-School"]}</p>
+                <p> Civil Status :{dict_obj["Civil-Status"]}</p>
+                <p> Gender :{dict_obj["Gender"]}</p>
+            <body>
+        """
+
+    elif userType == 'NONEINTERUSER':
+        return f"""
+
+        <html>
+            </head>
+
+            <body>
+                <p> Roll ID :{dict_obj["ID"]}</p> 
+                <p> Name In Full :{dict_obj["Name-full"]}</p>
+                <p> Name With Initial :{dict_obj["Name-Initial"]}</p>
+                <p> NIC :{dict_obj["NIC"]}</p>
+                <p> Contact Number :{dict_obj["Contact-Number"]}</p>
+                <p> E-Mail :{dict_obj["E-Mail"]}</p>
+                <p> W&OP Number :{dict_obj["WOP-Number"]}</p>
+                <p> Agrakara Number :{dict_obj["Agrakara-Number"]}</p>
+                <p> Spouse Name :{dict_obj["Spouse-Name"]}</p>
+                <p> Educational Qulification :{dict_obj["Educational-Qulification"]}</p>
+                <p> Professional Qulification :{dict_obj["Professional-Qulification"]}</p>
+                <p> Salary Number :{dict_obj["Salary-Number"]}</p>
+                <p> Nature Of Appointment :{dict_obj["Nature-Appointment"]}</p>
+                <p> Increment Date :{dict_obj["Increment-Date"]}</p>
+                <p> Date Of Birth :{dict_obj["Date-Birth"]}</p>
+                <p> First Appointment Date :{dict_obj["First-Appointment-Date"]}</p>
+                <p> Address :{dict_obj["Address"]}</p>
+                <p> Emergency Address and Contact :{dict_obj["Emergency"]}</p>
+                <p> Date Of Appointment To This School :{dict_obj["Date-Appointment-To-School"]}</p>
+                <p> Civil Status :{dict_obj["Civil-Status"]}</p>
+                <p> Gender :{dict_obj["Gender"]}</p>
+            <body>
+        """
+
+    elif userType == 'Lower-User-Primary':
+        return f"""
+
+        <html>
+            </head>
+            <body>
+                <p> Roll ID :{dict_obj["ID"]}</p> 
+                <p> Name In Full :{dict_obj["Name-full"]}</p>
+                <p> Name With Initial :{dict_obj["Name-Initial"]}</p>
+                <p> Home Address :{dict_obj["Address"]}</p>
+                <p> Office Address :{dict_obj["Address-Office"]}</p>
+                <p> Father Name :{dict_obj["Father-Name"]}</p>
+                <p> Mather Name :{dict_obj["Mather-Name"]}</p>
+                <p> Number Of Siblings :{dict_obj["Number-Siblings"]}</p>
+                <p> Level :{dict_obj["Level"]}</p>
+                <p> Religion :{dict_obj["Religion"]}</p>
+                <p> Admission Number :{dict_obj["Admission-Number"]}</p>
+                <p> Father's Nature Of Job :{dict_obj["Father-Job"]}</p>
+                <p> Mather's Nature Of Job :{dict_obj["Mather-Job"]}</p>
+                <p> Parent / Guardian Contact Number :{dict_obj["Parent-Number"]}</p>
+                <p> Date Of Birth :{dict_obj["Date-Birth"]}</p>
+                <p> Date Of Admission :{dict_obj["Date-Admission"]}</p>
+                <p> Gender :{dict_obj["Gender"]}</p>
+            <body>
+        """
+
+    elif userType == 'Lower-User-Ordinary':
+        return f"""
+
+        <html>
+            </head>
+            <body>
+                <p> Roll ID :{dict_obj["ID"]}</p> 
+                <p> Name In Full :{dict_obj["Name-full"]}</p>
+                <p> Name With Initial :{dict_obj["Name-Initial"]}</p>
+                <p> Home Address :{dict_obj["Address"]}</p>
+                <p> Office Address :{dict_obj["Address-Office"]}</p>
+                <p> Father Name :{dict_obj["Father-Name"]}</p>
+                <p> Mather Name :{dict_obj["Mather-Name"]}</p>
+                <p> Number Of Siblings :{dict_obj["Number-Siblings"]}</p>
+                <p> Level :{dict_obj["Level"]}</p>
+                <p> Religion :{dict_obj["Religion"]}</p>
+                <p> Admission Number :{dict_obj["Admission-Number"]}</p>
+                <p> Father's Nature Of Job :{dict_obj["Father-Job"]}</p>
+                <p> Mather's Nature Of Job :{dict_obj["Mather-Job"]}</p>
+                <p> Parent / Guardian Contact Number :{dict_obj["Parent-Number"]}</p>
+                <p> Date Of Birth :{dict_obj["Date-Birth"]}</p>
+                <p> Date Of Admission :{dict_obj["Date-Admission"]}</p>
+                <p> Gender :{dict_obj["Gender"]}</p>
+            <body>
+        """
+
+    else:
+        return f"""
+
+        <html>
+            </head>
+            <body>
+                <p> Roll ID :{dict_obj["ID"]}</p> 
+                <p> Name In Full :{dict_obj["Name-full"]}</p>
+                <p> Name With Initial :{dict_obj["Name-Initial"]}</p>
+                <p> Home Address :{dict_obj["Address"]}</p>
+                <p> Office Address :{dict_obj["Address-Office"]}</p>
+                <p> Father Name :{dict_obj["Father-Name"]}</p>
+                <p> Mather Name :{dict_obj["Mather-Name"]}</p>
+                <p> Number Of Siblings :{dict_obj["Number-Siblings"]}</p>
+                <p> Level :{dict_obj["Level"]}</p>
+                <p> Streem :{dict_obj["Streem"]}</p>
+                <p> Religion :{dict_obj["Religion"]}</p>
+                <p> Admission Number :{dict_obj["Admission-Number"]}</p>
+                <p> Father's Nature Of Job :{dict_obj["Father-Job"]}</p>
+                <p> Mather's Nature Of Job :{dict_obj["Mather-Job"]}</p>
+                <p> Parent / Guardian Contact Number :{dict_obj["Parent-Number"]}</p>
+                <p> Date Of Birth :{dict_obj["Date-Birth"]}</p>
+                <p> Date Of Admission :{dict_obj["Date-Admission"]}</p>
+                <p> Gender :{dict_obj["Gender"]}</p>
+            <body>
+        """
+
 
 
 # Face Recognition
@@ -368,12 +526,14 @@ class Crypto:
     def decrypt_interuser(cal, the_dict: dict, append_dict: dict):
         key_value = [key for key in the_dict]
 
-        for index in range(len(key_value)):
-            if the_dict[key_value[index]] == None:
-                append_dict[key_value[index]] = None
+        for num in range(len(key_value)):
+            index = key_value[num]
+
+            if the_dict[index] == None:
+                append_dict[index] = None
             else:
-                decrypted = cal.decrypt_one(the_dict[key_value[index]])
-                append_dict[key_value[index]] = decrypted
+                decrypted = cal.decrypt_one(the_dict[index])
+                append_dict[index] = decrypted
 
     @classmethod
     def decrypt_ID(cal, the_dict: dict, append: str):
