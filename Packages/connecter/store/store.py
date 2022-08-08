@@ -59,7 +59,7 @@ PATH_STORE_DATA_FILE_ADVNACED = os.path.join(
 PATH_STORE_DATA_FILE_INTER_LIFT = os.path.join(
     f"C:/Users/{os.getlogin()}/.findup/store/recycle/LIdata.json")
 PATH_STORE_DATA_FILE_INTER_LIFT_NONE = os.path.join(
-    f"C:/Users/{os.getlogin()}/.findup/store/active/LINdata.json")
+    f"C:/Users/{os.getlogin()}/.findup/store/recycle/LINdata.json")
 PATH_STORE_DATA_FILE_PRIMARY_LIFT = os.path.join(
     f"C:/Users/{os.getlogin()}/.findup/store/recycle/LPdata.json")
 PATH_STORE_DATA_FILE_ORDNARY_LIFT = os.path.join(

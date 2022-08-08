@@ -973,7 +973,7 @@ class Ui_Main(object):
 
         self.widget_inter_1 = QFrame(self.page_content_Input)
         self.widget_inter_1.setObjectName(u"widget_inter_1")
-        self.widget_inter_1.setMinimumSize(QSize(0, 500))
+        self.widget_inter_1.setMinimumSize(QSize(0, 400))
         self.setShadowEffect(self.widget_inter_1)
         self.verticalLayout_19 = QVBoxLayout(self.widget_inter_1)
         self.verticalLayout_19.setObjectName(u"verticalLayout_19")
@@ -991,13 +991,50 @@ class Ui_Main(object):
         self.verticalLayout_19.addWidget(
             self.label_info_Inter_face, 0, Qt.AlignCenter)
 
-        self.label_info_Inter_1 = QLabel(self.widget_inter_1)
-        self.label_info_Inter_1.setObjectName(u"label_info_Inter_1")
-        font2 = QFont()
-        font2.setFamily(u"./src/font/segoeui.ttf")
-        font2.setPointSize(10)
-        self.label_info_Inter_1.setFont(font2)
-        self.verticalLayout_19.addWidget(self.label_info_Inter_1)
+        self.label_inter_error = QLabel(self.widget_inter_1)
+        self.label_inter_error.setVisible(False)
+        self.verticalLayout_19.addWidget(self.label_inter_error)
+
+        self.groupBox_inter_radnom = QGroupBox(self.widget_inter_1)
+        self.groupBox_inter_radnom.setObjectName("groupBox")
+        self.verticalLayout_61_inter = QVBoxLayout(self.groupBox_inter_radnom)
+        self.verticalLayout_61_inter.setObjectName("verticalLayout_61_inter")
+
+        self.label_inter_rollid = QLabel(self.groupBox_inter_radnom)
+        self.label_inter_rollid.setMinimumSize(QSize(700, 40))
+        self.label_inter_rollid.setMaximumSize(QSize(700, 40))
+        self.label_inter_rollid.setObjectName("label_inter_rollid")
+        self.verticalLayout_61_inter.addWidget(
+            self.label_inter_rollid, 0, Qt.AlignCenter)
+
+        self.label_inter_fullname = QLabel(self.groupBox_inter_radnom)
+        self.label_inter_fullname.setMinimumSize(QSize(700, 40))
+        self.label_inter_fullname.setMaximumSize(QSize(700, 40))
+        self.label_inter_fullname.setObjectName("label_inter_fullname")
+        self.verticalLayout_61_inter.addWidget(
+            self.label_inter_fullname, 0, Qt.AlignCenter)
+
+        self.label_inter_contact = QLabel(self.groupBox_inter_radnom)
+        self.label_inter_contact.setMinimumSize(QSize(700, 40))
+        self.label_inter_contact.setMaximumSize(QSize(700, 40))
+        self.label_inter_contact.setObjectName("label_inter_contact")
+        self.verticalLayout_61_inter.addWidget(
+            self.label_inter_contact, 0, Qt.AlignCenter)
+
+        self.label_inter_email = QLabel(self.groupBox_inter_radnom)
+        self.label_inter_email.setMinimumSize(QSize(700, 40))
+        self.label_inter_email.setMaximumSize(QSize(700, 40))
+        self.label_inter_email.setObjectName("label_inter_email")
+        self.verticalLayout_61_inter.addWidget(
+            self.label_inter_email, 0, Qt.AlignCenter)
+
+        self.label_inter_address = QLabel(self.groupBox_inter_radnom)
+        self.label_inter_address.setMinimumSize(QSize(700, 40))
+        self.label_inter_address.setMaximumSize(QSize(700, 40))
+        self.label_inter_address.setObjectName("label_inter_address")
+        self.verticalLayout_61_inter.addWidget(self.label_inter_address)
+        self.verticalLayout_19.addWidget(
+            self.groupBox_inter_radnom, 0, Qt.AlignCenter)
 
         self.frame_inter_delet_bar_1 = QFrame(self.widget_inter_1)
         self.frame_inter_delet_bar_1.setObjectName(u"frame_inter_delet_bar_1")
@@ -1063,7 +1100,7 @@ class Ui_Main(object):
         self.verticalLayout_13.addWidget(self.widget_inter_1)
 
         self.widget_noneinter = QWidget(self.page_content_Input)
-        self.widget_noneinter.setMinimumSize(QSize(0, 500))
+        self.widget_noneinter.setMinimumSize(QSize(0, 400))
         self.widget_noneinter.setObjectName("widget_noneinter")
         self.verticalLayout_60 = QVBoxLayout(self.widget_noneinter)
         self.verticalLayout_60.setObjectName("verticalLayout_60")
@@ -1081,14 +1118,54 @@ class Ui_Main(object):
         self.verticalLayout_60.addWidget(
             self.label_info_NoneInter_face, 0, Qt.AlignCenter)
 
-        self.label_info_noneinter = QLabel(self.widget_noneinter)
-        font = QFont()
-        font.setFamily("./src/font/segoeui.ttf")
-        font.setPointSize(10)
-        self.label_info_noneinter.setFont(font)
-        self.label_info_noneinter.setText("")
-        self.label_info_noneinter.setObjectName("label_info_noneinter")
-        self.verticalLayout_60.addWidget(self.label_info_noneinter)
+        self.label_noneinter_error = QLabel(self.widget_noneinter)
+        self.label_noneinter_error.setVisible(False)
+        self.verticalLayout_60.addWidget(self.label_noneinter_error)
+
+        self.groupBox_noneinter_radnom = QGroupBox(self.widget_noneinter)
+        self.groupBox_noneinter_radnom.setObjectName(
+            "groupBox_noneinter_radnom")
+        self.verticalLayout_61_none = QVBoxLayout(
+            self.groupBox_noneinter_radnom)
+        self.verticalLayout_61_none.setObjectName("verticalLayout_61_none")
+
+        self.label_noneinter_rollid = QLabel(self.groupBox_noneinter_radnom)
+        self.label_noneinter_rollid.setMinimumSize(QSize(700, 40))
+        self.label_noneinter_rollid.setMaximumSize(QSize(700, 40))
+        self.label_noneinter_rollid.setObjectName("label_noneinter_rollid")
+        self.verticalLayout_61_none.addWidget(
+            self.label_noneinter_rollid, 0, Qt.AlignCenter)
+
+        self.label_noneinter_fullname = QLabel(self.groupBox_noneinter_radnom)
+        self.label_noneinter_fullname.setMinimumSize(QSize(700, 40))
+        self.label_noneinter_fullname.setMaximumSize(QSize(700, 40))
+        self.label_noneinter_fullname.setObjectName("label_noneinter_fullname")
+        self.verticalLayout_61_none.addWidget(
+            self.label_noneinter_fullname, 0, Qt.AlignCenter)
+
+        self.label_noneinter_contact = QLabel(self.groupBox_noneinter_radnom)
+        self.label_noneinter_contact.setMinimumSize(QSize(700, 40))
+        self.label_noneinter_contact.setMaximumSize(QSize(700, 40))
+        self.label_noneinter_contact.setObjectName("label_noneinter_contact")
+        self.verticalLayout_61_none.addWidget(
+            self.label_noneinter_contact, 0, Qt.AlignCenter)
+
+        self.label_noneinter_email = QLabel(self.groupBox_noneinter_radnom)
+        self.label_noneinter_email.setMinimumSize(QSize(700, 40))
+        self.label_noneinter_email.setMaximumSize(QSize(700, 40))
+        self.label_noneinter_email.setObjectName("label_noneinter_email")
+        self.verticalLayout_61_none.addWidget(
+            self.label_noneinter_email, 0, Qt.AlignCenter)
+
+        self.label_noneinter_address = QLabel(self.groupBox_noneinter_radnom)
+        self.label_noneinter_address.setMinimumSize(QSize(700, 40))
+        self.label_noneinter_address.setMaximumSize(QSize(700, 40))
+        self.label_noneinter_address.setObjectName("label_noneinter_address")
+        self.verticalLayout_61_none.addWidget(
+            self.label_noneinter_address, 0, Qt.AlignCenter)
+        self.verticalLayout_60.addWidget(
+            self.groupBox_noneinter_radnom)
+
         self.frame_noneinter_delet_bar = QFrame(self.widget_noneinter)
         self.frame_noneinter_delet_bar.setMaximumSize(QSize(16777215, 40))
         self.frame_noneinter_delet_bar.setFrameShape(QFrame.StyledPanel)
@@ -1147,7 +1224,7 @@ class Ui_Main(object):
 
         self.widget_lower_1 = QWidget(self.page_content_Input)
         self.widget_lower_1.setObjectName(u"widget_lower_1")
-        self.widget_lower_1.setMinimumSize(QSize(0, 500))
+        self.widget_lower_1.setMinimumSize(QSize(0, 400))
         self.setShadowEffect(self.widget_lower_1)
         self.verticalLayout_21 = QVBoxLayout(self.widget_lower_1)
         self.verticalLayout_21.setObjectName(u"verticalLayout_21")
@@ -1165,11 +1242,52 @@ class Ui_Main(object):
         self.verticalLayout_21.addWidget(
             self.label_info_lower_face, 0, Qt.AlignCenter)
 
-        self.label_info_lower_1 = QLabel(self.widget_lower_1)
-        self.label_info_lower_1.setObjectName(u"label_info_lower_1")
-        self.label_info_lower_1.setFont(font2)
+        self.label_ordnary_error = QLabel(self.widget_lower_1)
+        self.label_ordnary_error.setVisible(False)
+        self.verticalLayout_21.addWidget(self.label_ordnary_error)
 
-        self.verticalLayout_21.addWidget(self.label_info_lower_1)
+        self.groupBox_ordnary_radnom = QGroupBox(self.widget_lower_1)
+        self.groupBox_ordnary_radnom.setObjectName("groupBox_ordnary_radnom")
+        self.verticalLayout_61_ordnary = QVBoxLayout(
+            self.groupBox_ordnary_radnom)
+        self.verticalLayout_61_ordnary.setObjectName(
+            "verticalLayout_61_ordnary")
+
+        self.label_ordnary_rollid = QLabel(self.groupBox_ordnary_radnom)
+        self.label_ordnary_rollid.setMinimumSize(QSize(700, 40))
+        self.label_ordnary_rollid.setMaximumSize(QSize(700, 40))
+        self.label_ordnary_rollid.setObjectName("label_ordnary_rollid")
+        self.verticalLayout_61_ordnary.addWidget(
+            self.label_ordnary_rollid, 0, Qt.AlignCenter)
+
+        self.label_ordnary_fullname = QLabel(self.groupBox_ordnary_radnom)
+        self.label_ordnary_fullname.setMinimumSize(QSize(700, 40))
+        self.label_ordnary_fullname.setMaximumSize(QSize(700, 40))
+        self.label_ordnary_fullname.setObjectName("label_ordnary_fullname")
+        self.verticalLayout_61_ordnary.addWidget(
+            self.label_ordnary_fullname, 0, Qt.AlignCenter)
+
+        self.label_ordnary_contact = QLabel(self.groupBox_ordnary_radnom)
+        self.label_ordnary_contact.setMinimumSize(QSize(700, 40))
+        self.label_ordnary_contact.setMaximumSize(QSize(700, 40))
+        self.label_ordnary_contact.setObjectName("label_ordnary_contact")
+        self.verticalLayout_61_ordnary.addWidget(
+            self.label_ordnary_contact, 0, Qt.AlignCenter)
+
+        self.label_ordnary_email = QLabel(self.groupBox_ordnary_radnom)
+        self.label_ordnary_email.setMinimumSize(QSize(700, 40))
+        self.label_ordnary_email.setMaximumSize(QSize(700, 40))
+        self.label_ordnary_email.setObjectName("label_ordnary_email")
+        self.verticalLayout_61_ordnary.addWidget(
+            self.label_ordnary_email, 0, Qt.AlignCenter)
+
+        self.label_ordnary_address = QLabel(self.groupBox_ordnary_radnom)
+        self.label_ordnary_address.setMinimumSize(QSize(700, 40))
+        self.label_ordnary_address.setMaximumSize(QSize(700, 40))
+        self.label_ordnary_address.setObjectName("label_ordnary_address")
+        self.verticalLayout_61_ordnary.addWidget(
+            self.label_ordnary_address, 0, Qt.AlignCenter)
+        self.verticalLayout_21.addWidget(self.groupBox_ordnary_radnom)
 
         self.frame_inter_delet_bar_3 = QFrame(self.widget_lower_1)
         self.frame_inter_delet_bar_3.setObjectName(u"frame_inter_delet_bar_3")
@@ -1226,7 +1344,7 @@ class Ui_Main(object):
 
         self.widget_lower_pri = QWidget(self.page_content_Input)
         self.widget_lower_pri.setObjectName(u"widget_lower_pri")
-        self.widget_lower_pri.setMinimumSize(QSize(0, 500))
+        self.widget_lower_pri.setMinimumSize(QSize(0, 400))
         self.setShadowEffect(self.widget_lower_pri)
         self.verticalLayout_pri = QVBoxLayout(self.widget_lower_pri)
         self.verticalLayout_pri.setObjectName(u"verticalLayout_pri")
@@ -1244,11 +1362,52 @@ class Ui_Main(object):
         self.verticalLayout_pri.addWidget(
             self.label_info_pri_face, 0, Qt.AlignCenter)
 
-        self.label_info_lower_pri = QLabel(self.widget_lower_pri)
-        self.label_info_lower_pri.setObjectName(u"label_info_lower_pri")
-        self.label_info_lower_pri.setFont(font2)
+        self.label_primary_error = QLabel(self.widget_lower_pri)
+        self.label_primary_error.setVisible(False)
+        self.verticalLayout_pri.addWidget(self.label_primary_error)
 
-        self.verticalLayout_pri.addWidget(self.label_info_lower_pri)
+        self.groupBox_primary_radnom = QGroupBox(self.widget_lower_pri)
+        self.groupBox_primary_radnom.setObjectName("groupBox_primary_radnom")
+        self.verticalLayout_61_primary = QVBoxLayout(
+            self.groupBox_primary_radnom)
+        self.verticalLayout_61_primary.setObjectName(
+            "verticalLayout_61_primary")
+
+        self.label_primary_rollid = QLabel(self.groupBox_primary_radnom)
+        self.label_primary_rollid.setMinimumSize(QSize(700, 40))
+        self.label_primary_rollid.setMaximumSize(QSize(700, 40))
+        self.label_primary_rollid.setObjectName("label_primary_rollid")
+        self.verticalLayout_61_primary.addWidget(
+            self.label_primary_rollid, 0, Qt.AlignCenter)
+
+        self.label_primary_fullname = QLabel(self.groupBox_primary_radnom)
+        self.label_primary_fullname.setMinimumSize(QSize(700, 40))
+        self.label_primary_fullname.setMaximumSize(QSize(700, 40))
+        self.label_primary_fullname.setObjectName("label_primary_fullname")
+        self.verticalLayout_61_primary.addWidget(
+            self.label_primary_fullname, 0, Qt.AlignCenter)
+
+        self.label_primary_contact = QLabel(self.groupBox_primary_radnom)
+        self.label_primary_contact.setMinimumSize(QSize(700, 40))
+        self.label_primary_contact.setMaximumSize(QSize(700, 40))
+        self.label_primary_contact.setObjectName("label_primary_contact")
+        self.verticalLayout_61_primary.addWidget(
+            self.label_primary_contact, 0, Qt.AlignCenter)
+
+        self.label_primary_email = QLabel(self.groupBox_primary_radnom)
+        self.label_primary_email.setMinimumSize(QSize(700, 40))
+        self.label_primary_email.setMaximumSize(QSize(700, 40))
+        self.label_primary_email.setObjectName("label_primary_email")
+        self.verticalLayout_61_primary.addWidget(
+            self.label_primary_email, 0, Qt.AlignCenter)
+
+        self.label_primary_address = QLabel(self.groupBox_primary_radnom)
+        self.label_primary_address.setMinimumSize(QSize(700, 40))
+        self.label_primary_address.setMaximumSize(QSize(700, 40))
+        self.label_primary_address.setObjectName("label_primary_address")
+        self.verticalLayout_61_primary.addWidget(
+            self.label_primary_address, 0, Qt.AlignCenter)
+        self.verticalLayout_pri.addWidget(self.groupBox_primary_radnom)
 
         self.frame_inter_delet_bar_pri = QFrame(self.widget_lower_pri)
         self.frame_inter_delet_bar_pri.setObjectName(
@@ -1307,7 +1466,7 @@ class Ui_Main(object):
 
         self.widget_lower_advan = QWidget(self.page_content_Input)
         self.widget_lower_advan.setObjectName(u"widget_lower_advan")
-        self.widget_lower_advan.setMinimumSize(QSize(0, 500))
+        self.widget_lower_advan.setMinimumSize(QSize(0, 400))
         self.setShadowEffect(self.widget_lower_advan)
         self.verticalLayout_advan = QVBoxLayout(self.widget_lower_advan)
         self.verticalLayout_advan.setObjectName(u"verticalLayout_advan")
@@ -1325,11 +1484,52 @@ class Ui_Main(object):
         self.verticalLayout_advan.addWidget(
             self.label_info_advan_face, 0, Qt.AlignCenter)
 
-        self.label_info_lower_advan = QLabel(self.widget_lower_advan)
-        self.label_info_lower_advan.setObjectName(u"label_info_lower_advan")
-        self.label_info_lower_advan.setFont(font2)
+        self.label_advanced_error = QLabel(self.widget_lower_advan)
+        self.label_advanced_error.setVisible(False)
+        self.verticalLayout_advan.addWidget(self.label_advanced_error)
 
-        self.verticalLayout_advan.addWidget(self.label_info_lower_advan)
+        self.groupBox_advanced_radnom = QGroupBox(self.widget_lower_advan)
+        self.groupBox_advanced_radnom.setObjectName("groupBox_advanced_radnom")
+        self.verticalLayout_61_advanced = QVBoxLayout(
+            self.groupBox_advanced_radnom)
+        self.verticalLayout_61_advanced.setObjectName(
+            "verticalLayout_61_advanced")
+
+        self.label_advanced_rollid = QLabel(self.groupBox_advanced_radnom)
+        self.label_advanced_rollid.setMinimumSize(QSize(700, 40))
+        self.label_advanced_rollid.setMaximumSize(QSize(700, 40))
+        self.label_advanced_rollid.setObjectName("label_advanced_rollid")
+        self.verticalLayout_61_advanced.addWidget(
+            self.label_advanced_rollid, 0, Qt.AlignCenter)
+
+        self.label_advanced_fullname = QLabel(self.groupBox_advanced_radnom)
+        self.label_advanced_fullname.setMinimumSize(QSize(700, 40))
+        self.label_advanced_fullname.setMaximumSize(QSize(700, 40))
+        self.label_advanced_fullname.setObjectName("label_advanced_fullname")
+        self.verticalLayout_61_advanced.addWidget(
+            self.label_advanced_fullname, 0, Qt.AlignCenter)
+
+        self.label_advanced_contact = QLabel(self.groupBox_advanced_radnom)
+        self.label_advanced_contact.setMinimumSize(QSize(700, 40))
+        self.label_advanced_contact.setMaximumSize(QSize(700, 40))
+        self.label_advanced_contact.setObjectName("label_advanced_contact")
+        self.verticalLayout_61_advanced.addWidget(
+            self.label_advanced_contact, 0, Qt.AlignCenter)
+
+        self.label_advanced_email = QLabel(self.groupBox_advanced_radnom)
+        self.label_advanced_email.setMinimumSize(QSize(700, 40))
+        self.label_advanced_email.setMaximumSize(QSize(700, 40))
+        self.label_advanced_email.setObjectName("label_advanced_email")
+        self.verticalLayout_61_advanced.addWidget(
+            self.label_advanced_email, 0, Qt.AlignCenter)
+
+        self.label_advanced_address = QLabel(self.groupBox_advanced_radnom)
+        self.label_advanced_address.setMinimumSize(QSize(700, 40))
+        self.label_advanced_address.setMaximumSize(QSize(700, 40))
+        self.label_advanced_address.setObjectName("label_advanced_address")
+        self.verticalLayout_61_advanced.addWidget(
+            self.label_advanced_address, 0, Qt.AlignCenter)
+        self.verticalLayout_advan.addWidget(self.groupBox_advanced_radnom)
 
         self.frame_inter_delet_bar_advan = QFrame(self.widget_lower_advan)
         self.frame_inter_delet_bar_advan.setObjectName(
@@ -1420,7 +1620,7 @@ class Ui_Main(object):
         self.verticalLayout_14.setObjectName(u"verticalLayout_14")
         self.widget_inter_left_1 = QWidget(self.scrollAreaWidgetContents)
         self.widget_inter_left_1.setObjectName(u"widget_inter_left_1")
-        self.widget_inter_left_1.setMinimumSize(QSize(0, 500))
+        self.widget_inter_left_1.setMinimumSize(QSize(0, 400))
         self.setShadowEffect(self.widget_inter_left_1)
         self.verticalLayout_15 = QVBoxLayout(self.widget_inter_left_1)
         self.verticalLayout_15.setObjectName(u"verticalLayout_15")
@@ -1439,13 +1639,53 @@ class Ui_Main(object):
         self.verticalLayout_15.addWidget(
             self.label_info_inter_left_face, 0, Qt.AlignCenter)
 
-        self.info_inter_left_1 = QLabel(self.widget_inter_left_1)
-        self.info_inter_left_1.setObjectName(u"info_inter_left_1")
-        self.info_inter_left_1.setFont(font2)
-        self.info_inter_left_1.setAlignment(
-            Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
+        self.label_leftInter_error = QLabel(self.widget_inter_left_1)
+        self.label_leftInter_error.setVisible(False)
+        self.verticalLayout_15.addWidget(self.label_leftInter_error)
 
-        self.verticalLayout_15.addWidget(self.info_inter_left_1)
+        self.groupBox_leftInter_radnom = QGroupBox(self.widget_inter_left_1)
+        self.groupBox_leftInter_radnom.setObjectName("groupBox")
+        self.verticalLayout_61_inter_left = QVBoxLayout(
+            self.groupBox_leftInter_radnom)
+        self.verticalLayout_61_inter_left.setObjectName(
+            "verticalLayout_61_inter_left")
+
+        self.label_leftInter_rollid = QLabel(self.groupBox_leftInter_radnom)
+        self.label_leftInter_rollid.setMinimumSize(QSize(700, 40))
+        self.label_leftInter_rollid.setMaximumSize(QSize(700, 40))
+        self.label_leftInter_rollid.setObjectName("label_leftInter_rollid")
+        self.verticalLayout_61_inter_left.addWidget(
+            self.label_leftInter_rollid, 0, Qt.AlignCenter)
+
+        self.label_leftInter_fullname = QLabel(self.groupBox_leftInter_radnom)
+        self.label_leftInter_fullname.setMinimumSize(QSize(700, 40))
+        self.label_leftInter_fullname.setMaximumSize(QSize(700, 40))
+        self.label_leftInter_fullname.setObjectName("label_leftInter_fullname")
+        self.verticalLayout_61_inter_left.addWidget(
+            self.label_leftInter_fullname, 0, Qt.AlignCenter)
+
+        self.label_leftInter_contact = QLabel(self.groupBox_leftInter_radnom)
+        self.label_leftInter_contact.setMinimumSize(QSize(700, 40))
+        self.label_leftInter_contact.setMaximumSize(QSize(700, 40))
+        self.label_leftInter_contact.setObjectName("label_leftInter_contact")
+        self.verticalLayout_61_inter_left.addWidget(
+            self.label_leftInter_contact, 0, Qt.AlignCenter)
+
+        self.label_leftInter_email = QLabel(self.groupBox_leftInter_radnom)
+        self.label_leftInter_email.setMinimumSize(QSize(700, 40))
+        self.label_leftInter_email.setMaximumSize(QSize(700, 40))
+        self.label_leftInter_email.setObjectName("label_leftInter_email")
+        self.verticalLayout_61_inter_left.addWidget(
+            self.label_leftInter_email, 0, Qt.AlignCenter)
+
+        self.label_leftInter_address = QLabel(self.groupBox_leftInter_radnom)
+        self.label_leftInter_address.setMinimumSize(QSize(700, 40))
+        self.label_leftInter_address.setMaximumSize(QSize(700, 40))
+        self.label_leftInter_address.setObjectName("label_leftInter_address")
+        self.verticalLayout_61_inter_left.addWidget(
+            self.label_leftInter_address)
+        self.verticalLayout_15.addWidget(
+            self.groupBox_leftInter_radnom, 0, Qt.AlignCenter)
 
         self.frame_inter_left_btns_bar_1 = QFrame(self.widget_inter_left_1)
         self.frame_inter_left_btns_bar_1.setObjectName(
@@ -1470,7 +1710,6 @@ class Ui_Main(object):
         self.label_info_user_left_inter_1.setAlignment(Qt.AlignLeft)
 
         self.horizontalLayout_8.addWidget(self.label_info_user_left_inter_1)
-
 
         self.btn_view_interuser_left = QPushButton(
             self.frame_inter_left_btns_bar_1)
@@ -1516,7 +1755,7 @@ class Ui_Main(object):
         self.verticalLayout_14.addWidget(self.widget_inter_left_1)
 
         self.widget_noneinter_left = QWidget(self.page_content_Input)
-        self.widget_noneinter_left.setMinimumSize(QSize(0, 500))
+        self.widget_noneinter_left.setMinimumSize(QSize(0, 400))
         self.widget_noneinter_left.setObjectName("widget_noneinter_left")
         self.verticalLayout_60_left = QVBoxLayout(self.widget_noneinter_left)
         self.verticalLayout_60_left.setObjectName("verticalLayout_60_left")
@@ -1535,15 +1774,65 @@ class Ui_Main(object):
         self.verticalLayout_60_left.addWidget(
             self.label_info_NoneInter_face_left, 0, Qt.AlignCenter)
 
-        self.label_info_noneinter_left = QLabel(self.widget_noneinter_left)
-        font = QFont()
-        font.setFamily("./src/font/segoeui.ttf")
-        font.setPointSize(10)
-        self.label_info_noneinter_left.setFont(font)
-        self.label_info_noneinter_left.setText("")
-        self.label_info_noneinter_left.setObjectName(
-            "label_info_noneinter_left")
-        self.verticalLayout_60_left.addWidget(self.label_info_noneinter_left)
+        self.label_leftNoneInter_error = QLabel(self.widget_noneinter_left)
+        self.label_leftNoneInter_error.setVisible(False)
+        self.verticalLayout_60_left.addWidget(self.label_leftNoneInter_error)
+
+        self.groupBox_leftNoneInter_radnom = QGroupBox(
+            self.widget_noneinter_left)
+        self.groupBox_leftNoneInter_radnom.setObjectName("groupBox")
+        self.verticalLayout_61_none_left = QVBoxLayout(
+            self.groupBox_leftNoneInter_radnom)
+        self.verticalLayout_61_none_left.setObjectName(
+            "verticalLayout_61_none_left")
+
+        self.label_leftNoneInter_rollid = QLabel(
+            self.groupBox_leftNoneInter_radnom)
+        self.label_leftNoneInter_rollid.setMinimumSize(QSize(700, 40))
+        self.label_leftNoneInter_rollid.setMaximumSize(QSize(700, 40))
+        self.label_leftNoneInter_rollid.setObjectName(
+            "label_leftNoneInter_rollid")
+        self.verticalLayout_61_none_left.addWidget(
+            self.label_leftNoneInter_rollid, 0, Qt.AlignCenter)
+
+        self.label_leftNoneInter_fullname = QLabel(
+            self.groupBox_leftNoneInter_radnom)
+        self.label_leftNoneInter_fullname.setMinimumSize(QSize(700, 40))
+        self.label_leftNoneInter_fullname.setMaximumSize(QSize(700, 40))
+        self.label_leftNoneInter_fullname.setObjectName(
+            "label_leftNoneInter_fullname")
+        self.verticalLayout_61_none_left.addWidget(
+            self.label_leftNoneInter_fullname, 0, Qt.AlignCenter)
+
+        self.label_leftNoneInter_contact = QLabel(
+            self.groupBox_leftNoneInter_radnom)
+        self.label_leftNoneInter_contact.setMinimumSize(QSize(700, 40))
+        self.label_leftNoneInter_contact.setMaximumSize(QSize(700, 40))
+        self.label_leftNoneInter_contact.setObjectName(
+            "label_leftNoneInter_contact")
+        self.verticalLayout_61_none_left.addWidget(
+            self.label_leftNoneInter_contact, 0, Qt.AlignCenter)
+
+        self.label_leftNoneInter_email = QLabel(
+            self.groupBox_leftNoneInter_radnom)
+        self.label_leftNoneInter_email.setMinimumSize(QSize(700, 40))
+        self.label_leftNoneInter_email.setMaximumSize(QSize(700, 40))
+        self.label_leftNoneInter_email.setObjectName(
+            "label_leftNoneInter_email")
+        self.verticalLayout_61_none_left.addWidget(
+            self.label_leftNoneInter_email, 0, Qt.AlignCenter)
+
+        self.label_leftNoneInter_address = QLabel(
+            self.groupBox_leftNoneInter_radnom)
+        self.label_leftNoneInter_address.setMinimumSize(QSize(700, 40))
+        self.label_leftNoneInter_address.setMaximumSize(QSize(700, 40))
+        self.label_leftNoneInter_address.setObjectName(
+            "label_leftNoneInter_address")
+        self.verticalLayout_61_none_left.addWidget(
+            self.label_leftNoneInter_address)
+        self.verticalLayout_60_left.addWidget(
+            self.groupBox_leftNoneInter_radnom, 0, Qt.AlignCenter)
+
         self.frame_noneinter_delet_bar_left = QFrame(
             self.widget_noneinter_left)
         self.frame_noneinter_delet_bar_left.setMaximumSize(QSize(16777215, 40))
@@ -1616,7 +1905,7 @@ class Ui_Main(object):
 
         self.widget_lower_left_1 = QWidget(self.scrollAreaWidgetContents)
         self.widget_lower_left_1.setObjectName(u"widget_lower_left_1")
-        self.widget_lower_left_1.setMinimumSize(QSize(0, 500))
+        self.widget_lower_left_1.setMinimumSize(QSize(0, 400))
         self.setShadowEffect(self.widget_lower_left_1)
         self.verticalLayout_18 = QVBoxLayout(self.widget_lower_left_1)
         self.verticalLayout_18.setObjectName(u"verticalLayout_18")
@@ -1635,13 +1924,60 @@ class Ui_Main(object):
         self.verticalLayout_18.addWidget(
             self.label_info_lower_left_face, 0, Qt.AlignCenter)
 
-        self.info_lower_1 = QLabel(self.widget_lower_left_1)
-        self.info_lower_1.setObjectName(u"info_lower_1")
-        self.info_lower_1.setFont(font2)
-        self.info_lower_1.setAlignment(
-            Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
+        self.label_leftOrdnary_error = QLabel(self.widget_lower_left_1)
+        self.label_leftOrdnary_error.setVisible(False)
+        self.verticalLayout_18.addWidget(self.label_leftOrdnary_error)
 
-        self.verticalLayout_18.addWidget(self.info_lower_1)
+        self.groupBox_leftOrdnary_radnom = QGroupBox(self.widget_lower_left_1)
+        self.groupBox_leftOrdnary_radnom.setObjectName("groupBox")
+        self.verticalLayout_61_ordnary_left = QVBoxLayout(
+            self.groupBox_leftOrdnary_radnom)
+        self.verticalLayout_61_ordnary_left.setObjectName(
+            "verticalLayout_61_ordnary_left")
+
+        self.label_leftOrdnary_rollid = QLabel(
+            self.groupBox_leftOrdnary_radnom)
+        self.label_leftOrdnary_rollid.setMinimumSize(QSize(700, 40))
+        self.label_leftOrdnary_rollid.setMaximumSize(QSize(700, 40))
+        self.label_leftOrdnary_rollid.setObjectName("label_leftOrdnary_rollid")
+        self.verticalLayout_61_ordnary_left.addWidget(
+            self.label_leftOrdnary_rollid, 0, Qt.AlignCenter)
+
+        self.label_leftOrdnary_fullname = QLabel(
+            self.groupBox_leftOrdnary_radnom)
+        self.label_leftOrdnary_fullname.setMinimumSize(QSize(700, 40))
+        self.label_leftOrdnary_fullname.setMaximumSize(QSize(700, 40))
+        self.label_leftOrdnary_fullname.setObjectName(
+            "label_leftOrdnary_fullname")
+        self.verticalLayout_61_ordnary_left.addWidget(
+            self.label_leftOrdnary_fullname, 0, Qt.AlignCenter)
+
+        self.label_leftOrdnary_contact = QLabel(
+            self.groupBox_leftOrdnary_radnom)
+        self.label_leftOrdnary_contact.setMinimumSize(QSize(700, 40))
+        self.label_leftOrdnary_contact.setMaximumSize(QSize(700, 40))
+        self.label_leftOrdnary_contact.setObjectName(
+            "label_leftOrdnary_contact")
+        self.verticalLayout_61_ordnary_left.addWidget(
+            self.label_leftOrdnary_contact, 0, Qt.AlignCenter)
+
+        self.label_leftOrdnary_email = QLabel(self.groupBox_leftOrdnary_radnom)
+        self.label_leftOrdnary_email.setMinimumSize(QSize(700, 40))
+        self.label_leftOrdnary_email.setMaximumSize(QSize(700, 40))
+        self.label_leftOrdnary_email.setObjectName("label_leftOrdnary_email")
+        self.verticalLayout_61_ordnary_left.addWidget(
+            self.label_leftOrdnary_email, 0, Qt.AlignCenter)
+
+        self.label_leftOrdnary_address = QLabel(
+            self.groupBox_leftOrdnary_radnom)
+        self.label_leftOrdnary_address.setMinimumSize(QSize(700, 40))
+        self.label_leftOrdnary_address.setMaximumSize(QSize(700, 40))
+        self.label_leftOrdnary_address.setObjectName(
+            "label_leftOrdnary_address")
+        self.verticalLayout_61_ordnary_left.addWidget(
+            self.label_leftOrdnary_address)
+        self.verticalLayout_18.addWidget(
+            self.groupBox_leftOrdnary_radnom, 0, Qt.AlignCenter)
 
         self.frame_lower_left_btns_bar_1 = QFrame(self.widget_lower_left_1)
         self.frame_lower_left_btns_bar_1.setObjectName(
@@ -1707,7 +2043,7 @@ class Ui_Main(object):
 
         self.widget_lower_left_pri = QWidget(self.scrollAreaWidgetContents)
         self.widget_lower_left_pri.setObjectName(u"widget_lower_left_pri")
-        self.widget_lower_left_pri.setMinimumSize(QSize(0, 500))
+        self.widget_lower_left_pri.setMinimumSize(QSize(0, 400))
         self.setShadowEffect(self.widget_lower_left_pri)
         self.verticalLayout_pri = QVBoxLayout(self.widget_lower_left_pri)
         self.verticalLayout_pri.setObjectName(u"verticalLayout_pri")
@@ -1726,14 +2062,61 @@ class Ui_Main(object):
         self.verticalLayout_pri.addWidget(
             self.label_info_pri_left_face, 0, Qt.AlignCenter)
 
-        self.info_lower_left_pri = QLabel(self.widget_lower_left_pri)
-        self.info_lower_left_pri.setObjectName(u"info_lower_pri")
-        self.info_lower_left_pri.setFont(font2)
+        self.label_leftPrimary_error = QLabel(self.widget_lower_left_pri)
+        self.label_leftPrimary_error.setVisible(False)
+        self.verticalLayout_pri.addWidget(self.label_leftPrimary_error)
 
-        self.info_lower_left_pri.setAlignment(
-            Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
+        self.groupBox_leftPrimary_radnom = QGroupBox(
+            self.widget_lower_left_pri)
+        self.groupBox_leftPrimary_radnom.setObjectName("groupBox")
+        self.verticalLayout_61_primary_left = QVBoxLayout(
+            self.groupBox_leftPrimary_radnom)
+        self.verticalLayout_61_primary_left.setObjectName(
+            "verticalLayout_61_primary_left")
 
-        self.verticalLayout_pri.addWidget(self.info_lower_left_pri)
+        self.label_leftPrimary_rollid = QLabel(
+            self.groupBox_leftPrimary_radnom)
+        self.label_leftPrimary_rollid.setMinimumSize(QSize(700, 40))
+        self.label_leftPrimary_rollid.setMaximumSize(QSize(700, 40))
+        self.label_leftPrimary_rollid.setObjectName("label_leftPrimary_rollid")
+        self.verticalLayout_61_primary_left.addWidget(
+            self.label_leftPrimary_rollid, 0, Qt.AlignCenter)
+
+        self.label_leftPrimary_fullname = QLabel(
+            self.groupBox_leftPrimary_radnom)
+        self.label_leftPrimary_fullname.setMinimumSize(QSize(700, 40))
+        self.label_leftPrimary_fullname.setMaximumSize(QSize(700, 40))
+        self.label_leftPrimary_fullname.setObjectName(
+            "label_leftPrimary_fullname")
+        self.verticalLayout_61_primary_left.addWidget(
+            self.label_leftPrimary_fullname, 0, Qt.AlignCenter)
+
+        self.label_leftPrimary_contact = QLabel(
+            self.groupBox_leftPrimary_radnom)
+        self.label_leftPrimary_contact.setMinimumSize(QSize(700, 40))
+        self.label_leftPrimary_contact.setMaximumSize(QSize(700, 40))
+        self.label_leftPrimary_contact.setObjectName(
+            "label_leftPrimary_contact")
+        self.verticalLayout_61_primary_left.addWidget(
+            self.label_leftPrimary_contact, 0, Qt.AlignCenter)
+
+        self.label_leftPrimary_email = QLabel(self.groupBox_leftPrimary_radnom)
+        self.label_leftPrimary_email.setMinimumSize(QSize(700, 40))
+        self.label_leftPrimary_email.setMaximumSize(QSize(700, 40))
+        self.label_leftPrimary_email.setObjectName("label_leftPrimary_email")
+        self.verticalLayout_61_primary_left.addWidget(
+            self.label_leftPrimary_email, 0, Qt.AlignCenter)
+
+        self.label_leftPrimary_address = QLabel(
+            self.groupBox_leftPrimary_radnom)
+        self.label_leftPrimary_address.setMinimumSize(QSize(700, 40))
+        self.label_leftPrimary_address.setMaximumSize(QSize(700, 40))
+        self.label_leftPrimary_address.setObjectName(
+            "label_leftPrimary_address")
+        self.verticalLayout_61_primary_left.addWidget(
+            self.label_leftPrimary_address)
+        self.verticalLayout_pri.addWidget(
+            self.groupBox_leftPrimary_radnom, 0, Qt.AlignCenter)
 
         self.frame_lower_btns_bar_pri = QFrame(self.widget_lower_left_pri)
         self.frame_lower_btns_bar_pri.setObjectName(
@@ -1801,7 +2184,7 @@ class Ui_Main(object):
 
         self.widget_lower_left_advan = QWidget(self.scrollAreaWidgetContents)
         self.widget_lower_left_advan.setObjectName(u"widget_lower_left_advan")
-        self.widget_lower_left_advan.setMinimumSize(QSize(0, 500))
+        self.widget_lower_left_advan.setMinimumSize(QSize(0, 400))
         self.setShadowEffect(self.widget_lower_left_advan)
         self.verticalLayout_advan = QVBoxLayout(self.widget_lower_left_advan)
         self.verticalLayout_advan.setObjectName(u"verticalLayout_advan")
@@ -1820,13 +2203,63 @@ class Ui_Main(object):
         self.verticalLayout_advan.addWidget(
             self.label_info_advan_left_face, 0, Qt.AlignCenter)
 
-        self.info_lower_left_advan = QLabel(self.widget_lower_left_advan)
-        self.info_lower_left_advan.setObjectName(u"info_lower_advan")
-        self.info_lower_left_advan.setFont(font2)
-        self.info_lower_left_advan.setAlignment(
-            Qt.AlignLeading | Qt.AlignLeft | Qt.AlignVCenter)
+        self.label_leftAdvanced_error = QLabel(self.widget_lower_left_advan)
+        self.label_leftAdvanced_error.setVisible(False)
+        self.verticalLayout_advan.addWidget(self.label_leftAdvanced_error)
 
-        self.verticalLayout_advan.addWidget(self.info_lower_left_advan)
+        self.groupBox_leftAdvanced_radnom = QGroupBox(
+            self.widget_lower_left_advan)
+        self.groupBox_leftAdvanced_radnom.setObjectName("groupBox")
+        self.verticalLayout_61_advanced_left = QVBoxLayout(
+            self.groupBox_leftAdvanced_radnom)
+        self.verticalLayout_61_advanced_left.setObjectName(
+            "verticalLayout_61_advanced_left")
+
+        self.label_leftAdvanced_rollid = QLabel(
+            self.groupBox_leftAdvanced_radnom)
+        self.label_leftAdvanced_rollid.setMinimumSize(QSize(700, 40))
+        self.label_leftAdvanced_rollid.setMaximumSize(QSize(700, 40))
+        self.label_leftAdvanced_rollid.setObjectName(
+            "label_leftAdvanced_rollid")
+        self.verticalLayout_61_advanced_left.addWidget(
+            self.label_leftAdvanced_rollid, 0, Qt.AlignCenter)
+
+        self.label_leftAdvanced_fullname = QLabel(
+            self.groupBox_leftAdvanced_radnom)
+        self.label_leftAdvanced_fullname.setMinimumSize(QSize(700, 40))
+        self.label_leftAdvanced_fullname.setMaximumSize(QSize(700, 40))
+        self.label_leftAdvanced_fullname.setObjectName(
+            "label_leftAdvanced_fullname")
+        self.verticalLayout_61_advanced_left.addWidget(
+            self.label_leftAdvanced_fullname, 0, Qt.AlignCenter)
+
+        self.label_leftAdvanced_contact = QLabel(
+            self.groupBox_leftAdvanced_radnom)
+        self.label_leftAdvanced_contact.setMinimumSize(QSize(700, 40))
+        self.label_leftAdvanced_contact.setMaximumSize(QSize(700, 40))
+        self.label_leftAdvanced_contact.setObjectName(
+            "label_leftAdvanced_contact")
+        self.verticalLayout_61_advanced_left.addWidget(
+            self.label_leftAdvanced_contact, 0, Qt.AlignCenter)
+
+        self.label_leftAdvanced_email = QLabel(
+            self.groupBox_leftAdvanced_radnom)
+        self.label_leftAdvanced_email.setMinimumSize(QSize(700, 40))
+        self.label_leftAdvanced_email.setMaximumSize(QSize(700, 40))
+        self.label_leftAdvanced_email.setObjectName("label_leftAdvanced_email")
+        self.verticalLayout_61_advanced_left.addWidget(
+            self.label_leftAdvanced_email, 0, Qt.AlignCenter)
+
+        self.label_leftAdvanced_address = QLabel(
+            self.groupBox_leftAdvanced_radnom)
+        self.label_leftAdvanced_address.setMinimumSize(QSize(700, 40))
+        self.label_leftAdvanced_address.setMaximumSize(QSize(700, 40))
+        self.label_leftAdvanced_address.setObjectName(
+            "label_leftAdvanced_address")
+        self.verticalLayout_61_advanced_left.addWidget(
+            self.label_leftAdvanced_address)
+        self.verticalLayout_advan.addWidget(
+            self.groupBox_leftAdvanced_radnom, 0, Qt.AlignCenter)
 
         self.frame_lower_btns_bar_advan = QFrame(self.widget_lower_left_advan)
         self.frame_lower_btns_bar_advan.setObjectName(
@@ -3990,35 +4423,27 @@ class Ui_Main(object):
             QCoreApplication.translate("MainWindow", u"Analytics Data", None)
         )
 
-        self.label_info_Inter_1.setText("")
         self.btn_delete_inter_1.setText(
             QCoreApplication.translate("MainWindow", u" Delete", None))
 
-        self.label_info_lower_1.setText("")
         self.btn_delete_lower_1.setText(
             QCoreApplication.translate("MainWindow", u" Delete", None))
         self.btn_delete_lower_pri.setText(
             QCoreApplication.translate("MainWindow", u" Delete", None)
         )
-        self.label_info_lower_pri.setText("")
         self.btn_delete_lower_advan.setText(
             QCoreApplication.translate("MainWindow", u" Delete", None)
         )
-        self.label_info_lower_advan.setText("")
-        self.info_inter_left_1.setText("")
         self.btn_delete_inter_left_1.setText(
             QCoreApplication.translate("MainWindow", u" Delete", None))
-        self.info_lower_1.setText("")
         self.btn_delete_lower_left_1.setText(
             QCoreApplication.translate("MainWindow", u" Delete", None))
-        self.info_lower_left_pri.setText("")
         self.btn_delete_lower_left_pri.setText(
             QCoreApplication.translate("MainWindow", u" Delete", None))
-        self.info_lower_left_advan.setText("")
         self.btn_delete_lower_left_advan.setText(
             QCoreApplication.translate("MainWindow", u" Delete", None))
         self.lineEdit_nameSearch.setPlaceholderText(
-            QCoreApplication.translate("MainWindow", u"Search Name", None))
+            QCoreApplication.translate("MainWindow", u"Search Anything About User", None))
         self.btn_nameSearch.setText(
             QCoreApplication.translate("MainWindow", u" Search", None))
         self.lineEdit_rollSearch.setPlaceholderText(
@@ -4477,7 +4902,7 @@ class Ui_Main(object):
             QCoreApplication.translate("MainWindow", "Edit"))
         self.btn_edit_advan.setText(
             QCoreApplication.translate("MainWindow", "Edit"))
-        
+
         self.btn_view_interuser.setText(
             QCoreApplication.translate("MainWindow", "View"))
         self.btn_view_noneinteruser.setText(
@@ -4499,7 +4924,7 @@ class Ui_Main(object):
             QCoreApplication.translate("MainWindow", " Restore"))
         self.btn_edit_advan_left.setText(
             QCoreApplication.translate("MainWindow", " Restore"))
-        
+
         self.btn_view_interuser_left.setText(
             QCoreApplication.translate("MainWindow", "View"))
         self.btn_view_noneinteruser_left.setText(

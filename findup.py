@@ -1,3 +1,4 @@
+import random
 import cv2 as cv
 import sys
 import pandas as pd
@@ -562,7 +563,7 @@ class Create_Window(QMainWindow):
 
                     thread_loading = Thread_Loading()
                     thread_loading.prograss_function.connect(
-                        lambda: QTimer.singleShot(1400, lambda: prosses()))
+                        lambda: QTimer.singleShot(1450, lambda: prosses()))
                     thread_loading.start()
                     thread_loading.exec_()
 
@@ -1021,6 +1022,12 @@ class Main_Window(QMainWindow):
         self.randomise_ordnary()
         self.randomise_advanced()
 
+        self.randomise_leftInter()
+        self.randomise_leftNoneInter()
+        self.randomise_leftPrimary()
+        self.randomise_leftOrdnary()
+        self.randomise_leftAdvanced()
+
     # Set The Label Text
     def setTheAllLabelText(self):
         __data = Setting.load_superuser()
@@ -1095,12 +1102,24 @@ class Main_Window(QMainWindow):
         )
         self.ui.btn_upload_image_inter_teacher.clicked.connect(
             self.pickImageFromComputer_teachers)
+        self.ui.btn_delete_inter_1.clicked.connect(
+            self.randomiseInterDeleteFromActive
+        )
+        self.ui.btn_delete_inter_left_1.clicked.connect(
+            self.deleteInterUserFromLeft
+        )
 
         # None-Inter
         self.ui.btn_addInter_teacher_none.clicked.connect(
             self.store_noneinteruser_data)
         self.ui.btn_upload_image_inter_teacher_none.clicked.connect(
             self.pickImageFromComputer_teacher_none)
+        self.ui.btn_delete_noneinter.clicked.connect(
+            self.randomiseNoneInterDeleteFromActive
+        )
+        self.ui.btn_delete_noneinter_left.clicked.connect(
+            self.deleteNoneInterUserFromLeft
+        )
 
         # Primary
         self.ui.btn_addLower_primary.clicked.connect(
@@ -1108,6 +1127,12 @@ class Main_Window(QMainWindow):
         )
         self.ui.btn_upload_image_primary.clicked.connect(
             self.pickImageFromComputer_primary
+        )
+        self.ui.btn_delete_lower_pri.clicked.connect(
+            self.randomisePrimaryDeleteFromActive
+        )
+        self.ui.btn_delete_lower_left_pri.clicked.connect(
+            self.deletePrimaryUserFromLeft
         )
 
         # Ordnary
@@ -1117,6 +1142,12 @@ class Main_Window(QMainWindow):
         self.ui.btn_upload_image_lower.clicked.connect(
             self.pickImageFromComputer_ordnary
         )
+        self.ui.btn_delete_lower_1.clicked.connect(
+            self.randomiseOrdnaryDeleteFromActive
+        )
+        self.ui.btn_delete_lower_left_1.clicked.connect(
+            self.deleteOrdnaryUserFromLeft
+        )
 
         # Advanced
         self.ui.btn_addLower_adv.clicked.connect(
@@ -1124,6 +1155,17 @@ class Main_Window(QMainWindow):
         )
         self.ui.btn_upload_image_advanced.clicked.connect(
             self.pickImageFromComputer_advanced
+        )
+        self.ui.btn_delete_lower_advan.clicked.connect(
+            self.randomiseAdvncedDeleteFromActive
+        )
+        self.ui.btn_delete_lower_left_advan.clicked.connect(
+            self.deleteAdvancedUserFromLeft
+        )
+
+        # Software Companeds
+        self.ui.btn_nameSearch.clicked.connect(
+            self.search
         )
 
     def label_text_coping_event_installer(self):
@@ -1392,8 +1434,6 @@ class Main_Window(QMainWindow):
             light.LABEL_INFO_INTER_FACE)
         self.ui.label_info_user_inter_1.setStyleSheet(
             light.LABEL_INFO_INTER_USER_1)
-        self.ui.label_info_Inter_1.setStyleSheet(light.LABEL_INFO_INTER_1)
-        self.ui.info_inter_left_1.setStyleSheet(light.LABEL_INFO_INTER_1)
         self.ui.label_info_user_left_inter_1.setStyleSheet(
             light.LABEL_INFO_INTER_USER_1)
         self.ui.label_icon_inter_teacher.setStyleSheet(light.LABEL_ICON_INTER)
@@ -1485,8 +1525,6 @@ class Main_Window(QMainWindow):
 
         self.ui.label_info_user_noneinter.setStyleSheet(
             light.LABEL_INFO_INTER_USER_1)
-        self.ui.label_info_noneinter.setStyleSheet(
-            light.LABEL_INFO_INTER_1)
         self.ui.label_info_NoneInter_face.setStyleSheet(
             light.LABEL_ACTIVE_LEFT)
 
@@ -1496,8 +1534,6 @@ class Main_Window(QMainWindow):
 
         self.ui.label_info_user_noneinter_left.setStyleSheet(
             light.LABEL_INFO_INTER_USER_1)
-        self.ui.label_info_noneinter_left.setStyleSheet(
-            light.LABEL_INFO_INTER_1)
         self.ui.label_info_NoneInter_face_left.setStyleSheet(
             light.LABEL_ACTIVE_LEFT)
 
@@ -1555,11 +1591,9 @@ class Main_Window(QMainWindow):
             light.GLOBAL_LABEL)
         self.ui.label_info_user_lower_pri.setStyleSheet(
             light.LABEL_INFO_PRIMARY_USER_1)
-        self.ui.label_info_lower_pri.setStyleSheet(light.LABEL_INFO_PRIMARY_1)
         self.ui.label_icon_primary.setStyleSheet(light.LABEL_ICON_PRIMARY)
         self.ui.label_show_roll_primary.setStyleSheet(
             light.LABEL_SHOW_ROLL_PRIMARY)
-        self.ui.info_lower_left_pri.setStyleSheet(light.LABEL_INFO_PRIMARY_1)
         self.ui.label_info_user_left_lower_pri.setStyleSheet(
             light.LABEL_INFO_PRIMARY_USER_1)
 
@@ -1626,10 +1660,8 @@ class Main_Window(QMainWindow):
         self.ui.label_info_gender_lower.setStyleSheet(light.GLOBAL_LABEL)
         self.ui.label_inforem_date_of_birth_lower.setStyleSheet(
             light.GLOBAL_LABEL)
-        self.ui.label_info_lower_1.setStyleSheet(light.LABEL_INFO_LOWER_1)
         self.ui.label_info_user_lower_1.setStyleSheet(
             light.LABEL_INFO_LOWER_USER_1)
-        self.ui.info_lower_1.setStyleSheet(light.LABEL_INFO_LOWER_1)
         self.ui.label_info_user_left_lower_1.setStyleSheet(
             light.LABEL_INFO_LOWER_USER_1)
         self.ui.label_lower_head.setStyleSheet(
@@ -1686,12 +1718,8 @@ class Main_Window(QMainWindow):
         self.ui.label_icon_.setStyleSheet(light.LABEL_ICON_)
         self.ui.label_show_roll_ad.setStyleSheet(
             light.LABEL_SHOW_ROLL_ADVANCED)
-        self.ui.label_info_lower_advan.setStyleSheet(
-            light.LABEL_INFO_ADVANCED_1)
         self.ui.label_info_user_lower_advan.setStyleSheet(
             light.LABEL_INFO_ADVANCED_USER_1)
-        self.ui.info_lower_left_advan.setStyleSheet(
-            light.LABEL_INFO_ADVANCED_1)
         self.ui.label_info_user_left_lower_advan.setStyleSheet(
             light.LABEL_INFO_ADVANCED_USER_1)
         self.ui.label_advanced_level_13.setStyleSheet(
@@ -1842,6 +1870,106 @@ class Main_Window(QMainWindow):
         self.ui.analytics_status.setStyleSheet(light.STATUS_BAR_LABEL)
         self.ui.searching_status.setStyleSheet(light.STATUS_BAR_LABEL)
         self.ui.other_status.setStyleSheet(light.STATUS_BAR_LABEL)
+
+        # The Randomiser Label Style
+        self.ui.label_inter_rollid.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_inter_fullname.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_inter_contact.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_inter_email.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_inter_address.setStyleSheet(light.gloabel_style_label)
+
+        self.ui.label_noneinter_rollid.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_noneinter_fullname.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_noneinter_contact.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_noneinter_email.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_noneinter_address.setStyleSheet(
+            light.gloabel_style_label)
+
+        self.ui.label_primary_rollid.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_primary_fullname.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_primary_contact.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_primary_email.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_primary_address.setStyleSheet(light.gloabel_style_label)
+
+        self.ui.label_ordnary_rollid.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_ordnary_fullname.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_ordnary_contact.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_ordnary_email.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_ordnary_address.setStyleSheet(light.gloabel_style_label)
+
+        self.ui.label_advanced_rollid.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_advanced_fullname.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_advanced_contact.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_advanced_email.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_advanced_address.setStyleSheet(light.gloabel_style_label)
+
+        self.ui.label_inter_error.setStyleSheet(light.RANDOMISE_STYLE)
+        self.ui.label_noneinter_error.setStyleSheet(light.RANDOMISE_STYLE)
+        self.ui.label_primary_error.setStyleSheet(light.RANDOMISE_STYLE)
+        self.ui.label_ordnary_error.setStyleSheet(light.RANDOMISE_STYLE)
+        self.ui.label_advanced_error.setStyleSheet(light.RANDOMISE_STYLE)
+
+        self.ui.label_leftInter_rollid.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_leftInter_fullname.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftInter_contact.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftInter_email.setStyleSheet(light.gloabel_style_label)
+        self.ui.label_leftInter_address.setStyleSheet(
+            light.gloabel_style_label)
+
+        self.ui.label_leftNoneInter_rollid.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftNoneInter_fullname.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftNoneInter_contact.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftNoneInter_email.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftNoneInter_address.setStyleSheet(
+            light.gloabel_style_label)
+
+        self.ui.label_leftPrimary_rollid.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftPrimary_fullname.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftPrimary_contact.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftPrimary_email.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftPrimary_address.setStyleSheet(
+            light.gloabel_style_label)
+
+        self.ui.label_leftOrdnary_rollid.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftOrdnary_fullname.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftOrdnary_contact.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftOrdnary_email.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftOrdnary_address.setStyleSheet(
+            light.gloabel_style_label)
+
+        self.ui.label_leftAdvanced_rollid.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftAdvanced_fullname.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftAdvanced_contact.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftAdvanced_email.setStyleSheet(
+            light.gloabel_style_label)
+        self.ui.label_leftAdvanced_address.setStyleSheet(
+            light.gloabel_style_label)
+
+        self.ui.label_leftInter_error.setStyleSheet(light.RANDOMISE_STYLE)
+        self.ui.label_leftNoneInter_error.setStyleSheet(light.RANDOMISE_STYLE)
+        self.ui.label_leftPrimary_error.setStyleSheet(light.RANDOMISE_STYLE)
+        self.ui.label_leftOrdnary_error.setStyleSheet(light.RANDOMISE_STYLE)
+        self.ui.label_leftAdvanced_error.setStyleSheet(light.RANDOMISE_STYLE)
 
     def setIcon_for_window_light(self):
 
@@ -2336,8 +2464,6 @@ class Main_Window(QMainWindow):
             dark.LABEL_INFO_INTER_FACE)
         self.ui.label_info_user_inter_1.setStyleSheet(
             dark.LABEL_INFO_INTER_USER_1)
-        self.ui.label_info_Inter_1.setStyleSheet(dark.LABEL_INFO_INTER_1)
-        self.ui.info_inter_left_1.setStyleSheet(dark.LABEL_INFO_INTER_1)
         self.ui.label_info_user_left_inter_1.setStyleSheet(
             dark.LABEL_INFO_INTER_USER_1)
         self.ui.label_icon_inter_teacher.setStyleSheet(dark.LABEL_ICON_INTER)
@@ -2429,8 +2555,6 @@ class Main_Window(QMainWindow):
 
         self.ui.label_info_user_noneinter.setStyleSheet(
             dark.LABEL_INFO_INTER_USER_1)
-        self.ui.label_info_noneinter.setStyleSheet(
-            dark.LABEL_INFO_INTER_1)
         self.ui.label_info_NoneInter_face.setStyleSheet(
             dark.LABEL_ACTIVE_LEFT)
 
@@ -2440,8 +2564,6 @@ class Main_Window(QMainWindow):
 
         self.ui.label_info_user_noneinter_left.setStyleSheet(
             dark.LABEL_INFO_INTER_USER_1)
-        self.ui.label_info_noneinter_left.setStyleSheet(
-            dark.LABEL_INFO_INTER_1)
         self.ui.label_info_NoneInter_face_left.setStyleSheet(
             dark.LABEL_ACTIVE_LEFT)
 
@@ -2500,11 +2622,9 @@ class Main_Window(QMainWindow):
             dark.GLOBAL_LABEL)
         self.ui.label_info_user_lower_pri.setStyleSheet(
             dark.LABEL_INFO_PRIMARY_USER_1)
-        self.ui.label_info_lower_pri.setStyleSheet(dark.LABEL_INFO_PRIMARY_1)
         self.ui.label_icon_primary.setStyleSheet(dark.LABEL_ICON_PRIMARY)
         self.ui.label_show_roll_primary.setStyleSheet(
             dark.LABEL_SHOW_ROLL_PRIMARY)
-        self.ui.info_lower_left_pri.setStyleSheet(dark.LABEL_INFO_PRIMARY_1)
         self.ui.label_info_user_left_lower_pri.setStyleSheet(
             dark.LABEL_INFO_PRIMARY_USER_1)
 
@@ -2571,10 +2691,8 @@ class Main_Window(QMainWindow):
         self.ui.label_info_gender_lower.setStyleSheet(dark.GLOBAL_LABEL)
         self.ui.label_inforem_date_of_birth_lower.setStyleSheet(
             dark.GLOBAL_LABEL)
-        self.ui.label_info_lower_1.setStyleSheet(dark.LABEL_INFO_LOWER_1)
         self.ui.label_info_user_lower_1.setStyleSheet(
             dark.LABEL_INFO_LOWER_USER_1)
-        self.ui.info_lower_1.setStyleSheet(dark.LABEL_INFO_LOWER_1)
         self.ui.label_info_user_left_lower_1.setStyleSheet(
             dark.LABEL_INFO_LOWER_USER_1)
         self.ui.label_lower_head.setStyleSheet(
@@ -2631,12 +2749,8 @@ class Main_Window(QMainWindow):
         self.ui.label_icon_.setStyleSheet(dark.LABEL_ICON_)
         self.ui.label_show_roll_ad.setStyleSheet(
             dark.LABEL_SHOW_ROLL_ADVANCED)
-        self.ui.label_info_lower_advan.setStyleSheet(
-            dark.LABEL_INFO_ADVANCED_1)
         self.ui.label_info_user_lower_advan.setStyleSheet(
             dark.LABEL_INFO_ADVANCED_USER_1)
-        self.ui.info_lower_left_advan.setStyleSheet(
-            dark.LABEL_INFO_ADVANCED_1)
         self.ui.label_info_user_left_lower_advan.setStyleSheet(
             dark.LABEL_INFO_ADVANCED_USER_1)
         self.ui.label_advanced_level_13.setStyleSheet(
@@ -2787,6 +2901,99 @@ class Main_Window(QMainWindow):
         self.ui.analytics_status.setStyleSheet(dark.STATUS_BAR_LABEL)
         self.ui.searching_status.setStyleSheet(dark.STATUS_BAR_LABEL)
         self.ui.other_status.setStyleSheet(dark.STATUS_BAR_LABEL)
+
+        # The Randomiser Label Style
+        self.ui.label_inter_rollid.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_inter_fullname.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_inter_contact.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_inter_email.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_inter_address.setStyleSheet(dark.gloabel_style_label)
+
+        self.ui.label_noneinter_rollid.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_noneinter_fullname.setStyleSheet(
+            dark.gloabel_style_label)
+        self.ui.label_noneinter_contact.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_noneinter_email.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_noneinter_address.setStyleSheet(dark.gloabel_style_label)
+
+        self.ui.label_primary_rollid.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_primary_fullname.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_primary_contact.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_primary_email.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_primary_address.setStyleSheet(dark.gloabel_style_label)
+
+        self.ui.label_ordnary_rollid.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_ordnary_fullname.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_ordnary_contact.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_ordnary_email.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_ordnary_address.setStyleSheet(dark.gloabel_style_label)
+
+        self.ui.label_advanced_rollid.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_advanced_fullname.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_advanced_contact.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_advanced_email.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_advanced_address.setStyleSheet(dark.gloabel_style_label)
+
+        self.ui.label_inter_error.setStyleSheet(dark.RANDOMISE_STYLE)
+        self.ui.label_noneinter_error.setStyleSheet(dark.RANDOMISE_STYLE)
+        self.ui.label_primary_error.setStyleSheet(dark.RANDOMISE_STYLE)
+        self.ui.label_ordnary_error.setStyleSheet(dark.RANDOMISE_STYLE)
+        self.ui.label_advanced_error.setStyleSheet(dark.RANDOMISE_STYLE)
+
+        self.ui.label_leftInter_rollid.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_leftInter_fullname.setStyleSheet(
+            dark.gloabel_style_label)
+        self.ui.label_leftInter_contact.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_leftInter_email.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_leftInter_address.setStyleSheet(dark.gloabel_style_label)
+
+        self.ui.label_leftNoneInter_rollid.setStyleSheet(
+            dark.gloabel_style_label)
+        self.ui.label_leftNoneInter_fullname.setStyleSheet(
+            dark.gloabel_style_label)
+        self.ui.label_leftNoneInter_contact.setStyleSheet(
+            dark.gloabel_style_label)
+        self.ui.label_leftNoneInter_email.setStyleSheet(
+            dark.gloabel_style_label)
+        self.ui.label_leftNoneInter_address.setStyleSheet(
+            dark.gloabel_style_label)
+
+        self.ui.label_leftPrimary_rollid.setStyleSheet(
+            dark.gloabel_style_label)
+        self.ui.label_leftPrimary_fullname.setStyleSheet(
+            dark.gloabel_style_label)
+        self.ui.label_leftPrimary_contact.setStyleSheet(
+            dark.gloabel_style_label)
+        self.ui.label_leftPrimary_email.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_leftPrimary_address.setStyleSheet(
+            dark.gloabel_style_label)
+
+        self.ui.label_leftOrdnary_rollid.setStyleSheet(
+            dark.gloabel_style_label)
+        self.ui.label_leftOrdnary_fullname.setStyleSheet(
+            dark.gloabel_style_label)
+        self.ui.label_leftOrdnary_contact.setStyleSheet(
+            dark.gloabel_style_label)
+        self.ui.label_leftOrdnary_email.setStyleSheet(dark.gloabel_style_label)
+        self.ui.label_leftOrdnary_address.setStyleSheet(
+            dark.gloabel_style_label)
+
+        self.ui.label_leftAdvanced_rollid.setStyleSheet(
+            dark.gloabel_style_label)
+        self.ui.label_leftAdvanced_fullname.setStyleSheet(
+            dark.gloabel_style_label)
+        self.ui.label_leftAdvanced_contact.setStyleSheet(
+            dark.gloabel_style_label)
+        self.ui.label_leftAdvanced_email.setStyleSheet(
+            dark.gloabel_style_label)
+        self.ui.label_leftAdvanced_address.setStyleSheet(
+            dark.gloabel_style_label)
+
+        self.ui.label_leftInter_error.setStyleSheet(dark.RANDOMISE_STYLE)
+        self.ui.label_leftNoneInter_error.setStyleSheet(dark.RANDOMISE_STYLE)
+        self.ui.label_leftPrimary_error.setStyleSheet(dark.RANDOMISE_STYLE)
+        self.ui.label_leftOrdnary_error.setStyleSheet(dark.RANDOMISE_STYLE)
+        self.ui.label_leftAdvanced_error.setStyleSheet(dark.RANDOMISE_STYLE)
 
     def setIcon_for_window_dark(self):
 
@@ -3149,7 +3356,7 @@ class Main_Window(QMainWindow):
         dark.setSuperUserFinform(__user, self.ui.label_infor_super)
 
 ##################################################################################################
-################################ Password Changer ###################################################
+################################ Password Changer ################################################
     # Thread For Access Window
     def thread_connecter_access_pwd(self):
         thread = Thread_Access()
@@ -3424,7 +3631,7 @@ class Main_Window(QMainWindow):
             if face_recognition(path, theUserOutPutImagePath,
                                 self.ui.status_prograss.setValue, self.ui.label_status_text, change_image(
                                     theUserOutPutImagePath, "ADD TEACHERS"),
-                                self.ui.label_icon_inter_teacher, TEACHER_FACE_PATH_LIST) == True:
+                                self.ui.label_icon_inter_teacher, TEACHER_FACE_PATH_LIST, self.ui.btn_upload_image_inter_teacher, error_code_inter) == True:
                 logger.debug(
                     "The Face Image is detected.. [pickImageFromComputer_teachers]")
 
@@ -3452,7 +3659,7 @@ class Main_Window(QMainWindow):
             if face_recognition(path, theUserOutPutImagePath, self.ui.status_prograss.setValue,
                                 self.ui.label_status_text,  change_image(
                                     theUserOutPutImagePath, "ADD TEACHERS"),
-                                self.ui.label_icon_none, NONE_TEACHER_FACE_PATH_LIST):
+                                self.ui.label_icon_none, NONE_TEACHER_FACE_PATH_LIST, self.ui.btn_upload_image_inter_teacher_none, error_code_noneinter):
                 logger.debug(
                     "The Face Image is detected.. [pickImageFromComputer_teacher_none]")
 
@@ -3481,7 +3688,7 @@ class Main_Window(QMainWindow):
             if face_recognition(path, theUserOutPutImagePath, self.ui.status_prograss.setValue,
                                 self.ui.label_status_text,  change_image(
                                     theUserOutPutImagePath, "ADD SUDENTS"),
-                                self.ui.label_icon_primary, PRAYMARY_FACE_PATH_LIST):
+                                self.ui.label_icon_primary, PRAYMARY_FACE_PATH_LIST, self.ui.btn_upload_image_primary, error_code_primary):
                 logger.debug(
                     "The Face Image is detected.. [pickImageFromComputer_primary]")
 
@@ -3509,7 +3716,7 @@ class Main_Window(QMainWindow):
             if face_recognition(path, theUserOutPutImagePath, self.ui.status_prograss.setValue,
                                 self.ui.label_status_text,  change_image(
                                     theUserOutPutImagePath, "ADD SUDENTS"),
-                                self.ui.label_icon_lower, ORDNARY_FACE_PATH_LIST):
+                                self.ui.label_icon_lower, ORDNARY_FACE_PATH_LIST, self.ui.btn_upload_image_lower, error_code_ordnary):
                 logger.debug(
                     "The Face Image is detected.. [pickImageFromComputer_ordnary]")
 
@@ -3537,7 +3744,7 @@ class Main_Window(QMainWindow):
             if face_recognition(path, theUserOutPutImagePath, self.ui.status_prograss.setValue,
                                 self.ui.label_status_text,  change_image(
                                     theUserOutPutImagePath, "ADD SUDENTS"),
-                                self.ui.label_icon_, ADVANCED_FACE_PATH_LIST):
+                                self.ui.label_icon_, ADVANCED_FACE_PATH_LIST, self.ui.btn_upload_image_advanced, error_code_advanced):
                 logger.debug(
                     "The Face Image is detected.. [pickImageFromComputer_advanced]")
 
@@ -3550,6 +3757,7 @@ class Main_Window(QMainWindow):
                 self.__lastRollID = str()
 
     # Generate Roll Number
+
     def generateRollId(self):
         return shortuuid.uuid()
 
@@ -3590,6 +3798,8 @@ class Main_Window(QMainWindow):
                 self.ui.label_show_roll_number.setText)
             thread_store.theMainUserImage.connect(
                 self.ui.label_icon_inter_teacher.setText)
+            thread_store.button.connect(
+                self.ui.btn_addInter_teacher.setEnabled)
             thread_store.finished.connect(clear)
             thread_store.finished.connect(self.addInterUserRandomizerRuner)
             thread_store.start()
@@ -3722,6 +3932,8 @@ class Main_Window(QMainWindow):
                 self.ui.label_show_roll_number_none.setText)
             thread_store.theMainUserImage.connect(
                 self.ui.label_icon_none.setText)
+            thread_store.button.connect(
+                self.ui.btn_addInter_teacher_none.setEnabled)
             thread_store.finished.connect(clear)
             thread_store.finished.connect(self.addNoneInterUserRandomizerRuner)
             thread_store.start()
@@ -3851,6 +4063,8 @@ class Main_Window(QMainWindow):
                 self.ui.label_show_roll_primary.setText)
             thread_store.theMainUserImage.connect(
                 self.ui.label_icon_primary.setText)
+            thread_store.button.connect(
+                self.ui.btn_addLower_primary.setEnabled)
             thread_store.finished.connect(clear)
             thread_store.finished.connect(self.addPrimaryUserRandomizerRuner)
             thread_store.start()
@@ -3969,13 +4183,14 @@ class Main_Window(QMainWindow):
                 self.ui.label_show_roll_number_lower.setText)
             thread_store.theMainUserImage.connect(
                 self.ui.label_icon_lower.setText)
+            thread_store.button.connect(self.ui.btn_addlower.setEnabled)
             thread_store.finished.connect(clear)
             thread_store.finished.connect(self.addOrdnaryUserRandomizerRuner)
             thread_store.start()
             thread_store.exec_()
 
             logger.debug(
-                "The Information is stored [store_primaryuser_data]")
+                "The Information is stored [store_ordnaryuser_data]")
 
         else:
             error = Error_Window(self)
@@ -4087,6 +4302,7 @@ class Main_Window(QMainWindow):
             thread_store.setRollIDLabelText.connect(
                 self.ui.label_show_roll_ad.setText)
             thread_store.theMainUserImage.connect(self.ui.label_icon_.setText)
+            thread_store.button.connect(self.ui.btn_addLower_adv.setEnabled)
             thread_store.finished.connect(clear)
             thread_store.finished.connect(self.addAdvnacedUserRandomizerRuner)
             thread_store.start()
@@ -4188,47 +4404,59 @@ class Main_Window(QMainWindow):
         return False
 ##################################################################################################
 
+    def checkTheTheme(self):
+        setting = Setting.load_superuser()
+        if setting["Setting"]["Default-theme"] == "light":
+            return False
+        return True
+
 ##################################################################################################
-    def randomizer(self, file_path, randomizer_list, target_dict, label_text, face_label, frame_bar, userType, widget):
+
+    # Active Randomiser
+    def randomizer(self, file_path, randomizer_list, target_dict, label_list, group_bax, error_label,  face_label, frame_bar, userType, widget):
 
         if userType == 'INTERUSER':
             randomizer_list.clear()
 
+            group_bax.setVisible(True)
             frame_bar.setVisible(True)
             face_label.setVisible(True)
-            widget.setMinimumSize(QSize(0, 500))
+            widget.setMinimumSize(QSize(0, 450))
 
             data = Store.read_json(file_path)
             random_index = random.randint(0, len(data[userType]) - 1)
             Crypto.decrypt_interuser(data[userType][random_index], target_dict)
-            html_obj = make_html_obj(target_dict, userType)
+            make_html_objNormal(target_dict, userType, label_list)
             image = f"<p align= \'center\'><img src=\'{target_dict['Image']}\'></p>"
-            label_text.setText(html_obj)
             face_label.setText(image)
             randomizer_list.append(random_index)
+
+            error_label.setVisible(False)
 
         elif userType == 'NONEINTERUSER':
             randomizer_list.clear()
 
+            group_bax.setVisible(True)
             frame_bar.setVisible(True)
             face_label.setVisible(True)
-            widget.setMinimumSize(QSize(0, 500))
+            widget.setMinimumSize(QSize(0, 450))
 
             data = Store.read_json(file_path)
             random_index = random.randint(0, len(data[userType]) - 1)
             Crypto.decrypt_interuser(data[userType][random_index], target_dict)
-            html_obj = make_html_obj(target_dict, userType)
+            make_html_objNormal(target_dict, userType, label_list)
             image = f"<p align= \'center\'><img src=\'{target_dict['Image']}\'></p>"
-            label_text.setText(html_obj)
             face_label.setText(image)
             randomizer_list.append(random_index)
+            error_label.setVisible(False)
 
         elif userType == 'Lower-User-Primary':
             randomizer_list.clear()
 
+            group_bax.setVisible(True)
             frame_bar.setVisible(True)
             face_label.setVisible(True)
-            widget.setMinimumSize(QSize(0, 500))
+            widget.setMinimumSize(QSize(0, 450))
 
             data = Store.read_json(file_path)
             level = [level for level in data[userType]
@@ -4238,18 +4466,19 @@ class Main_Window(QMainWindow):
                 0, len(data[userType][random_index_level]) - 1)
             Crypto.decrypt_interuser(
                 data[userType][random_index_level][random_index], target_dict)
-            html_obj = make_html_obj(target_dict, userType)
+            make_html_objNormal(target_dict, userType, label_list)
             image = f"<p align= \'center\'><img src=\'{target_dict['Image']}\'></p>"
-            label_text.setText(html_obj)
             face_label.setText(image)
             randomizer_list.append((random_index_level, random_index))
+            error_label.setVisible(False)
 
         elif userType == 'Lower-User-Ordinary':
             randomizer_list.clear()
 
+            group_bax.setVisible(True)
             frame_bar.setVisible(True)
             face_label.setVisible(True)
-            widget.setMinimumSize(QSize(0, 500))
+            widget.setMinimumSize(QSize(0, 450))
 
             data = Store.read_json(file_path)
             avariable_level = [
@@ -4259,19 +4488,20 @@ class Main_Window(QMainWindow):
                 0, len(data[userType][random_index_level]) - 1)
             Crypto.decrypt_interuser(
                 data[userType][random_index_level][random_index], target_dict)
-            html_obj = make_html_obj(target_dict, userType)
+            make_html_objNormal(target_dict, userType, label_list)
             image = f"<p align= \'center\'><img src=\'{target_dict['Image']}\'></p>"
-            label_text.setText(html_obj)
             face_label.setText(image)
             randomizer_list.append(
                 (random_index_level, random_index))
+            error_label.setVisible(False)
 
         else:
             randomizer_list.clear()
 
+            group_bax.setVisible(True)
             frame_bar.setVisible(True)
             face_label.setVisible(True)
-            widget.setMinimumSize(QSize(0, 500))
+            widget.setMinimumSize(QSize(0, 450))
 
             data = Store.read_json(file_path)
             LevelStreem = [(level, streem) for level in data[userType]
@@ -4282,28 +4512,105 @@ class Main_Window(QMainWindow):
                 data[userType][random_index_streem_level[0]][random_index_streem_level[-1]])-1)
             Crypto.decrypt_interuser(data[userType][random_index_streem_level[0]]
                                      [random_index_streem_level[-1]][random_index], target_dict)
-            html_obj = make_html_obj(target_dict, userType)
+            make_html_objNormal(target_dict, userType, label_list)
             image = f"<p align= \'center\'><img src=\'{target_dict['Image']}\'></p>"
-            label_text.setText(html_obj)
             face_label.setText(image)
             randomizer_list.append(
                 (random_index_streem_level, random_index))
+            error_label.setVisible(False)
 
-    def notAvailable(self, text, label_text, face_label, frame_bar, widget):
-        label_text.setText(text)
+    def notAvailable(self, text, label_text, group_box, label_error, face_label, frame_bar, widget):
         face_label.setVisible(False)
         frame_bar.setVisible(False)
         widget.setMinimumSize(QSize(0, 200))
+        label_error.setVisible(True)
+        label_error.setText(text)
 
+        label_text[0].setVisible(False)
+        label_text[1].setVisible(False)
+        label_text[2].setVisible(False)
+        label_text[3].setVisible(False)
+        label_text[4].setVisible(False)
+        group_box.setVisible(False)
+
+    # Left Randomiser
+    def randomiserLeft(self, file_path, randomizer_list, target_dict, label_list, group_bax, error_label,  face_label, frame_bar, userType, widget):
+        randomizer_list.clear()
+
+        group_bax.setVisible(True)
+        frame_bar.setVisible(True)
+        face_label.setVisible(True)
+        widget.setMinimumSize(QSize(0, 450))
+
+        data = Store.read_json(file_path)
+        random_index = random.randint(0, len(data[userType]) - 1)
+        Crypto.decrypt_interuser(data[userType][random_index], target_dict)
+        make_html_objNormal(target_dict, userType, label_list)
+        image = f"<p align= \'center\'><img src=\'{target_dict['Image']}\'></p>"
+        face_label.setText(image)
+        randomizer_list.append(random_index)
+
+        error_label.setVisible(False)
+
+    def notAvailableLeft(self, text, label_text, group_box, label_error, face_label, frame_bar, widget):
+        face_label.setVisible(False)
+        frame_bar.setVisible(False)
+        widget.setMinimumSize(QSize(0, 200))
+        label_error.setVisible(True)
+        label_error.setText(text)
+
+        label_text[0].setVisible(False)
+        label_text[1].setVisible(False)
+        label_text[2].setVisible(False)
+        label_text[3].setVisible(False)
+        label_text[4].setVisible(False)
+        group_box.setVisible(False)
 ##################################################################################################
 ############################################ Randomize the Inter #################################
+
     def randomize_inter(self):
+        def TecherIsNotAvairble():
+            if self.checkTheTheme:
+                self.notAvailable(
+                    dark.RANDOMISE_TEACHER,
+                    [
+                        self.ui.label_inter_rollid, self.ui.label_inter_fullname,
+                        self.ui.label_inter_contact, self.ui.label_inter_email,
+                        self.ui.label_inter_address
+                    ],
+                    self.ui.groupBox_inter_radnom,
+                    self.ui.label_inter_error,
+                    self.ui.label_info_Inter_face,
+                    self.ui.frame_inter_delet_bar_1,
+                    self.ui.widget_inter_1
+                )
+            else:
+                self.notAvailable(
+                    dark.RANDOMISE_TEACHER,
+                    [
+                        self.ui.label_inter_rollid, self.ui.label_inter_fullname,
+                        self.ui.label_inter_contact, self.ui.label_inter_email,
+                        self.ui.label_inter_address
+                    ],
+                    self.ui.groupBox_inter_radnom,
+                    self.ui.label_inter_error,
+                    self.ui.label_info_Inter_face,
+                    self.ui.frame_inter_delet_bar_1,
+                    self.ui.widget_inter_1
+                )
+
         try:
             self.randomizer(
                 PATH_STORE_DATA_FILE_INTER,
                 TEACHER_RANDOM_INDEX,
                 TEACHER_TARGET,
-                self.ui.label_info_Inter_1,
+                [
+                    self.ui.label_inter_rollid, self.ui.label_inter_fullname,
+                    self.ui.label_inter_contact, self.ui.label_inter_email,
+                    self.ui.label_inter_address
+                ],
+                self.ui.groupBox_inter_radnom,
+                self.ui.label_inter_error,
                 self.ui.label_info_Inter_face,
                 self.ui.frame_inter_delet_bar_1,
                 INTERUSER,
@@ -4312,33 +4619,15 @@ class Main_Window(QMainWindow):
             logger.debug("Randomiser runing [randomize_inter]")
 
         except FileNotFoundError:
-            self.notAvailable(
-                dark.RANDOMISE_TEACHER,
-                self.ui.label_info_Inter_1,
-                self.ui.label_info_Inter_face,
-                self.ui.frame_inter_delet_bar_1,
-                self.ui.widget_inter_1
-            )
+            TecherIsNotAvairble()
             logger.exception("FileNotFoundError Inter Random")
 
         except IndexError:
-            self.notAvailable(
-                dark.RANDOMISE_TEACHER,
-                self.ui.label_info_Inter_1,
-                self.ui.label_info_Inter_face,
-                self.ui.frame_inter_delet_bar_1,
-                self.ui.widget_inter_1
-            )
+            TecherIsNotAvairble()
             logger.exception("IndexError Inter Random")
 
         except ValueError:
-            self.notAvailable(
-                dark.RANDOMISE_TEACHER,
-                self.ui.label_info_Inter_1,
-                self.ui.label_info_Inter_face,
-                self.ui.frame_inter_delet_bar_1,
-                self.ui.widget_inter_1
-            )
+            TecherIsNotAvairble()
             logger.exception("ValueError Inter Random")
 
     def addInterUserRandomizerRuner(self):
@@ -4352,13 +4641,48 @@ class Main_Window(QMainWindow):
 ##################################################################################################
 ############################################ Randomize the None Inter ############################
     def randomise_noneinter(self):
+        def NoneTecherIsNotAvairble():
+            if self.checkTheTheme:
+                self.notAvailable(
+                    dark.RANDOMISE_TEACHER,
+                    [
+                        self.ui.label_noneinter_rollid, self.ui.label_noneinter_fullname,
+                        self.ui.label_noneinter_contact, self.ui.label_noneinter_email,
+                        self.ui.label_noneinter_address
+                    ],
+                    self.ui.groupBox_noneinter_radnom,
+                    self.ui.label_noneinter_error,
+                    self.ui.label_info_NoneInter_face,
+                    self.ui.frame_noneinter_delet_bar,
+                    self.ui.widget_noneinter
+                )
+            else:
+                self.notAvailable(
+                    dark.RANDOMISE_TEACHER,
+                    [
+                        self.ui.label_noneinter_rollid, self.ui.label_noneinter_fullname,
+                        self.ui.label_noneinter_contact, self.ui.label_noneinter_email,
+                        self.ui.label_noneinter_address
+                    ],
+                    self.ui.groupBox_noneinter_radnom,
+                    self.ui.label_noneinter_error,
+                    self.ui.label_info_NoneInter_face,
+                    self.ui.frame_noneinter_delet_bar,
+                    self.ui.widget_noneinter
+                )
 
         try:
             self.randomizer(
                 PATH_STORE_DATA_FILE_INTER_NONE,
                 NONE_TEACHER_RANDOM_INDEX,
                 NONE_TEACHER_TARGET,
-                self.ui.label_info_noneinter,
+                [
+                    self.ui.label_noneinter_rollid, self.ui.label_noneinter_fullname,
+                    self.ui.label_noneinter_contact, self.ui.label_noneinter_email,
+                    self.ui.label_noneinter_address
+                ],
+                self.ui.groupBox_noneinter_radnom,
+                self.ui.label_noneinter_error,
                 self.ui.label_info_NoneInter_face,
                 self.ui.frame_noneinter_delet_bar,
                 NONEINTERUSER,
@@ -4367,33 +4691,15 @@ class Main_Window(QMainWindow):
             logger.debug("Randomiser runing [randomise_noneinter]")
 
         except FileNotFoundError:
-            self.notAvailable(
-                dark.RANDOMISE_TEACHER,
-                self.ui.label_info_noneinter,
-                self.ui.label_info_NoneInter_face,
-                self.ui.frame_noneinter_delet_bar,
-                self.ui.widget_noneinter
-            )
+            NoneTecherIsNotAvairble()
             logger.exception("FileNotFoundError None-Inter Random")
 
         except IndexError:
-            self.notAvailable(
-                dark.RANDOMISE_TEACHER,
-                self.ui.label_info_noneinter,
-                self.ui.label_info_NoneInter_face,
-                self.ui.frame_noneinter_delet_bar,
-                self.ui.widget_noneinter
-            )
+            NoneTecherIsNotAvairble()
             logger.exception("IndexError None-Inter Random")
 
         except ValueError:
-            self.notAvailable(
-                dark.RANDOMISE_TEACHER,
-                self.ui.label_info_noneinter,
-                self.ui.label_info_NoneInter_face,
-                self.ui.frame_noneinter_delet_bar,
-                self.ui.widget_noneinter
-            )
+            NoneTecherIsNotAvairble()
             logger.exception("ValueError None-Inter Random")
 
     def addNoneInterUserRandomizerRuner(self):
@@ -4407,12 +4713,47 @@ class Main_Window(QMainWindow):
 ##################################################################################################
 ############################################ Randomize the Primary ###############################
     def randomise_primary(self):
+        def PrimaryIsNotAvairble():
+            if self.checkTheTheme:
+                self.notAvailable(
+                    dark.RANDOMISE_SUDENT,
+                    [
+                        self.ui.label_primary_rollid, self.ui.label_primary_fullname,
+                        self.ui.label_primary_contact, self.ui.label_primary_email,
+                        self.ui.label_primary_address
+                    ],
+                    self.ui.groupBox_primary_radnom,
+                    self.ui.label_primary_error,
+                    self.ui.label_info_pri_face,
+                    self.ui.frame_inter_delet_bar_pri,
+                    self.ui.widget_lower_pri
+                )
+            else:
+                self.notAvailable(
+                    dark.RANDOMISE_SUDENT,
+                    [
+                        self.ui.label_primary_rollid, self.ui.label_primary_fullname,
+                        self.ui.label_primary_contact, self.ui.label_primary_email,
+                        self.ui.label_primary_address
+                    ],
+                    self.ui.groupBox_primary_radnom,
+                    self.ui.label_primary_error,
+                    self.ui.label_info_pri_face,
+                    self.ui.frame_inter_delet_bar_pri,
+                    self.ui.widget_lower_pri
+                )
         try:
             self.randomizer(
                 PATH_STORE_DATA_FILE_PRIMARY,
                 PRAYMARY_RANDOM_INDEX,
                 PRIMARY_TARGET,
-                self.ui.label_info_lower_pri,
+                [
+                    self.ui.label_primary_rollid, self.ui.label_primary_fullname,
+                    self.ui.label_primary_contact, self.ui.label_primary_email,
+                    self.ui.label_primary_address
+                ],
+                self.ui.groupBox_primary_radnom,
+                self.ui.label_primary_error,
                 self.ui.label_info_pri_face,
                 self.ui.frame_inter_delet_bar_pri,
                 PRIMARYLOWER,
@@ -4421,33 +4762,15 @@ class Main_Window(QMainWindow):
             logger.debug("Randomiser runing [randomise_primary]")
 
         except FileNotFoundError:
-            self.notAvailable(
-                dark.RANDOMISE_SUDENT,
-                self.ui.label_info_lower_pri,
-                self.ui.label_info_pri_face,
-                self.ui.frame_inter_delet_bar_pri,
-                self.ui.widget_lower_pri
-            )
+            PrimaryIsNotAvairble()
             logger.exception("FileNotFoundError Primary Random")
 
         except IndexError:
-            self.notAvailable(
-                dark.RANDOMISE_SUDENT,
-                self.ui.label_info_lower_pri,
-                self.ui.label_info_pri_face,
-                self.ui.frame_inter_delet_bar_pri,
-                self.ui.widget_lower_pri
-            )
+            PrimaryIsNotAvairble()
             logger.exception("IndexError Primary Random")
 
         except ValueError:
-            self.notAvailable(
-                dark.RANDOMISE_SUDENT,
-                self.ui.label_info_lower_pri,
-                self.ui.label_info_pri_face,
-                self.ui.frame_inter_delet_bar_pri,
-                self.ui.widget_lower_pri
-            )
+            PrimaryIsNotAvairble()
             logger.exception("Value Error Primary Random")
 
     def addPrimaryUserRandomizerRuner(self):
@@ -4461,13 +4784,47 @@ class Main_Window(QMainWindow):
 ##################################################################################################
 ############################################ Randomize the Ordnary ###############################
     def randomise_ordnary(self):
-
+        def OrdnaryIsNotAvairble():
+            if self.checkTheTheme:
+                self.notAvailable(
+                    dark.RANDOMISE_SUDENT,
+                    [
+                        self.ui.label_ordnary_rollid, self.ui.label_ordnary_fullname,
+                        self.ui.label_ordnary_contact, self.ui.label_ordnary_email,
+                        self.ui.label_ordnary_address
+                    ],
+                    self.ui.groupBox_ordnary_radnom,
+                    self.ui.label_ordnary_error,
+                    self.ui.label_info_lower_face,
+                    self.ui.frame_inter_delet_bar_3,
+                    self.ui.widget_lower_1
+                )
+            else:
+                self.notAvailable(
+                    dark.RANDOMISE_SUDENT,
+                    [
+                        self.ui.label_ordnary_rollid, self.ui.label_ordnary_fullname,
+                        self.ui.label_ordnary_contact, self.ui.label_ordnary_email,
+                        self.ui.label_ordnary_address
+                    ],
+                    self.ui.groupBox_ordnary_radnom,
+                    self.ui.label_ordnary_error,
+                    self.ui.label_info_lower_face,
+                    self.ui.frame_inter_delet_bar_3,
+                    self.ui.widget_lower_1
+                )
         try:
             self.randomizer(
                 PATH_STORE_DATA_FILE_ORDNARY,
                 ORDNARY_RANDOM_INDEX,
                 ORNARY_TARGET,
-                self.ui.label_info_lower_1,
+                [
+                    self.ui.label_ordnary_rollid, self.ui.label_ordnary_fullname,
+                    self.ui.label_ordnary_contact, self.ui.label_ordnary_email,
+                    self.ui.label_ordnary_address
+                ],
+                self.ui.groupBox_ordnary_radnom,
+                self.ui.label_ordnary_error,
                 self.ui.label_info_lower_face,
                 self.ui.frame_inter_delet_bar_3,
                 ORDNARYLOWER,
@@ -4476,33 +4833,15 @@ class Main_Window(QMainWindow):
             logger.debug("Randomiser runing [randomise_ordnary]")
 
         except FileNotFoundError:
-            self.notAvailable(
-                dark.RANDOMISE_SUDENT,
-                self.ui.label_info_lower_1,
-                self.ui.label_info_lower_face,
-                self.ui.frame_inter_delet_bar_3,
-                self.ui.widget_lower_1
-            )
+            OrdnaryIsNotAvairble()
             logger.exception("FileNotFoundError Ordnary Random")
 
         except IndexError:
-            self.notAvailable(
-                dark.RANDOMISE_SUDENT,
-                self.ui.label_info_lower_1,
-                self.ui.label_info_lower_face,
-                self.ui.frame_inter_delet_bar_3,
-                self.ui.widget_lower_1
-            )
+            OrdnaryIsNotAvairble()
             logger.exception("IndexError Ordnary Random")
 
         except ValueError:
-            self.notAvailable(
-                dark.RANDOMISE_SUDENT,
-                self.ui.label_info_lower_1,
-                self.ui.label_info_lower_face,
-                self.ui.frame_inter_delet_bar_3,
-                self.ui.widget_lower_1
-            )
+            OrdnaryIsNotAvairble()
             logger.exception("ValueError Ordnary Random")
 
     def addOrdnaryUserRandomizerRuner(self):
@@ -4517,12 +4856,48 @@ class Main_Window(QMainWindow):
 ############################################ Randomize the Advnaced ##############################
     def randomise_advanced(self):
 
+        def AdvancedIsNotAvairble():
+            if self.checkTheTheme:
+                self.notAvailable(
+                    dark.RANDOMISE_SUDENT,
+                    [
+                        self.ui.label_advanced_rollid, self.ui.label_advanced_fullname,
+                        self.ui.label_advanced_contact, self.ui.label_advanced_email,
+                        self.ui.label_advanced_address
+                    ],
+                    self.ui.groupBox_advanced_radnom,
+                    self.ui.label_advanced_error,
+                    self.ui.label_info_advan_face,
+                    self.ui.frame_inter_delet_bar_advan,
+                    self.ui.widget_lower_advan
+                )
+            else:
+                self.notAvailable(
+                    dark.RANDOMISE_SUDENT,
+                    [
+                        self.ui.label_advanced_rollid, self.ui.label_advanced_fullname,
+                        self.ui.label_advanced_contact, self.ui.label_advanced_email,
+                        self.ui.label_advanced_address
+                    ],
+                    self.ui.groupBox_advanced_radnom,
+                    self.ui.label_advanced_error,
+                    self.ui.label_info_advan_face,
+                    self.ui.frame_inter_delet_bar_advan,
+                    self.ui.widget_lower_advan
+                )
+
         try:
             self.randomizer(
                 PATH_STORE_DATA_FILE_ADVNACED,
                 ADVANCED_RANDOM_INDEX,
                 ADVANCED_TARGET,
-                self.ui.label_info_lower_advan,
+                [
+                    self.ui.label_advanced_rollid, self.ui.label_advanced_fullname,
+                    self.ui.label_advanced_contact, self.ui.label_advanced_email,
+                    self.ui.label_advanced_address
+                ],
+                self.ui.groupBox_advanced_radnom,
+                self.ui.label_advanced_error,
                 self.ui.label_info_advan_face,
                 self.ui.frame_inter_delet_bar_advan,
                 ADVNACEDLOWER,
@@ -4531,33 +4906,15 @@ class Main_Window(QMainWindow):
             logger.debug("Randomiser runing [randomise_advanced]")
 
         except FileNotFoundError:
-            self.notAvailable(
-                dark.RANDOMISE_SUDENT,
-                self.ui.label_info_lower_advan,
-                self.ui.label_info_advan_face,
-                self.ui.frame_inter_delet_bar_advan,
-                self.ui.widget_lower_advan
-            )
+            AdvancedIsNotAvairble()
             logger.exception("FileNotFoundError Advanced Random")
 
         except IndexError:
-            self.notAvailable(
-                dark.RANDOMISE_SUDENT,
-                self.ui.label_info_lower_advan,
-                self.ui.label_info_advan_face,
-                self.ui.frame_inter_delet_bar_advan,
-                self.ui.widget_lower_advan
-            )
+            AdvancedIsNotAvairble()
             logger.exception("IndexError Advanced Random")
 
         except ValueError:
-            self.notAvailable(
-                dark.RANDOMISE_SUDENT,
-                self.ui.label_info_lower_advan,
-                self.ui.label_info_advan_face,
-                self.ui.frame_inter_delet_bar_advan,
-                self.ui.widget_lower_advan
-            )
+            AdvancedIsNotAvairble()
             logger.exception("ValueError Advanced Random")
 
     def addAdvnacedUserRandomizerRuner(self):
@@ -4568,7 +4925,70 @@ class Main_Window(QMainWindow):
         thread.start()
         thread.exec_()
 
+##################################################################################################
+############################################ Randomize Inter delete ##############################
+    def randomiseInterDeleteFromActive(self):
+        thread = DeleteRandomiseFromActiove(Store.read_json, INTERUSER, PATH_STORE_DATA_FILE_INTER,
+                                            PATH_STORE_DATA_FILE_INTER_LIFT, TEACHER_RANDOM_INDEX, Store.write_json, "Deleting...", Crypto.decrypt_one, PATH_STORE_FACE_IMAGE_INTER_LEFT, Crypto.encrypt_one)
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_label.connect(self.ui.label_status_text.setText)
+        thread.delete_button.connect(self.ui.btn_delete_inter_1.setEnabled)
+        thread.finished.connect(self.addInterUserRandomizerRuner)
+        thread.finished.connect(self.leftAddInterUserRandomizerRuner)
+        thread.start()
+        thread.exec_()
 
+##################################################################################################
+############################################ Randomize None-Inter delete #########################
+    def randomiseNoneInterDeleteFromActive(self):
+        thread = DeleteRandomiseFromActiove(Store.read_json, NONEINTERUSER, PATH_STORE_DATA_FILE_INTER_NONE,
+                                            PATH_STORE_DATA_FILE_INTER_LIFT_NONE, NONE_TEACHER_RANDOM_INDEX, Store.write_json, "Deleting...", Crypto.decrypt_one, PATH_STORE_FACE_IMAGE_INTER_NONE_LEFT, Crypto.encrypt_one)
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_label.connect(self.ui.label_status_text.setText)
+        thread.delete_button.connect(self.ui.btn_delete_noneinter.setEnabled)
+        thread.finished.connect(self.addNoneInterUserRandomizerRuner)
+        thread.finished.connect(self.leftAddNoneInterUserRandomizerRuner)
+        thread.start()
+        thread.exec_()
+
+##################################################################################################
+############################################ Randomize Primary delete ############################
+    def randomisePrimaryDeleteFromActive(self):
+        thread = DeleteRandomiseFromActiove(Store.read_json, PRIMARYLOWER, PATH_STORE_DATA_FILE_PRIMARY,
+                                            PATH_STORE_DATA_FILE_PRIMARY_LIFT, PRAYMARY_RANDOM_INDEX, Store.write_json, "Deleting...", Crypto.decrypt_one, PATH_STORE_FACE_IMAGE_PRIMARY_LEFT, Crypto.encrypt_one)
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_label.connect(self.ui.label_status_text.setText)
+        thread.delete_button.connect(self.ui.btn_delete_lower_pri.setEnabled)
+        thread.finished.connect(self.addPrimaryUserRandomizerRuner)
+        thread.finished.connect(self.leftAddPrimaryUserRandomizerRuner)
+        thread.start()
+        thread.exec_()
+
+##################################################################################################
+############################################ Randomize Ordnary delete ############################
+    def randomiseOrdnaryDeleteFromActive(self):
+        thread = DeleteRandomiseFromActiove(Store.read_json, ORDNARYLOWER, PATH_STORE_DATA_FILE_ORDNARY,
+                                            PATH_STORE_DATA_FILE_ORDNARY_LIFT, ORDNARY_RANDOM_INDEX, Store.write_json, "Deleting...", Crypto.decrypt_one, PATH_STORE_FACE_IMAGE_ORDNARY_LEFT, Crypto.encrypt_one)
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_label.connect(self.ui.label_status_text.setText)
+        thread.delete_button.connect(self.ui.btn_delete_lower_1.setEnabled)
+        thread.finished.connect(self.addOrdnaryUserRandomizerRuner)
+        thread.finished.connect(self.leftAddOrdnaryUserRandomizerRuner)
+        thread.start()
+        thread.exec_()
+
+##################################################################################################
+############################################ Randomize Advnaced delete ###########################
+    def randomiseAdvncedDeleteFromActive(self):
+        thread = DeleteRandomiseFromActiove(Store.read_json, ADVNACEDLOWER, PATH_STORE_DATA_FILE_ADVNACED,
+                                            PATH_STORE_DATA_FILE_ADVNACED_LIFT, ADVANCED_RANDOM_INDEX, Store.write_json, "Deleting...", Crypto.decrypt_one, PATH_STORE_FACE_IMAGE_ADVANCED_LEFT, Crypto.encrypt_one)
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_label.connect(self.ui.label_status_text.setText)
+        thread.delete_button.connect(self.ui.btn_delete_lower_advan.setEnabled)
+        thread.finished.connect(self.addAdvnacedUserRandomizerRuner)
+        thread.finished.connect(self.leftAddAdvancedUserRandomizerRuner)
+        thread.start()
+        thread.exec_()
 ##################################################################################################
     # Event Filter For Press Event
 
@@ -4632,6 +5052,447 @@ class Main_Window(QMainWindow):
                 QApplication.clipboard().setText(text)
 
         return super().eventFilter(source, event)
+
+##################################################################################################
+########################################## Randomise the Inter Left ##############################
+    def randomise_leftInter(self):
+
+        def leftTecherIsNotAvairble():
+            if self.checkTheTheme:
+                self.notAvailableLeft(
+                    dark.RANDOMISE_TEACHER,
+                    [
+                        self.ui.label_leftInter_rollid, self.ui.label_leftInter_fullname,
+                        self.ui.label_leftInter_contact, self.ui.label_leftInter_email,
+                        self.ui.label_leftInter_address
+                    ],
+                    self.ui.groupBox_leftInter_radnom,
+                    self.ui.label_leftInter_error,
+                    self.ui.label_info_inter_left_face,
+                    self.ui.frame_inter_left_btns_bar_1,
+                    self.ui.widget_inter_left_1
+                )
+            else:
+                self.notAvailableLeft(
+                    dark.RANDOMISE_TEACHER,
+                    [
+                        self.ui.label_leftInter_rollid, self.ui.label_leftInter_fullname,
+                        self.ui.label_leftInter_contact, self.ui.label_leftInter_email,
+                        self.ui.label_leftInter_address
+                    ],
+                    self.ui.groupBox_leftInter_radnom,
+                    self.ui.label_leftInter_error,
+                    self.ui.label_info_inter_left_face,
+                    self.ui.frame_inter_left_btns_bar_1,
+                    self.ui.widget_inter_left_1
+                )
+
+        try:
+            self.randomiserLeft(
+                PATH_STORE_DATA_FILE_INTER_LIFT,
+                TEACHER_RANDOM_INDEX_LEFT,
+                TEACHER_TARGET_LEFT,
+                [
+                    self.ui.label_leftInter_rollid, self.ui.label_leftInter_fullname,
+                    self.ui.label_leftInter_contact, self.ui.label_leftInter_email,
+                    self.ui.label_leftInter_address
+                ],
+                self.ui.groupBox_leftInter_radnom,
+                self.ui.label_leftInter_error,
+                self.ui.label_info_inter_left_face,
+                self.ui.frame_inter_left_btns_bar_1,
+                INTERUSER,
+                self.ui.widget_inter_left_1
+            )
+            logger.debug("Randomiser runing [randomise_leftInter]")
+
+        except FileNotFoundError:
+            leftTecherIsNotAvairble()
+            logger.exception("FileNotFoundError Inter Random")
+
+        except IndexError:
+            leftTecherIsNotAvairble()
+            logger.exception("IndexError Inter Random")
+
+        except ValueError:
+            leftTecherIsNotAvairble()
+            logger.exception("ValueError Inter Random")
+
+    def leftAddInterUserRandomizerRuner(self):
+        thread = Thread_Randomize("Randomising Teacher Data...")
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_label.connect(self.ui.label_status_text.setText)
+        thread.randomizer.connect(self.randomise_leftInter)
+        thread.start()
+        thread.exec_()
+
+##################################################################################################
+########################################## Randomise the None-Inter Left #########################
+    def randomise_leftNoneInter(self):
+
+        def leftNoneTecherIsNotAvairble():
+            if self.checkTheTheme:
+                self.notAvailableLeft(
+                    dark.RANDOMISE_TEACHER,
+                    [
+                        self.ui.label_leftNoneInter_rollid, self.ui.label_leftNoneInter_fullname,
+                        self.ui.label_leftNoneInter_contact, self.ui.label_leftNoneInter_email,
+                        self.ui.label_leftNoneInter_address
+                    ],
+                    self.ui.groupBox_leftNoneInter_radnom,
+                    self.ui.label_leftNoneInter_error,
+                    self.ui.label_info_NoneInter_face_left,
+                    self.ui.frame_noneinter_delet_bar_left,
+                    self.ui.widget_noneinter_left
+                )
+            else:
+                self.notAvailableLeft(
+                    dark.RANDOMISE_TEACHER,
+                    [
+                        self.ui.label_leftNoneInter_rollid, self.ui.label_leftNoneInter_fullname,
+                        self.ui.label_leftNoneInter_contact, self.ui.label_leftNoneInter_email,
+                        self.ui.label_leftNoneInter_address
+                    ],
+                    self.ui.groupBox_leftNoneInter_radnom,
+                    self.ui.label_leftNoneInter_error,
+                    self.ui.label_info_NoneInter_face_left,
+                    self.ui.frame_noneinter_delet_bar_left,
+                    self.ui.widget_noneinter_left
+                )
+
+        try:
+            self.randomiserLeft(
+                PATH_STORE_DATA_FILE_INTER_LIFT_NONE,
+                NONE_TEACHER_RANDOM_INDEX_LEFT,
+                NONE_TEACHER_TARGET_LEFT,
+                [
+                    self.ui.label_leftNoneInter_rollid, self.ui.label_leftNoneInter_fullname,
+                    self.ui.label_leftNoneInter_contact, self.ui.label_leftNoneInter_email,
+                    self.ui.label_leftNoneInter_address
+                ],
+                self.ui.groupBox_leftNoneInter_radnom,
+                self.ui.label_leftNoneInter_error,
+                self.ui.label_info_NoneInter_face_left,
+                self.ui.frame_noneinter_delet_bar_left,
+                NONEINTERUSER,
+                self.ui.widget_noneinter_left
+            )
+            logger.debug("Randomiser runing [randomise_leftNoneInter]")
+
+        except FileNotFoundError:
+            leftNoneTecherIsNotAvairble()
+            logger.exception("FileNotFoundError None-Inter Random")
+
+        except IndexError:
+            leftNoneTecherIsNotAvairble()
+            logger.exception("IndexError None-Inter Random")
+
+        except ValueError:
+            leftNoneTecherIsNotAvairble()
+            logger.exception("ValueError None-Inter Random")
+
+    def leftAddNoneInterUserRandomizerRuner(self):
+        thread = Thread_Randomize("Randomising Teacher Data...")
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_label.connect(self.ui.label_status_text.setText)
+        thread.randomizer.connect(self.randomise_leftNoneInter)
+        thread.start()
+        thread.exec_()
+
+##################################################################################################
+########################################## Randomise the Primary Left ############################
+    def randomise_leftPrimary(self):
+        def leftPrimaryIsNotAvairble():
+            if self.checkTheTheme:
+                self.notAvailableLeft(
+                    dark.RANDOMISE_SUDENT,
+                    [
+                        self.ui.label_leftPrimary_rollid, self.ui.label_leftPrimary_fullname,
+                        self.ui.label_leftPrimary_contact, self.ui.label_leftPrimary_email,
+                        self.ui.label_leftPrimary_address
+                    ],
+                    self.ui.groupBox_leftPrimary_radnom,
+                    self.ui.label_leftPrimary_error,
+                    self.ui.label_info_pri_left_face,
+                    self.ui.frame_lower_btns_bar_pri,
+                    self.ui.widget_lower_left_pri
+                )
+            else:
+                self.notAvailableLeft(
+                    dark.RANDOMISE_TEACHER,
+                    [
+                        self.ui.label_leftPrimary_rollid, self.ui.label_leftPrimary_fullname,
+                        self.ui.label_leftPrimary_contact, self.ui.label_leftPrimary_email,
+                        self.ui.label_leftPrimary_address
+                    ],
+                    self.ui.groupBox_leftPrimary_radnom,
+                    self.ui.label_leftPrimary_error,
+                    self.ui.label_info_pri_left_face,
+                    self.ui.frame_lower_btns_bar_pri,
+                    self.ui.widget_lower_left_pri
+                )
+
+        try:
+            self.randomiserLeft(
+                PATH_STORE_DATA_FILE_PRIMARY_LIFT,
+                PRAYMARY_RANDOM_INDEX_LEFT,
+                PRIMARY_TARGET_LEFT,
+                [
+                    self.ui.label_leftPrimary_rollid, self.ui.label_leftPrimary_fullname,
+                    self.ui.label_leftPrimary_contact, self.ui.label_leftPrimary_email,
+                    self.ui.label_leftPrimary_address
+                ],
+                self.ui.groupBox_leftPrimary_radnom,
+                self.ui.label_leftPrimary_error,
+                self.ui.label_info_pri_left_face,
+                self.ui.frame_lower_btns_bar_pri,
+                PRIMARYLOWER,
+                self.ui.widget_lower_left_pri
+            )
+            logger.debug("Randomiser runing [randomise_leftPrimary]")
+
+        except FileNotFoundError:
+            leftPrimaryIsNotAvairble()
+            logger.exception("FileNotFoundError Primary Random")
+
+        except IndexError:
+            leftPrimaryIsNotAvairble()
+            logger.exception("IndexError Primary Random")
+
+        except ValueError:
+            leftPrimaryIsNotAvairble()
+            logger.exception("ValueError Primary Random")
+
+    def leftAddPrimaryUserRandomizerRuner(self):
+        thread = Thread_Randomize("Randomising Teacher Data...")
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_label.connect(self.ui.label_status_text.setText)
+        thread.randomizer.connect(self.randomise_leftPrimary)
+        thread.start()
+        thread.exec_()
+
+##################################################################################################
+########################################## Randomise the Ordnary Left ############################
+    def randomise_leftOrdnary(self):
+        def leftOrdnaryIsNotAvairble():
+            if self.checkTheTheme:
+                self.notAvailableLeft(
+                    dark.RANDOMISE_SUDENT,
+                    [
+                        self.ui.label_leftOrdnary_rollid, self.ui.label_leftOrdnary_fullname,
+                        self.ui.label_leftOrdnary_contact, self.ui.label_leftOrdnary_email,
+                        self.ui.label_leftOrdnary_address
+                    ],
+                    self.ui.groupBox_leftOrdnary_radnom,
+                    self.ui.label_leftOrdnary_error,
+                    self.ui.label_info_lower_left_face,
+                    self.ui.frame_lower_left_btns_bar_1,
+                    self.ui.widget_lower_left_1
+                )
+            else:
+                self.notAvailableLeft(
+                    dark.RANDOMISE_TEACHER,
+                    [
+                        self.ui.label_leftOrdnary_rollid, self.ui.label_leftOrdnary_fullname,
+                        self.ui.label_leftOrdnary_contact, self.ui.label_leftOrdnary_email,
+                        self.ui.label_leftOrdnary_address
+                    ],
+                    self.ui.groupBox_leftOrdnary_radnom,
+                    self.ui.label_leftOrdnary_error,
+                    self.ui.label_info_lower_left_face,
+                    self.ui.frame_lower_left_btns_bar_1,
+                    self.ui.widget_lower_left_1
+                )
+
+        try:
+            self.randomiserLeft(
+                PATH_STORE_DATA_FILE_ORDNARY_LIFT,
+                ORDNARY_RANDOM_INDEX_LEFT,
+                ORNARY_TARGET_LEFT,
+                [
+                    self.ui.label_leftOrdnary_rollid, self.ui.label_leftOrdnary_fullname,
+                    self.ui.label_leftOrdnary_contact, self.ui.label_leftOrdnary_email,
+                    self.ui.label_leftOrdnary_address
+                ],
+                self.ui.groupBox_leftOrdnary_radnom,
+                self.ui.label_leftOrdnary_error,
+                self.ui.label_info_lower_left_face,
+                self.ui.frame_lower_left_btns_bar_1,
+                ORDNARYLOWER,
+                self.ui.widget_lower_left_1
+            )
+            logger.debug("Randomiser runing [randomise_leftOrdnary]")
+
+        except FileNotFoundError:
+            leftOrdnaryIsNotAvairble()
+            logger.exception("FileNotFoundError Ordnary Random")
+
+        except IndexError:
+            leftOrdnaryIsNotAvairble()
+            logger.exception("IndexError Ordnary Random")
+
+        except ValueError:
+            leftOrdnaryIsNotAvairble()
+            logger.exception("ValueError Ordnary Random")
+
+    def leftAddOrdnaryUserRandomizerRuner(self):
+        thread = Thread_Randomize("Randomising Teacher Data...")
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_label.connect(self.ui.label_status_text.setText)
+        thread.randomizer.connect(self.randomise_leftOrdnary)
+        thread.start()
+        thread.exec_()
+
+##################################################################################################
+########################################## Randomise the Advanced Left ###########################
+    def randomise_leftAdvanced(self):
+        def leftAdvancedIsNotAvairble():
+            if self.checkTheTheme:
+                self.notAvailableLeft(
+                    dark.RANDOMISE_SUDENT,
+                    [
+                        self.ui.label_leftAdvanced_rollid, self.ui.label_leftAdvanced_fullname,
+                        self.ui.label_leftAdvanced_contact, self.ui.label_leftAdvanced_email,
+                        self.ui.label_leftAdvanced_address
+                    ],
+                    self.ui.groupBox_leftAdvanced_radnom,
+                    self.ui.label_leftAdvanced_error,
+                    self.ui.label_info_advan_left_face,
+                    self.ui.frame_lower_btns_bar_advan,
+                    self.ui.widget_lower_left_advan
+                )
+            else:
+                self.notAvailableLeft(
+                    dark.RANDOMISE_TEACHER,
+                    [
+                        self.ui.label_leftAdvanced_rollid, self.ui.label_leftAdvanced_fullname,
+                        self.ui.label_leftAdvanced_contact, self.ui.label_leftAdvanced_email,
+                        self.ui.label_leftAdvanced_address
+                    ],
+                    self.ui.groupBox_leftAdvanced_radnom,
+                    self.ui.label_leftAdvanced_error,
+                    self.ui.label_info_advan_left_face,
+                    self.ui.frame_lower_btns_bar_advan,
+                    self.ui.widget_lower_left_advan
+                )
+
+        try:
+            self.randomiserLeft(
+                PATH_STORE_DATA_FILE_ADVNACED_LIFT,
+                ADVANCED_RANDOM_INDEX_LEFT,
+                ADVANCED_TARGET_LEFT,
+                [
+                    self.ui.label_leftAdvanced_rollid, self.ui.label_leftAdvanced_fullname,
+                    self.ui.label_leftAdvanced_contact, self.ui.label_leftAdvanced_email,
+                    self.ui.label_leftAdvanced_address
+                ],
+                self.ui.groupBox_leftAdvanced_radnom,
+                self.ui.label_leftAdvanced_error,
+                self.ui.label_info_advan_left_face,
+                self.ui.frame_lower_btns_bar_advan,
+                ADVNACEDLOWER,
+                self.ui.widget_lower_left_advan
+            )
+            logger.debug("Randomiser runing [randomise_leftAdvanced]")
+
+        except FileNotFoundError:
+            leftAdvancedIsNotAvairble()
+            logger.exception("FileNotFoundError Advanced Random")
+
+        except IndexError:
+            leftAdvancedIsNotAvairble()
+            logger.exception("IndexError Advanced Random")
+
+        except ValueError:
+            leftAdvancedIsNotAvairble()
+            logger.exception("ValueError Advanced Random")
+
+    def leftAddAdvancedUserRandomizerRuner(self):
+        thread = Thread_Randomize("Randomising Teacher Data...")
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_label.connect(self.ui.label_status_text.setText)
+        thread.randomizer.connect(self.randomise_leftAdvanced)
+        thread.start()
+        thread.exec_()
+
+##################################################################################################
+########################################## Randomise the Inter Delete  Left ######################
+    def deleteInterUserFromLeft(self):
+        thread = DeleteRandomiseFromLeft(TEACHER_RANDOM_INDEX_LEFT,
+                                         Store.read_json, INTERUSER, "Deleting...", Store.write_json, PATH_STORE_DATA_FILE_INTER_LIFT)
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_status_text.connect(self.ui.label_status_text.setText)
+        thread.delete_button.connect(
+            self.ui.btn_delete_inter_left_1.setEnabled)
+        thread.finished.connect(self.leftAddInterUserRandomizerRuner)
+        thread.start()
+        thread.exec_()
+
+##################################################################################################
+########################################## Randomise the None-Inter Delete Left ##################
+    def deleteNoneInterUserFromLeft(self):
+        thread = DeleteRandomiseFromLeft(NONE_TEACHER_RANDOM_INDEX_LEFT,
+                                         Store.read_json, NONEINTERUSER, "Deleting...", Store.write_json, PATH_STORE_DATA_FILE_INTER_LIFT_NONE)
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_status_text.connect(self.ui.label_status_text.setText)
+        thread.delete_button.connect(
+            self.ui.btn_delete_noneinter_left.setEnabled)
+        thread.finished.connect(self.leftAddNoneInterUserRandomizerRuner)
+        thread.start()
+        thread.exec_()
+
+##################################################################################################
+########################################## Randomise the Primary Delete Left #####################
+    def deletePrimaryUserFromLeft(self):
+        thread = DeleteRandomiseFromLeft(PRAYMARY_RANDOM_INDEX_LEFT,
+                                         Store.read_json, PRIMARYLOWER, "Deleting...", Store.write_json, PATH_STORE_DATA_FILE_PRIMARY_LIFT)
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_status_text.connect(self.ui.label_status_text.setText)
+        thread.delete_button.connect(
+            self.ui.btn_delete_lower_left_pri.setEnabled)
+        thread.finished.connect(self.leftAddPrimaryUserRandomizerRuner)
+        thread.start()
+        thread.exec_()
+
+##################################################################################################
+########################################## Randomise the Ordnary Delete Left #####################
+    def deleteOrdnaryUserFromLeft(self):
+        thread = DeleteRandomiseFromLeft(ORDNARY_RANDOM_INDEX_LEFT,
+                                         Store.read_json, ORDNARYLOWER, "Deleting...", Store.write_json, PATH_STORE_DATA_FILE_ORDNARY_LIFT)
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_status_text.connect(self.ui.label_status_text.setText)
+        thread.delete_button.connect(
+            self.ui.btn_delete_lower_left_1.setEnabled)
+        thread.finished.connect(self.leftAddOrdnaryUserRandomizerRuner)
+        thread.start()
+        thread.exec_()
+
+##################################################################################################
+########################################## Randomise the Advanced Delete Left ####################
+    def deleteAdvancedUserFromLeft(self):
+        thread = DeleteRandomiseFromLeft(ADVANCED_RANDOM_INDEX_LEFT,
+                                         Store.read_json, ADVNACEDLOWER, "Deleting...", Store.write_json, PATH_STORE_DATA_FILE_ADVNACED_LIFT)
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_status_text.connect(self.ui.label_status_text.setText)
+        thread.delete_button.connect(
+            self.ui.btn_delete_lower_left_advan.setEnabled)
+        thread.finished.connect(self.leftAddAdvancedUserRandomizerRuner)
+        thread.start()
+        thread.exec_()
+##################################################################################################
+
+##################################################################################################
+######################################## Search The Inter Any Information ########################
+    def search(self):
+        thread = SearchUserInformation(self.ui.lineEdit_nameSearch, Crypto.decrypt_one,\
+             [INTERUSER, NONEINTERUSER, PRIMARYLOWER, ORDNARYLOWER, ADVNACEDLOWER])
+        thread.prograss_bar.connect(self.ui.status_prograss.setValue)
+        thread.prograss_status.connect(self.ui.label_status_text.setText)
+        thread.button.connect(self.ui.btn_nameSearch.setEnabled)
+        thread.start()
+        thread.exec_()
+        
+##################################################################################################
 
 
 class Verifier:

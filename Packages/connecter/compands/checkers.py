@@ -1,5 +1,7 @@
+from distutils.log import error
 import re
 import cv2 as cv
+from numpy import True_
 from rsa import decrypt
 from Packages.connecter.cryptography.crypto import *
 from Packages.connecter.thread_findup.threadForFindup import *
@@ -212,7 +214,7 @@ def rollIDShower(number):
             <body>
                 <p>
                     <span style=\" font-size:12pt; font-weight:600;\">
-                        Roll ID : {number}
+                        Roll ID : {number.replace(" ", "")}
                     </span>
                 </p>
             </body>
@@ -234,12 +236,135 @@ PRAYMARY_RANDOM_INDEX = []
 ORDNARY_RANDOM_INDEX = []
 ADVANCED_RANDOM_INDEX = []
 
+TEACHER_RANDOM_INDEX_LEFT = []
+NONE_TEACHER_RANDOM_INDEX_LEFT = []
+PRAYMARY_RANDOM_INDEX_LEFT = []
+ORDNARY_RANDOM_INDEX_LEFT = []
+ADVANCED_RANDOM_INDEX_LEFT = []
+
 # Target User Dict
 TEACHER_TARGET = {}
 NONE_TEACHER_TARGET = {}
 PRIMARY_TARGET = {}
 ORNARY_TARGET = {}
 ADVANCED_TARGET = {}
+
+TEACHER_TARGET_LEFT = {}
+NONE_TEACHER_TARGET_LEFT = {}
+PRIMARY_TARGET_LEFT = {}
+ORNARY_TARGET_LEFT = {}
+ADVANCED_TARGET_LEFT = {}
+
+
+error_code_inter = []
+error_code_noneinter = []
+error_code_primary = []
+error_code_ordnary = []
+error_code_advanced = []
+
+# Make Html Normal Object
+def make_html_objNormal(dict_obj: dict, userType, label_list: list):
+    label_list[0].setVisible(True)
+    label_list[1].setVisible(True)
+    label_list[2].setVisible(True)
+    label_list[3].setVisible(True)
+    label_list[4].setVisible(True)
+
+    if userType == 'INTERUSER':
+
+        rollid = dict_obj["ID"]
+        fullName = dict_obj["Name-full"]
+        contact_num = dict_obj["Contact-Number"]
+        email = dict_obj["E-Mail"]
+        address = dict_obj["Address"]
+
+        label_list[0].setText(
+            f"<p align=\'center\'>Roll ID        : {rollid}</p>")
+        label_list[1].setText(
+            f"<p align=\'center\'>Full Name      : {fullName}</p>")
+        label_list[2].setText(
+            f"<p align=\'center\'>Contact Number : {contact_num}</p>")
+        label_list[3].setText(
+            f"<p align=\'center\'>Email          : {email}</p>")
+        label_list[4].setText(
+            f"<p align=\'center\'>Address        : {address}</p>")
+
+    elif userType == 'NONEINTERUSER':
+
+        rollid = dict_obj["ID"]
+        fullname = dict_obj["Name-full"]
+        contact_num = dict_obj["Contact-Number"]
+        email = dict_obj["E-Mail"]
+        address = dict_obj["Address"]
+
+        label_list[0].setText(
+            f"<p align=\'center\'>Roll ID        : {rollid}</p>")
+        label_list[1].setText(
+            f"<p align=\'center\'>Full Name      : {fullname}</p>")
+        label_list[2].setText(
+            f"<p align=\'center\'>Contact Number : {contact_num}</p>")
+        label_list[3].setText(
+            f"<p align=\'center\'>Email          : {email}</p>")
+        label_list[4].setText(
+            f"<p align=\'center\'>Address        : {address}</p>")
+
+    elif userType == 'Lower-User-Primary':
+
+        rollid = dict_obj["ID"]
+        fullname = dict_obj["Name-full"]
+        contact_num = dict_obj["Parent-Number"]
+        level = dict_obj["Level"]
+        address = dict_obj["Address"]
+
+        label_list[0].setText(
+            f"<p align=\'center\'>Roll ID        : {rollid}</p>")
+        label_list[1].setText(
+            f"<p align=\'center\'>Full Name      : {fullname}</p>")
+        label_list[2].setText(
+            f"<p align=\'center\'>Parent / Guardian Contact Number : {contact_num}</p>")
+        label_list[3].setText(
+            f"<p align=\'center\'>Level          : {level}</p>")
+        label_list[4].setText(
+            f"<p align=\'center\'>Address        : {address}</p>")
+
+    elif userType == 'Lower-User-Ordinary':
+
+        rollid = dict_obj["ID"]
+        fullname = dict_obj["Name-full"]
+        contact_num = dict_obj["Parent-Number"]
+        level = dict_obj["Level"]
+        address = dict_obj["Address"]
+
+        label_list[0].setText(
+            f"<p align=\'center\'>Roll ID        : {rollid}</p>")
+        label_list[1].setText(
+            f"<p align=\'center\'>Full Name      : {fullname}</p>")
+        label_list[2].setText(
+            f"<p align=\'center\'>Parent / Guardian Contact Number : {contact_num}</p>")
+        label_list[3].setText(
+            f"<p align=\'center\'>Level          : {level}</p>")
+        label_list[4].setText(
+            f"<p align=\'center\'>Address        : {address}</p>")
+
+    else:
+
+        rollid = dict_obj["ID"]
+        fullname = dict_obj["Name-full"]
+        contact_num = dict_obj["Parent-Number"]
+        level = dict_obj["Level"]
+        streem = dict_obj["Streem"]
+        address = dict_obj["Address"]
+
+        label_list[0].setText(
+            f"<p align=\'center\'>Roll ID        : {rollid}</p>")
+        label_list[1].setText(
+            f"<p align=\'center\'>Full Name      : {fullname}</p>")
+        label_list[2].setText(
+            f"<p align=\'center\'>Parent / Guardian Contact Number : {contact_num}</p>")
+        label_list[3].setText(
+            f"<p align=\'center\'>Level & Streem       : {level}, {streem}</p>")
+        label_list[4].setText(
+            f"<p align=\'center\'>Address        : {address}</p>")
 
 
 # Make Html Object
@@ -251,8 +376,15 @@ def make_html_obj(dict_obj: dict, userType):
         <html>
             </head>
 
-            <body>
-                <p> Roll ID :{dict_obj["ID"]}</p> 
+            <body style=\'margin: 20px;\'>
+                <p style=\'
+                    display: inline-block;
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    margin: 20px;
+                    font-size: 20px;
+                    font-weight: 500;
+                \'> Roll ID :{dict_obj["ID"]}</p> 
                 <p> Name In Full :{dict_obj["Name-full"]}</p>
                 <p> Name With Initial :{dict_obj["Name-Initial"]}</p>
                 <p> NIC :{dict_obj["NIC"]}</p>
@@ -390,9 +522,8 @@ def make_html_obj(dict_obj: dict, userType):
         """
 
 
-
 # Face Recognition
-def face_recognition(file_path, output_file_path, prograssbar, prograssbar_text, setting_text,  image_label, list_users):
+def face_recognition(file_path, output_file_path, prograssbar, prograssbar_text, setting_text,  image_label, list_users, button, error_code):
 
     def final_func():
         list_users.append(output_file_path)
@@ -407,10 +538,11 @@ def face_recognition(file_path, output_file_path, prograssbar, prograssbar_text,
 
     if faces != [] and faces != ():
         thread = Thread_Prograss("Image Processing...", setting_text,
-                                 file_path, output_file_path, FACE_RECOGNITION_XML_PATH)
+                                 file_path, output_file_path, FACE_RECOGNITION_XML_PATH, error_code)
         thread.prograss_bar.connect(prograssbar)
         thread.prograss_text.connect(prograssbar_text.setText)
         thread.theMainUserImage.connect(image_label.setText)
+        thread.button.connect(button.setEnabled)
         thread.finished.connect(final_func)
         thread.start()
         thread.exec_()

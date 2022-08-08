@@ -286,6 +286,9 @@ INTER_BTN = """
         color: white;
         background-color: rgba(85, 170, 255, 100);
     }
+    QPushButton:disabled {
+        background-color: none;
+    }
 """
 INTER_BTN_OPEN = """
     QPushButton{
@@ -301,6 +304,9 @@ INTER_BTN_OPEN = """
     QPushButton:pressed{
         color: white;
         background-color: rgba(85, 170, 255, 100);
+    }
+    QPushButton:disabled {
+        background-color: none;
     }
 """
 
@@ -319,6 +325,9 @@ LOWER_BTN = """
         color: white;
      	background-color: rgba(85, 170, 255, 100);
     }
+    QPushButton:disabled {
+        background-color: none;
+    }
 """
 LOWER_BTN_OPEN = """
     QPushButton{
@@ -335,6 +344,9 @@ LOWER_BTN_OPEN = """
         color: white;
         background-color: rgba(85, 170, 255, 100);
     }
+    QPushButton:disabled {
+        background-color: none;
+    }
 """
 
 SUPERUSER_BTN = """
@@ -350,6 +362,9 @@ SUPERUSER_BTN = """
     QPushButton:pressed{
         background-color: rgba(85, 170, 255, 100);
     }
+    QPushButton:disabled {
+        background-color: none;
+    }
 """
 SUPERUSER_BTN_CLOSE = """
     QPushButton{
@@ -363,6 +378,9 @@ SUPERUSER_BTN_CLOSE = """
     }
     QPushButton:pressed{
         background-color: rgba(85, 170, 255, 100);
+    }
+    QPushButton:disabled {
+        background-color: none;
     }
 """
 
@@ -381,6 +399,9 @@ PRIMARY_BTN = """
         color: white;
         background-color: rgba(85, 170, 255, 100);
     }
+    QPushButton:disabled {
+        background-color: none;
+    }
 """
 
 ORDNARY_BTN = """
@@ -397,6 +418,9 @@ ORDNARY_BTN = """
     QPushButton:pressed{
         color: white;
         background-color: rgba(85, 170, 255, 100);
+    }
+    QPushButton:disabled {
+        background-color: none;
     }
 """
 
@@ -415,6 +439,9 @@ ADVANCED_BTN = """
         color: white;
         background-color: rgba(85, 170, 255, 100);
     }
+    QPushButton:disabled {
+        background-color: none;
+    }
 """
 
 ADDLOWER_PRIMARY_BTN = """
@@ -429,6 +456,9 @@ ADDLOWER_PRIMARY_BTN = """
     }
     QPushButton:pressed{
         background-color: rgba(26, 114, 255, 100);
+    }
+    QPushButton:disabled {
+        background-color: none;
     }
 """
 
@@ -447,6 +477,9 @@ GOHOME_PRIMARY_BTN = """
         color: white;
         background-color: rgba(26, 114, 255, 100);
     }
+    QPushButton:disabled {
+        background-color: none;
+    }
 """
 
 ADDLOWER_ADVANCED_BTN = """
@@ -461,6 +494,9 @@ ADDLOWER_ADVANCED_BTN = """
     }
     QPushButton:pressed{
         background-color: rgba(26, 114, 255, 100);
+    }
+    QPushButton:disabled {
+        background-color: none;
     }
 """
 
@@ -479,6 +515,9 @@ GOHOME_ADVANCED_BTN = """
         color: white;
         background-color: rgba(26, 114, 255, 100);
     }
+    QPushButton:disabled {
+        background-color: none;
+    }
 """
 
 DELETE_INTER_BTN_1 = """
@@ -493,6 +532,9 @@ DELETE_INTER_BTN_1 = """
     }
     QPushButton:pressed{
         background-color: rgba(85, 170, 255, 100);
+    }
+    QPushButton:disabled {
+        background-color: none;
     }
 """
 
@@ -509,6 +551,9 @@ DELETE_LOWER_BTN_1 = """
     QPushButton:pressed{
         background-color: rgba(85, 170, 255, 100);
     }
+    QPushButton:disabled {
+        background-color: none;
+    }
 """
 DELETE_PRIMARY_BTN_1 = """
     QPushButton{
@@ -522,6 +567,9 @@ DELETE_PRIMARY_BTN_1 = """
     }
     QPushButton:pressed{
         background-color: rgba(85, 170, 255, 100);
+    }
+    QPushButton:disabled {
+        background-color: none;
     }
 """
 
@@ -538,6 +586,9 @@ DELETE_ADVANCED_BTN_1 = """
     QPushButton:pressed{
         background-color: rgba(85, 170, 255, 100);
     }
+    QPushButton:disabled {
+        background-color: none;
+    }
 """
 SEARCH_BAR_BTN = """
     QPushButton{
@@ -551,6 +602,9 @@ SEARCH_BAR_BTN = """
     }
     QPushButton:pressed{
         background-color: rgba(85, 170, 255, 100);
+    }
+    QPushButton:disabled {
+        background-color: none;
     }
 """
 SETTING_USERNAME_HIDDEN_BTN = """
@@ -566,6 +620,9 @@ SETTING_USERNAME_HIDDEN_BTN = """
     QPushButton:pressed{
         background-color: rgba(0, 127, 226, 100);
     }
+    QPushButton:disabled {
+        background-color: none;
+    }
 """
 SETTING_SAVE_USERNAME_BTN = """
     QPushButton {
@@ -579,6 +636,9 @@ SETTING_SAVE_USERNAME_BTN = """
     }
     QPushButton:pressed{
         background-color: rgba(0, 127, 226, 100);
+    }
+    QPushButton:disabled {
+        background-color: none;
     }
 """
 SETTING_HIDDEN_BTN_OP = """
@@ -608,6 +668,9 @@ SETTING_RELOAD_BTN = """
     QPushButton:pressed{
         background-color: rgba(0, 127, 226, 100);
     }
+    QPushButton:disabled {
+        background-color: none;
+    }
 """
 SETTING_RESET_BTN = """
     QPushButton {
@@ -622,6 +685,9 @@ SETTING_RESET_BTN = """
     QPushButton:pressed{
         background-color: rgba(156, 12, 51, 100);
     }
+    QPushButton:disabled {
+        background-color: none;
+    }
 """
 SETTING_LOGOUT_BTN = """
     QPushButton {
@@ -635,6 +701,9 @@ SETTING_LOGOUT_BTN = """
     }
     QPushButton:pressed{
         background-color: rgba(0, 127, 226, 100);
+    }
+    QPushButton:disabled {
+        background-color: none;
     }
 """
 SETTING_HIDDEN_EMAIL_BTN = """
@@ -664,6 +733,9 @@ SETTING_SAVE_EMAIL_BTN = """
     QPushButton:pressed{
         background-color: rgba(0, 127, 226, 100);
     }
+    QPushButton:disabled {
+        background-color: none;
+    }
 """
 SETTING_HIDDEN_BTN_CONTECT = """
     QPushButton {
@@ -691,6 +763,9 @@ SETTING_SAVE_CONTECT_NUM_BTN = """
     }
     QPushButton:pressed{
         background-color: rgba(0, 127, 226, 100);
+    }
+    QPushButton:disabled {
+        background-color: none;
     }
 """
 SETTING_PASSWORD_CHANGER_BTN = """
@@ -720,6 +795,9 @@ SETTING_SAVE_PASSWORD_BTN = """
     QPushButton:pressed{
         background-color: rgba(0, 127, 226, 100);
     }
+    QPushButton:disabled {
+        background-color: none;
+    }
 """
 
 UPLOAD_IMAGE_BTN = """
@@ -735,6 +813,9 @@ UPLOAD_IMAGE_BTN = """
     QPushButton:pressed{
         background-color: rgba(26, 114, 255, 100);
     }
+    QPushButton:disabled {
+        background-color: none;
+    }
 """
 
 ADDINTER_BTN = """
@@ -749,6 +830,9 @@ ADDINTER_BTN = """
     }
     QPushButton:pressed{
         background-color: rgba(26, 114, 255, 100);
+    }
+    QPushButton:disabled {
+        background-color: none;
     }
 """
 GOHOME_INTER_BTN = """
@@ -778,6 +862,9 @@ ADDLOWER_LOWER_BTN = """
     }
     QPushButton:pressed{
         background-color: rgba(26, 114, 255, 100);
+    }
+    QPushButton:disabled {
+        background-color: none;
     }
 """
 GOHOME_LOWER_BTN = """
@@ -809,6 +896,9 @@ EDIT_SETTING_BTN = """
     QPushButton:pressed { 
         background-color: rgba(90, 175, 255, 100);
     }
+    QPushButton:disabled {
+        background-color: none;
+    }
 """
 
 HIDDEN_ABOUT_BTN = """
@@ -838,6 +928,9 @@ THEME_BTN = """
     }
     QPushButton:pressed{
         background-color: rgba(26, 114, 255, 100);
+    }
+    QPushButton:disabled {
+        background-color: none;
     }
 """
 
@@ -1839,8 +1932,31 @@ ICON_LABEL_TEXT = """
 """
 
 # Randomise Label Text
-RANDOMISE_SUDENT  = "<h1 align=\'center\'>Sudents Data Are Not Available</h1>"
-RANDOMISE_TEACHER  = "<h1 align=\'center\'>Teachers Data Are Not Available</h1>"
+RANDOMISE_SUDENT = "<h1 align=\'center\'>Sudents Data Are Not Available</h1>"
+RANDOMISE_TEACHER = "<h1 align=\'center\'>Teachers Data Are Not Available</h1>"
+
+RANDOMISE_STYLE = """
+
+    QLabel {
+        color: rgb(148, 154, 193);
+        border: 0px solid; 
+        font-size: 25px; 
+        font-weight: 500; 
+        font-family: url(./src/font/segoeui.ttf);
+        background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.506, fy:0.5, stop:0 rgba(46, 48, 60, 255), stop:1 rgba(26, 27, 34, 255));
+    }
+"""
+gloabel_style_label = """
+    QLabel {
+        border-radius: 10px;
+	    color: rgb(148, 154, 193);
+	    padding: 10px; 
+	    font-size: 20px;
+	    font-weight: 500;
+	    border: 0px solid;
+        background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.506, fy:0.5, stop:0 rgba(46, 48, 60, 255), stop:1 rgba(26, 27, 34, 255));
+    }
+"""
 
 #  USER INFORMATION TEXT FOR ACTIVE AND LEFT
 ACTIVE_LABEL_INFO_TEXT = """
@@ -2006,4 +2122,7 @@ TEXT_FOR_FACE_DETECTION = """
     <body>
         <h3>Your image is trouble to recognise; therefore, <br>use another image to complete the task.</h3>
     </body>
+"""
+ERROR_CODE = """
+    <h3>The picture who is given that has lot of faces; therefore, <br> use another image to complete the task.</h3>
 """
