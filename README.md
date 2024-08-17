@@ -11,6 +11,7 @@ FindUp is an advanced school management system designed to efficiently store and
 
 1. Clone this repository
 2. Run `pip install -r requirements.txt`
+3. 'Python findup.py'
 
 ## Screenshots
 
